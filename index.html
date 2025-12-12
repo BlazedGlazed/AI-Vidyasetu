@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeighbourShare | Borrow Smarter. Live Lighter. Together.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤝</text></svg>">
+</head>
+<body>
+    <!-- Loading animation -->
+    <div class="loader">
+        <div class="loader__circle"></div>
+        <div class="loader__circle"></div>
+        <div class="loader__circle"></div>
+        <div class="loader__text">Connecting Community...</div>
+    </div>
+
+    <!-- Main container with blur/fade effect -->
+    <div class="main-container blur-in">
+        <!-- Global Navigation -->
+        <nav class="navbar">
+            <div class="navbar__container">
+                <div class="navbar__logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <span class="logo-text">Neighbour<span class="logo-highlight">Share</span></span>
+                </div>
+
+                <div class="navbar__menu">
+                    <a href="index.html" class="navbar__link active" data-page="home">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="browse.html" class="navbar__link" data-page="browse">
+                        <i class="fas fa-search"></i>
+                        <span>Browse Items</span>
+                    </a>
+                    <a href="lend.html" class="navbar__link" data-page="lend">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Lend Item</span>
+                    </a>
+                    <a href="dashboard.html" class="navbar__link" data-page="dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="community.html" class="navbar__link" data-page="community">
+                        <i class="fas fa-users"></i>
+                        <span>Community</span>
+                    </a>
+                </div>
+
+                <div class="navbar__actions">
+                    <button class="btn btn-login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Sign In</span>
+                    </button>
+                    <button class="btn btn-primary btn-signup">
+                        <span>Join Free</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <button class="navbar__mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="homepage">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="container">
+                    <div class="hero__content">
+                        <div class="hero__tagline">
+                            <span class="tagline-pill">Sustainable Sharing</span>
+                            <span class="tagline-pill">Zero Waste</span>
+                            <span class="tagline-pill">Local Community</span>
+                        </div>
+                        
+                        <h1 class="hero__title">
+                            <span class="title-line">Borrow <span class="text-gradient">Smarter.</span></span>
+                            <span class="title-line">Live <span class="text-gradient">Lighter.</span></span>
+                            <span class="title-line"><span class="text-gradient">Together.</span></span>
+                        </h1>
+                        
+                        <p class="hero__subtitle">
+                            Share household items with your neighbors, reduce waste, save money, and build stronger communities. Join thousands who are already sharing smarter.
+                        </p>
+                        
+                        <!-- Animated Search Bar -->
+                        <div class="search-container">
+                            <div class="search-bar">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" class="search-input" placeholder="Search items within 1 km... (e.g., power drill, lawn mower, blender)">
+                                <button class="btn btn-primary search-btn">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>Find Now</span>
+                                </button>
+                            </div>
+                            <div class="search-hint">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Popular now: <strong>Electric drill</strong>, <strong>Pressure washer</strong>, <strong>Camping tent</strong></span>
+                            </div>
+                        </div>
+                        
+                        <div class="hero__stats">
+                            <div class="stat-item">
+                                <div class="stat-number" data-count="12560">0</div>
+                                <div class="stat-label">Items Shared</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" data-count="3280">0</div>
+                                <div class="stat-label">Happy Members</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" data-count="42">0</div>
+                                <div class="stat-label">Tonnes CO₂ Saved</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" data-count="15">0</div>
+                                <div class="stat-label">Km Radius</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating 3D Objects -->
+                    <div class="floating-objects">
+                        <div class="float-object obj-1">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="float-object obj-2">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <div class="float-object obj-3">
+                            <i class="fas fa-couch"></i>
+                        </div>
+                        <div class="float-object obj-4">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="float-object obj-5">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Scroll Indicator -->
+                <div class="scroll-indicator">
+                    <div class="mouse">
+                        <div class="wheel"></div>
+                    </div>
+                    <p>Scroll to explore</p>
+                </div>
+            </section>
+
+            <!-- Category Slider -->
+            <section class="categories">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Browse by <span class="text-gradient">Category</span></h2>
+                        <p class="section-subtitle">Find exactly what you need from neighbors near you</p>
+                    </div>
+                    
+                    <div class="categories-slider">
+                        <button class="slider-btn slider-btn-prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <div class="categories-container">
+                            <div class="category-card active">
+                                <div class="category-icon">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                                <h3 class="category-title">Tools</h3>
+                                <p class="category-count">1,240 items</p>
+                                <div class="category-progress">
+                                    <div class="progress-bar" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-icon">
+                                    <i class="fas fa-laptop"></i>
+                                </div>
+                                <h3 class="category-title">Electronics</h3>
+                                <p class="category-count">890 items</p>
+                                <div class="category-progress">
+                                    <div class="progress-bar" style="width: 65%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-icon">
+                                    <i class="fas fa-blender"></i>
+                                </div>
+                                <h3 class="category-title">Home Appliances</h3>
+                                <p class="category-count">1,560 items</p>
+                                <div class="category-progress">
+                                    <div class="progress-bar" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-icon">
+                                    <i class="fas fa-basketball-ball"></i>
+                                </div>
+                                <h3 class="category-title">Sports & Outdoors</h3>
+                                <p class="category-count">740 items</p>
+                                <div class="category-progress">
+                                    <div class="progress-bar" style="width: 55%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <h3 class="category-title">Books & Media</h3>
+                                <p class="category-count">420 items</p>
+                                <div class="category-progress">
+                                    <div class="progress-bar" style="width: 40%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="category-card">
+                                <div class="category-icon">
+                                    <i class="fas fa-tshirt"></i>
+                                </div>
+                                <h3 class="category-title">Fashion</h3>
+                                <p class="category-count">680 items</p>
+                                <div class="category-progress">
+                                    <div class="progress-bar" style="width: 60%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="slider-btn slider-btn-next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="categories-indicator">
+                        <span class="indicator-dot active"></span>
+                        <span class="indicator-dot"></span>
+                        <span class="indicator-dot"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How It Works -->
+            <section class="how-it-works">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">How It <span class="text-gradient">Works</span></h2>
+                        <p class="section-subtitle">Join the sharing revolution in just four simple steps</p>
+                    </div>
+                    
+                    <div class="steps-container">
+                        <div class="step-line"></div>
+                        
+                        <div class="step-card" data-step="1">
+                            <div class="step-number">01</div>
+                            <div class="step-content">
+                                <div class="step-icon">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <h3 class="step-title">Create Account</h3>
+                                <p class="step-description">Sign up for free, verify your location, and set up your profile in under 2 minutes.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card" data-step="2">
+                            <div class="step-number">02</div>
+                            <div class="step-content">
+                                <div class="step-icon">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <h3 class="step-title">Browse or List</h3>
+                                <p class="step-description">Search for items you need or list items you're willing to share with your community.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card" data-step="3">
+                            <div class="step-number">03</div>
+                            <div class="step-content">
+                                <div class="step-icon">
+                                    <i class="fas fa-handshake"></i>
+                                </div>
+                                <h3 class="step-title">Connect & Arrange</h3>
+                                <p class="step-description">Message the lender, agree on timing, and arrange pickup or delivery.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card" data-step="4">
+                            <div class="step-number">04</div>
+                            <div class="step-content">
+                                <div class="step-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <h3 class="step-title">Share & Review</h3>
+                                <p class="step-description">Borrow the item, return on time, and leave a review to build community trust.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Why Share? -->
+            <section class="why-share">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Why <span class="text-gradient">Share?</span></h2>
+                        <p class="section-subtitle">See the tangible impact you make by sharing with your neighbors</p>
+                    </div>
+                    
+                    <div class="impact-stats">
+                        <div class="impact-card">
+                            <div class="impact-icon">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div class="impact-content">
+                                <h3 class="impact-title">Environmental Impact</h3>
+                                <div class="impact-number" data-count="42">0</div>
+                                <div class="impact-unit">Tonnes CO₂ Saved</div>
+                                <p class="impact-description">Equivalent to planting 1,950 trees or taking 9 cars off the road for a year.</p>
+                            </div>
+                            <div class="impact-chart">
+                                <canvas class="chart" id="co2Chart" width="100" height="100"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="impact-card">
+                            <div class="impact-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="impact-content">
+                                <h3 class="impact-title">Financial Savings</h3>
+                                <div class="impact-number">$<span data-count="286">0</span>K</div>
+                                <div class="impact-unit">Saved by Members</div>
+                                <p class="impact-description">Our community has saved over $286,000 by borrowing instead of buying new.</p>
+                            </div>
+                            <div class="impact-chart">
+                                <canvas class="chart" id="moneyChart" width="100" height="100"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="impact-card">
+                            <div class="impact-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="impact-content">
+                                <h3 class="impact-title">Community Growth</h3>
+                                <div class="impact-number" data-count="3280">0</div>
+                                <div class="impact-unit">Active Members</div>
+                                <p class="impact-description">Join 3,280+ neighbors who are building stronger, more connected communities.</p>
+                            </div>
+                            <div class="impact-chart">
+                                <canvas class="chart" id="communityChart" width="100" height="100"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials Carousel -->
+            <section class="testimonials">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Community <span class="text-gradient">Stories</span></h2>
+                        <p class="section-subtitle">Hear from neighbors who are already sharing smarter</p>
+                    </div>
+                    
+                    <div class="testimonials-carousel">
+                        <button class="carousel-btn carousel-btn-prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <div class="testimonials-container">
+                            <div class="testimonial-card active">
+                                <div class="testimonial-content">
+                                    <div class="quote-icon">
+                                        <i class="fas fa-quote-left"></i>
+                                    </div>
+                                    <p class="testimonial-text">"I borrowed a power washer for my deck and ended up meeting my neighbor Mark, who's a landscaper. He gave me great tips for my garden! NeighbourShare saved me $250 and helped me make a new friend."</p>
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">
+                                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Sarah Johnson">
+                                    </div>
+                                    <div class="author-info">
+                                        <h4 class="author-name">Sarah Johnson</h4>
+                                        <p class="author-location">• Seattle, WA • 24 Shares</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="testimonial-card">
+                                <div class="testimonial-content">
+                                    <div class="quote-icon">
+                                        <i class="fas fa-quote-left"></i>
+                                    </div>
+                                    <p class="testimonial-text">"As a DIY enthusiast, I have so many tools that just sit in my garage. With NeighbourShare, I've lent out my table saw 8 times and made $120 in optional tips. It feels great knowing my tools are being used instead of collecting dust."</p>
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">
+                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Marcus Chen">
+                                    </div>
+                                    <div class="author-info">
+                                        <h4 class="author-name">Marcus Chen</h4>
+                                        <p class="author-location">• Austin, TX • 18 Lends</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="testimonial-card">
+                                <div class="testimonial-content">
+                                    <div class="quote-icon">
+                                        <i class="fas fa-quote-left"></i>
+                                    </div>
+                                    <p class="testimonial-text">"Moving to a new city was tough, but NeighbourShare helped me connect with my community. I've borrowed camping gear, a carpet cleaner, and even a fondue set for a party. It's more than sharing stuff—it's about building connections."</p>
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">
+                                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Priya Patel">
+                                    </div>
+                                    <div class="author-info">
+                                        <h4 class="author-name">Priya Patel</h4>
+                                        <p class="author-location">• Brooklyn, NY • 12 Borrows</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="testimonial-card">
+                                <div class="testimonial-content">
+                                    <div class="quote-icon">
+                                        <i class="fas fa-quote-left"></i>
+                                    </div>
+                                    <p class="testimonial-text">"Our neighborhood tool library was always missing what I needed. NeighbourShare solved that completely. I found a tile cutter for my bathroom renovation within 3 blocks. The app is seamless and the people are trustworthy."</p>
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">
+                                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="David Miller">
+                                    </div>
+                                    <div class="author-info">
+                                        <h4 class="author-name">David Miller</h4>
+                                        <p class="author-location">• Portland, OR • 31 Shares</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="carousel-btn carousel-btn-next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="testimonials-indicator">
+                        <span class="indicator-dot active"></span>
+                        <span class="indicator-dot"></span>
+                        <span class="indicator-dot"></span>
+                        <span class="indicator-dot"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <div class="container">
+                    <div class="cta-card">
+                        <div class="cta-content">
+                            <h2 class="cta-title">Ready to Join the <span class="text-gradient">Sharing Revolution?</span></h2>
+                            <p class="cta-description">Sign up today and get your first 3 borrows completely free. No hidden fees, no commitments—just smarter sharing.</p>
+                            
+                            <div class="cta-buttons">
+                                <button class="btn btn-primary btn-large btn-ripple">
+                                    <span>Join Free Now</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                                <button class="btn btn-outline btn-large">
+                                    <i class="fas fa-play-circle"></i>
+                                    <span>Watch Intro Video</span>
+                                </button>
+                            </div>
+                            
+                            <div class="cta-features">
+                                <div class="feature">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>No monthly fees</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Verified neighbors only</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Item protection guarantee</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cta-visual">
+                            <div class="visual-element visual-1">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="visual-element visual-2">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="visual-element visual-3">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Global Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer__main">
+                    <div class="footer__brand">
+                        <div class="footer__logo">
+                            <div class="logo-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <span class="logo-text">Neighbour<span class="logo-highlight">Share</span></span>
+                        </div>
+                        <p class="footer__tagline">Building sustainable communities through smart sharing.</p>
+                        <div class="footer__social">
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer__links">
+                        <div class="footer__column">
+                            <h3 class="footer__title">Platform</h3>
+                            <a href="#" class="footer__link">How It Works</a>
+                            <a href="#" class="footer__link">Browse Items</a>
+                            <a href="#" class="footer__link">Lend Items</a>
+                            <a href="#" class="footer__link">Community</a>
+                            <a href="#" class="footer__link">Trust & Safety</a>
+                        </div>
+                        
+                        <div class="footer__column">
+                            <h3 class="footer__title">Company</h3>
+                            <a href="#" class="footer__link">About Us</a>
+                            <a href="#" class="footer__link">Careers</a>
+                            <a href="#" class="footer__link">Press</a>
+                            <a href="#" class="footer__link">Blog</a>
+                            <a href="#" class="footer__link">Impact Report</a>
+                        </div>
+                        
+                        <div class="footer__column">
+                            <h3 class="footer__title">Support</h3>
+                            <a href="#" class="footer__link">Help Center</a>
+                            <a href="#" class="footer__link">FAQs</a>
+                            <a href="#" class="footer__link">Contact Us</a>
+                            <a href="#" class="footer__link">Community Guidelines</a>
+                            <a href="#" class="footer__link">Privacy Policy</a>
+                        </div>
+                        
+                        <div class="footer__column">
+                            <h3 class="footer__title">Cities</h3>
+                            <a href="#" class="footer__link">New York</a>
+                            <a href="#" class="footer__link">Los Angeles</a>
+                            <a href="#" class="footer__link">Chicago</a>
+                            <a href="#" class="footer__link">Seattle</a>
+                            <a href="#" class="footer__link">Austin</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer__bottom">
+                    <div class="footer__copyright">
+                        <p>&copy; 2025 NeighbourShare. All rights reserved. Made with <i class="fas fa-heart" style="color: #ff4757;"></i> for sustainable communities.</p>
+                    </div>
+                    
+                    <div class="footer__apps">
+                        <a href="#" class="app-link">
+                            <i class="fab fa-apple"></i>
+                            <div class="app-text">
+                                <span>Download on the</span>
+                                <strong>App Store</strong>
+                            </div>
+                        </a>
+                        <a href="#" class="app-link">
+                            <i class="fab fa-google-play"></i>
+                            <div class="app-text">
+                                <span>Get it on</span>
+                                <strong>Google Play</strong>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
