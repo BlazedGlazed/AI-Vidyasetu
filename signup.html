@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeighbourShare | Join Our Community</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/signup.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤝</text></svg>">
+</head>
+<body>
+    <!-- Loading animation -->
+    <div class="loader">
+        <div class="loader__circle"></div>
+        <div class="loader__circle"></div>
+        <div class="loader__circle"></div>
+        <div class="loader__text">Preparing Registration...</div>
+    </div>
+
+    <!-- Background Animation -->
+    <div class="background-animation">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+        <div class="floating-shape shape-5"></div>
+        <div class="floating-icon icon-1">
+            <i class="fas fa-home"></i>
+        </div>
+        <div class="floating-icon icon-2">
+            <i class="fas fa-users"></i>
+        </div>
+        <div class="floating-icon icon-3">
+            <i class="fas fa-leaf"></i>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Back to Home -->
+        <a href="index.html" class="back-home">
+            <i class="fas fa-arrow-left"></i>
+            <span>Back to Home</span>
+        </a>
+
+        <!-- Signup Container -->
+        <div class="signup-container">
+            <!-- Left Side - Branding & Info -->
+            <div class="signup-left">
+                <div class="brand-section">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h1 class="logo-text">Neighbour<span class="logo-highlight">Share</span></h1>
+                    </div>
+                    <p class="brand-tagline">Join 3,280+ neighbors building sustainable communities</p>
+                </div>
+
+                <!-- Benefits -->
+                <div class="benefits-section">
+                    <h2>Why Join NeighbourShare?</h2>
+                    <div class="benefits-grid">
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <h3>Save Money</h3>
+                            <p>Access items you need without the cost of buying new</p>
+                        </div>
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="fas fa-globe-americas"></i>
+                            </div>
+                            <h3>Reduce Waste</h3>
+                            <p>Share resources and minimize your environmental impact</p>
+                        </div>
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <h3>Build Trust</h3>
+                            <p>Connect with verified neighbors in your community</p>
+                        </div>
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>Stay Safe</h3>
+                            <p>Secure platform with verified profiles and reviews</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-section">
+                    <div class="stat-item">
+                        <div class="stat-number">3,280+</div>
+                        <div class="stat-label">Active Members</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">12,560+</div>
+                        <div class="stat-label">Items Shared</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">$286K+</div>
+                        <div class="stat-label">Saved</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Signup Form -->
+            <div class="signup-right">
+                <div class="signup-card">
+                    <!-- Progress Bar -->
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar">
+                            <div class="progress-fill" style="width: 33%"></div>
+                        </div>
+                        <div class="progress-steps">
+                            <div class="progress-step active" data-step="1">
+                                <div class="step-circle">1</div>
+                                <span class="step-label">Details</span>
+                            </div>
+                            <div class="progress-step" data-step="2">
+                                <div class="step-circle">2</div>
+                                <span class="step-label">Address</span>
+                            </div>
+                            <div class="progress-step" data-step="3">
+                                <div class="step-circle">3</div>
+                                <span class="step-label">Verify</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 1: Personal Details -->
+                    <div class="signup-step active" id="step1">
+                        <div class="step-header">
+                            <h2>Create Your Account</h2>
+                            <p>Let's start with your basic information</p>
+                        </div>
+
+                        <form class="signup-form" id="step1Form">
+                            <!-- Full Name -->
+                            <div class="form-group">
+                                <label for="fullName" class="form-label">Full Name *</label>
+                                <div class="input-container">
+                                    <input 
+                                        type="text" 
+                                        id="fullName" 
+                                        class="form-input"
+                                        placeholder="Enter your full name"
+                                        required
+                                    >
+                                    <div class="input-icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="input-validation">
+                                        <i class="fas fa-check-circle valid-icon"></i>
+                                        <i class="fas fa-exclamation-circle error-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="input-hint">As it appears on your ID</div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <div class="input-container">
+                                    <input 
+                                        type="email" 
+                                        id="email" 
+                                        class="form-input"
+                                        placeholder="you@example.com"
+                                        required
+                                    >
+                                    <div class="input-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div class="input-validation">
+                                        <i class="fas fa-check-circle valid-icon"></i>
+                                        <i class="fas fa-exclamation-circle error-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="input-hint">We'll send a verification code</div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="form-group">
+                                <label for="password" class="form-label">Password *</label>
+                                <div class="input-container">
+                                    <input 
+                                        type="password" 
+                                        id="password" 
+                                        class="form-input"
+                                        placeholder="Create a strong password"
+                                        required
+                                    >
+                                    <div class="input-icon">
+                                        <i class="fas fa-lock"></i>
+                                    </div>
+                                    <button type="button" class="password-toggle" id="passwordToggle">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <div class="input-validation">
+                                        <i class="fas fa-check-circle valid-icon"></i>
+                                        <i class="fas fa-exclamation-circle error-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="password-strength">
+                                    <div class="strength-bar">
+                                        <div class="strength-fill" style="width: 0%"></div>
+                                    </div>
+                                    <div class="strength-text">Password strength: <span>Very weak</span></div>
+                                </div>
+                                <ul class="password-requirements">
+                                    <li data-requirement="length">At least 8 characters</li>
+                                    <li data-requirement="uppercase">One uppercase letter</li>
+                                    <li data-requirement="lowercase">One lowercase letter</li>
+                                    <li data-requirement="number">One number</li>
+                                    <li data-requirement="special">One special character</li>
+                                </ul>
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <div class="input-container">
+                                    <input 
+                                        type="tel" 
+                                        id="phone" 
+                                        class="form-input"
+                                        placeholder="(123) 456-7890"
+                                    >
+                                    <div class="input-icon">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div class="input-validation">
+                                        <i class="fas fa-check-circle valid-icon"></i>
+                                        <i class="fas fa-exclamation-circle error-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="input-hint">For important updates (optional)</div>
+                            </div>
+
+                            <!-- Terms -->
+                            <div class="form-group">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="terms" required>
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-label">
+                                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <!-- Next Button -->
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline btn-back" onclick="goToHome()">
+                                    <i class="fas fa-arrow-left"></i>
+                                    <span>Cancel</span>
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-next btn-ripple">
+                                    <span>Continue to Address</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Login Link -->
+                        <div class="login-link">
+                            <p>Already have an account? <a href="login.html" class="login-text">Sign in</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Address Details -->
+                    <div class="signup-step" id="step2">
+                        <div class="step-header">
+                            <h2>Your Location</h2>
+                            <p>Help us connect you with nearby neighbors</p>
+                        </div>
+
+                        <form class="signup-form" id="step2Form">
+                            <!-- Address Line 1 -->
+                            <div class="form-group">
+                                <label for="address1" class="form-label">Street Address *</label>
+                                <div class="input-container">
+                                    <input 
+                                        type="text" 
+                                        id="address1" 
+                                        class="form-input"
+                                        placeholder="123 Main Street"
+                                        required
+                                    >
+                                    <div class="input-icon">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div class="input-validation">
+                                        <i class="fas fa-check-circle valid-icon"></i>
+                                        <i class="fas fa-exclamation-circle error-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Address Line 2 -->
+                            <div class="form-group">
+                                <label for="address2" class="form-label">Apartment, Suite, etc.</label>
+                                <div class="input-container">
+                                    <input 
+                                        type="text" 
+                                        id="address2" 
+                                        class="form-input"
+                                        placeholder="Apt 4B (optional)"
+                                    >
+                                    <div class="input-icon">
+                                        <i class="fas fa-building"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- City -->
+                            <div class="form-group">
+                                <label for="city" class="form-label">City *</label>
+                                <div class="input-container">
+                                    <input 
+                                        type="text" 
+                                        id="city" 
+                                        class="form-input"
+                                        placeholder="New York"
+                                        required
+                                    >
+                                    <div class="input-icon">
+                                        <i class="fas fa-city"></i>
+                                    </div>
+                                    <div class="input-validation">
+                                        <i class="fas fa-check-circle valid-icon"></i>
+                                        <i class="fas fa-exclamation-circle error-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- State & Zip -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="state" class="form-label">State *</label>
+                                    <div class="input-container">
+                                        <select id="state" class="form-input" required>
+                                            <option value="">Select State</option>
+                                            <option value="AL">Alabama</option>
+                                            <option value="AK">Alaska</option>
+                                            <option value="AZ">Arizona</option>
+                                            <option value="AR">Arkansas</option>
+                                            <option value="CA">California</option>
+                                            <option value="CO">Colorado</option>
+                                            <option value="CT">Connecticut</option>
+                                            <option value="DE">Delaware</option>
+                                            <option value="FL">Florida</option>
+                                            <option value="GA">Georgia</option>
+                                            <option value="HI">Hawaii</option>
+                                            <option value="ID">Idaho</option>
+                                            <option value="IL">Illinois</option>
+                                            <option value="IN">Indiana</option>
+                                            <option value="IA">Iowa</option>
+                                            <option value="KS">Kansas</option>
+                                            <option value="KY">Kentucky</option>
+                                            <option value="LA">Louisiana</option>
+                                            <option value="ME">Maine</option>
+                                            <option value="MD">Maryland</option>
+                                            <option value="MA">Massachusetts</option>
+                                            <option value="MI">Michigan</option>
+                                            <option value="MN">Minnesota</option>
+                                            <option value="MS">Mississippi</option>
+                                            <option value="MO">Missouri</option>
+                                            <option value="MT">Montana</option>
+                                            <option value="NE">Nebraska</option>
+                                            <option value="NV">Nevada</option>
+                                            <option value="NH">New Hampshire</option>
+                                            <option value="NJ">New Jersey</option>
+                                            <option value="NM">New Mexico</option>
+                                            <option value="NY">New York</option>
+                                            <option value="NC">North Carolina</option>
+                                            <option value="ND">North Dakota</option>
+                                            <option value="OH">Ohio</option>
+                                            <option value="OK">Oklahoma</option>
+                                            <option value="OR">Oregon</option>
+                                            <option value="PA">Pennsylvania</option>
+                                            <option value="RI">Rhode Island</option>
+                                            <option value="SC">South Carolina</option>
+                                            <option value="SD">South Dakota</option>
+                                            <option value="TN">Tennessee</option>
+                                            <option value="TX">Texas</option>
+                                            <option value="UT">Utah</option>
+                                            <option value="VT">Vermont</option>
+                                            <option value="VA">Virginia</option>
+                                            <option value="WA">Washington</option>
+                                            <option value="WV">West Virginia</option>
+                                            <option value="WI">Wisconsin</option>
+                                            <option value="WY">Wyoming</option>
+                                        </select>
+                                        <div class="input-icon">
+                                            <i class="fas fa-flag-usa"></i>
+                                        </div>
+                                        <div class="input-validation">
+                                            <i class="fas fa-check-circle valid-icon"></i>
+                                            <i class="fas fa-exclamation-circle error-icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="zipCode" class="form-label">ZIP Code *</label>
+                                    <div class="input-container">
+                                        <input 
+                                            type="text" 
+                                            id="zipCode" 
+                                            class="form-input"
+                                            placeholder="10001"
+                                            required
+                                            pattern="[0-9]{5}"
+                                            maxlength="5"
+                                        >
+                                        <div class="input-icon">
+                                            <i class="fas fa-mail-bulk"></i>
+                                        </div>
+                                        <div class="input-validation">
+                                            <i class="fas fa-check-circle valid-icon"></i>
+                                            <i class="fas fa-exclamation-circle error-icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sharing Radius -->
+                            <div class="form-group">
+                                <label class="form-label">Sharing Radius *</label>
+                                <div class="radius-options">
+                                    <label class="radio-container">
+                                        <input type="radio" name="radius" value="1" checked>
+                                        <span class="radio-checkmark"></span>
+                                        <span class="radio-label">
+                                            <strong>1 km</strong>
+                                            <span>Close neighbors only</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-container">
+                                        <input type="radio" name="radius" value="3">
+                                        <span class="radio-checkmark"></span>
+                                        <span class="radio-label">
+                                            <strong>3 km</strong>
+                                            <span>Neighborhood range</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-container">
+                                        <input type="radio" name="radius" value="5">
+                                        <span class="radio-checkmark"></span>
+                                        <span class="radio-label">
+                                            <strong>5 km</strong>
+                                            <span>Extended community</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Navigation -->
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline btn-back" onclick="goToStep(1)">
+                                    <i class="fas fa-arrow-left"></i>
+                                    <span>Back</span>
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-next btn-ripple">
+                                    <span>Continue to Verification</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Step 3: Verification -->
+                    <div class="signup-step" id="step3">
+                        <div class="step-header">
+                            <h2>Verify Your Email</h2>
+                            <p>We've sent a verification code to your email</p>
+                        </div>
+
+                        <form class="signup-form" id="step3Form">
+                            <!-- Email Display -->
+                            <div class="email-display">
+                                <i class="fas fa-envelope"></i>
+                                <div class="email-info">
+                                    <span class="email-label">Code sent to:</span>
+                                    <span class="email-value" id="displayEmail">user@example.com</span>
+                                </div>
+                                <button type="button" class="btn-text" onclick="resendCode()">
+                                    Resend Code
+                                </button>
+                            </div>
+
+                            <!-- OTP Input -->
+                            <div class="form-group">
+                                <label class="form-label">Enter 6-digit Code *</label>
+                                <div class="otp-container">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="0">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="1">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="2">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="3">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="4">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="5">
+                                </div>
+                                <div class="otp-hint">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Code expires in: <strong id="countdown">05:00</strong></span>
+                                </div>
+                            </div>
+
+                            <!-- Profile Picture (Optional) -->
+                            <div class="form-group">
+                                <label class="form-label">Profile Picture (Optional)</label>
+                                <div class="upload-container">
+                                    <div class="upload-area" id="uploadArea">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <p>Drag & drop or <span>browse</span></p>
+                                        <input type="file" id="profilePicture" accept="image/*" hidden>
+                                    </div>
+                                    <div class="upload-preview" id="uploadPreview">
+                                        <img src="" alt="Preview" id="imagePreview">
+                                        <button type="button" class="remove-image" onclick="removeImage()">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="input-hint">Max size: 5MB • JPG, PNG, or GIF</div>
+                            </div>
+
+                            <!-- Welcome Message -->
+                            <div class="welcome-message">
+                                <div class="welcome-icon">
+                                    <i class="fas fa-sparkles"></i>
+                                </div>
+                                <h3>Welcome to NeighbourShare!</h3>
+                                <p>You're joining a community of sustainable sharers. Complete registration to start borrowing and lending items.</p>
+                            </div>
+
+                            <!-- Navigation -->
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline btn-back" onclick="goToStep(2)">
+                                    <i class="fas fa-arrow-left"></i>
+                                    <span>Back</span>
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-next btn-ripple" id="completeBtn">
+                                    <span>Complete Registration</span>
+                                    <i class="fas fa-check-circle"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Success Screen -->
+                    <div class="success-screen" id="successScreen">
+                        <div class="success-content">
+                            <div class="success-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h2>Welcome to NeighbourShare!</h2>
+                            <p>Your account has been successfully created. You're now part of our sustainable sharing community.</p>
+                            
+                            <div class="success-stats">
+                                <div class="success-stat">
+                                    <i class="fas fa-gift"></i>
+                                    <span>3 Free Borrow Credits</span>
+                                </div>
+                                <div class="success-stat">
+                                    <i class="fas fa-star"></i>
+                                    <span>Verified Member Status</span>
+                                </div>
+                                <div class="success-stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>3280+ Neighbors</span>
+                                </div>
+                            </div>
+
+                            <div class="success-actions">
+                                <button class="btn btn-primary btn-large btn-ripple" onclick="goToDashboard()">
+                                    <span>Explore Dashboard</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                                <button class="btn btn-outline btn-large" onclick="goToBrowse()">
+                                    <i class="fas fa-search"></i>
+                                    <span>Browse Items</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Info -->
+                <div class="security-info">
+                    <i class="fas fa-shield-alt"></i>
+                    <p>Your information is protected with 256-bit SSL encryption</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/signup.js"></script>
+</body>
+</html>

@@ -420,3 +420,103 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Add to existing auth.js file
+
+// =========================================
+// 11. Signup Form Handling
+// =========================================
+function initSignupForm() {
+    const signupForm = document.getElementById('signupForm');
+    
+    if (signupForm) {
+        signupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const userData = Object.fromEntries(formData);
+            
+            // Validate form
+            if (validateSignupForm(userData)) {
+                // Show loading state
+                const submitBtn = this.querySelector('button[type="submit"]');
+                submitBtn.classList.add('loading');
+                submitBtn.disabled = true;
+                
+                // Simulate API call (replace with actual backend integration)
+                simulateSignup(userData);
+            }
+        });
+    }
+}
+
+function validateSignupForm(data) {
+    let isValid = true;
+    
+    // Reset all errors
+    document.querySelectorAll('.form-input').forEach(input => {
+        input.classList.remove('error');
+    });
+    
+    // Validate each field
+    if (!data.fullName || data.fullName.length < 2) {
+        showError('fullName', 'Please enter your full name');
+        isValid = false;
+    }
+    
+    if (!data.email || !isValidEmail(data.email)) {
+        showError('email', 'Please enter a valid email address');
+        isValid = false;
+    }
+    
+    if (!data.password || data.password.length < 8) {
+        showError('password', 'Password must be at least 8 characters');
+        isValid = false;
+    } else if (!isStrongPassword(data.password)) {
+        showError('password', 'Password must include uppercase, lowercase, number, and special character');
+        isValid = false;
+    }
+    
+    if (data.password !== data.confirmPassword) {
+        showError('confirmPassword', 'Passwords do not match');
+        isValid = false;
+    }
+    
+    if (!data.terms) {
+        const termsInput = document.getElementById('terms');
+        termsInput.parentElement.classList.add('error');
+        isValid = false;
+    }
+    
+    return isValid;
+}
+
+function simulateSignup(userData) {
+    // This is a mock simulation - replace with actual API call
+    
+    setTimeout(() => {
+        const submitBtn = document.querySelector('button[type="submit"]');
+        
+        // Simulate success
+        showAlert('successAlert', 'Account created successfully! Redirecting to verification...');
+        
+        // Store user data in localStorage (for demo)
+        localStorage.setItem('tempUserData', JSON.stringify(userData));
+        
+        // Redirect to verification page after 2 seconds
+        setTimeout(() => {
+            window.location.href = 'verify-email.html'; // Create this page
+        }, 2000);
+        
+        // Reset button
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+    }, 1500);
+}
+
+// Add this to your main initialization in auth.js
+// document.addEventListener('DOMContentLoaded', function() {
+//     // ... existing code ...
+//     initSignupForm(); // Add this line
+// });
