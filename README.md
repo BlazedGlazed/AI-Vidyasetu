@@ -1,32 +1,19 @@
-# AI-Vidyasetu
-This repo contains our team- 'Py_JAKEL''s official Zonal round competetion.
+# The Community Share Hub - Waste Management
+This repo contains our team- 'Py_JACKEL''s official Zonal round competetion.
 
 
-This programe is developed by-
-    1) Shreyasdeep Gayan
-    2) Bedanta Sarkar
-    3) Ranak Das
-    4) Tanubhav Bhagovati
-    5) Kishanu Kayshup
+This project allows people of a neighbourhood to lend and borrow occasionally used specialized or expensive items from each other that would otherwise be not feasible to buy. This project fosters a sustainable and collaborative commmunity and reduces waste production and carbon emission rate in the locality. 
 
-The undersighen assures that the program is thoughtfull created by them soletly for the purpose of the competetion and the use of this program for commercial purposes is strictly prohibited by owners.
+The project has the following features :
+    - The website has a user authentication system for signup, login and logout to track individual users
+    - It has a listing feature where the sellers can list the items to b elnt by their avaliability status.
+    - Sellers can search for the items in a proximity of radius 1 km.
+    - The user uploads an image of the item to be lent and the AI Image Recognition to automatically detect te oblect, categorize it            accordingly and suggest at title and/or description to make the listing feature easier.
+    - An easy to navigate dashboard where the users can request items, set pickup or return dates, and track active loans.
+    - Shows records of history of shared and borrrowed items
+    - 
 
 
-
-
-Generate HTML code
-
-Generate CSS code (separate file)
-
-Generate JS code (separate file)
-
-Must include placeholders for backend integration
-
-Must include reusable components imports
-
-You must now generate code ONLY for the page I ask you next.
-
-⭐ PART 3 — PAGE-SPECIFIC PROMPTS
 
 Use these one by one with the master prompt above.
 
@@ -260,3 +247,13 @@ frontend/
      ├── navbar.html
      ├── footer.html
      ├── item-card.html
+
+The undersighen assures that the program is thoughtfull created by them soletly for the purpose of the competetion and the use of this program for commercial purposes is strictly prohibited by owners.
+
+This programe is developed by-
+    1) Shreyasdeep Gayan
+    2) Bedanta Sarkar
+    3) Ranak Das
+    4) Tanubhav Bhagovati
+    5) Kishanu Kayshup
+
