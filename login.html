@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeighbourShare | Login to Your Account</title>
+    <title>NeighbourShare | Borrow Smarter. Live Lighter. Together.</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/index.css">
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤝</text></svg>">
 </head>
 <body>
@@ -17,228 +18,597 @@
         <div class="loader__circle"></div>
         <div class="loader__circle"></div>
         <div class="loader__circle"></div>
-        <div class="loader__text">Loading...</div>
+        <div class="loader__text">Connecting Community...</div>
     </div>
 
-    <!-- Background Animation -->
-    <div class="background-animation">
-        <div class="floating-shape shape-1"></div>
-        <div class="floating-shape shape-2"></div>
-        <div class="floating-shape shape-3"></div>
-        <div class="floating-shape shape-4"></div>
-        <div class="floating-shape shape-5"></div>
-    </div>
-
-    <!-- Main Container -->
-    <div class="main-container">
-        <!-- Back to Home -->
-        <a href="index.html" class="back-home">
-            <i class="fas fa-arrow-left"></i>
-            <span>Back to Home</span>
-        </a>
-
-        <!-- Login Container -->
-        <div class="login-container">
-            <!-- Left Side - Branding & Info -->
-            <div class="login-left">
-                <div class="brand-section">
-                    <div class="logo">
+    <!-- Main container with blur/fade effect -->
+    <div class="main-container blur-in">
+        <!-- Global Navigation -->
+        <nav class="navbar">
+            <div class="navbar__container">
+                <div class="navbar__logo">
+                    <a href="index.html" class="logo-link">
                         <div class="logo-icon">
                             <i class="fas fa-handshake"></i>
                         </div>
-                        <h1 class="logo-text">Neighbour<span class="logo-highlight">Share</span></h1>
-                    </div>
-                    <p class="brand-tagline">Building sustainable communities through smart sharing</p>
+                        <span class="logo-text">Neighbour<span class="logo-highlight">Share</span></span>
+                    </a>
                 </div>
 
-                <div class="features-list">
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-leaf"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h3>Reduce Waste</h3>
-                            <p>Share instead of buying new, reduce your carbon footprint</p>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-hand-holding-usd"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h3>Save Money</h3>
-                            <p>Access thousands of items for free or minimal cost</p>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h3>Build Community</h3>
-                            <p>Connect with neighbors and build meaningful relationships</p>
-                        </div>
+                <div class="navbar__menu">
+                    <a href="index.html" class="navbar__link active" data-page="home">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="item-listing.html" class="navbar__link" data-page="browse">
+                        <i class="fas fa-search"></i>
+                        <span>Browse Items</span>
+                    </a>
+                    <a href="item-listing.html?action=lend" class="navbar__link" data-page="lend">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Lend Item</span>
+                    </a>
+                    <a href="dashboard.html" class="navbar__link" data-page="dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="community-stats.html" class="navbar__link" data-page="community">
+                        <i class="fas fa-users"></i>
+                        <span>Community</span>
+                    </a>
+                </div>
+
+                <div class="navbar__actions">
+                    <a href="login.html" class="btn btn-login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Sign In</span>
+                    </a>
+                    <a href="signup.html" class="btn btn-primary btn-signup">
+                        <span>Join Free</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+
+                    <!-- Dark Mode Toggle -->
+                    <div class="theme-toggle">
+                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon"></i>
                     </div>
                 </div>
 
-                <div class="testimonial">
-                    <div class="quote-icon">
-                        <i class="fas fa-quote-left"></i>
-                    </div>
-                    <p class="testimonial-text">"NeighbourShare helped me save over $500 in just 3 months by borrowing tools and appliances instead of buying new!"</p>
-                    <div class="testimonial-author">
-                        <div class="author-info">
-                            <h4>Alex Chen</h4>
-                            <p>Member since 2023</p>
-                        </div>
-                    </div>
-                </div>
+                <button class="navbar__mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
+        </nav>
 
-            <!-- Right Side - Login Form -->
-            <div class="login-right">
-                <div class="login-card">
-                    <!-- Animated Success/Error Alert -->
-                    <div class="alert alert-success" id="successAlert">
-                        <div class="alert-icon">
-                            <i class="fas fa-check-circle"></i>
+        <!-- Main Content -->
+        <main class="homepage">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="container">
+                    <div class="hero__content">
+                        <div class="hero__tagline">
+                            <span class="tagline-pill">Sustainable Sharing</span>
+                            <span class="tagline-pill">Zero Waste</span>
+                            <span class="tagline-pill">Local Community</span>
                         </div>
-                        <div class="alert-content">
-                            <h4>Login Successful!</h4>
-                            <p>Redirecting to your dashboard...</p>
+                        
+                        <h1 class="hero__title">
+                            <span class="title-line">Borrow <span class="text-gradient">Smarter.</span></span>
+                            <span class="title-line">Live <span class="text-gradient">Lighter.</span></span>
+                            <span class="title-line"><span class="text-gradient">Together.</span></span>
+                        </h1>
+                        
+                        <p class="hero__subtitle">
+                            Share household items with your neighbors, reduce waste, save money, and build stronger communities. Join thousands who are already sharing smarter.
+                        </p>
+                        
+                        <!-- Animated Search Bar -->
+                        <div class="search-container">
+                            <div class="search-bar">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" class="search-input" placeholder="Search items within 1 km... (e.g., power drill, lawn mower, blender)" id="global-search">
+                                <a href="item-listing.html" class="btn btn-primary search-btn" id="search-btn">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>Find Now</span>
+                                </a>
+                            </div>
+                            <div class="search-hint">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Popular now: 
+                                    <a href="item-listing.html?category=tools" class="popular-link"><strong>Electric drill</strong></a>, 
+                                    <a href="item-listing.html?category=appliances" class="popular-link"><strong>Pressure washer</strong></a>, 
+                                    <a href="item-listing.html?category=sports" class="popular-link"><strong>Camping tent</strong></a>
+                                </span>
+                            </div>
                         </div>
-                        <button class="alert-close" onclick="hideAlert('successAlert')">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-
-                    <div class="alert alert-error" id="errorAlert">
-                        <div class="alert-icon">
-                            <i class="fas fa-exclamation-circle"></i>
+                        
+                        <div class="hero__stats">
+                            <div class="stat-item">
+                                <div class="stat-number" data-count="12560">0</div>
+                                <div class="stat-label">Items Shared</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" data-count="3280">0</div>
+                                <div class="stat-label">Happy Members</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" data-count="42">0</div>
+                                <div class="stat-label">Tonnes CO₂ Saved</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" data-count="15">0</div>
+                                <div class="stat-label">Km Radius</div>
+                            </div>
                         </div>
-                        <div class="alert-content">
-                            <h4>Login Failed</h4>
-                            <p id="errorMessage">Invalid email or password. Please try again.</p>
-                        </div>
-                        <button class="alert-close" onclick="hideAlert('errorAlert')">
-                            <i class="fas fa-times"></i>
+                    </div>
+                    
+                    <!-- Floating 3D Objects -->
+                    <div class="floating-objects">
+                        <a href="item-listing.html?category=tools" class="float-object obj-1">
+                            <i class="fas fa-tools"></i>
+                        </a>
+                        <a href="item-listing.html?category=electronics" class="float-object obj-2">
+                            <i class="fas fa-laptop"></i>
+                        </a>
+                        <a href="item-listing.html?category=furniture" class="float-object obj-3">
+                            <i class="fas fa-couch"></i>
+                        </a>
+                        <a href="item-listing.html?category=electronics" class="float-object obj-4">
+                            <i class="fas fa-gamepad"></i>
+                        </a>
+                        <a href="item-listing.html?category=garden" class="float-object obj-5">
+                            <i class="fas fa-leaf"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Scroll Indicator -->
+                <div class="scroll-indicator">
+                    <div class="mouse">
+                        <div class="wheel"></div>
+                    </div>
+                    <p>Scroll to explore</p>
+                </div>
+            </section>
+
+            <!-- Category Slider -->
+            <section class="categories">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Browse by <span class="text-gradient">Category</span></h2>
+                        <p class="section-subtitle">Find exactly what you need from neighbors near you</p>
+                    </div>
+                    
+                    <div class="categories-slider">
+                        <button class="slider-btn slider-btn-prev">
+                            <i class="fas fa-chevron-left"></i>
                         </button>
-                    </div>
-
-                    <!-- Form Header -->
-                    <div class="form-header">
-                        <h2>Welcome Back!</h2>
-                        <p>Sign in to your account to continue sharing</p>
-                    </div>
-
-                    <!-- Social Login Options -->
-                    <div class="social-login">
-                        <button class="social-btn google-btn">
-                            <i class="fab fa-google"></i>
-                            <span>Continue with Google</span>
-                        </button>
-                        <button class="social-btn apple-btn">
-                            <i class="fab fa-apple"></i>
-                            <span>Continue with Apple</span>
-                        </button>
-                    </div>
-
-                    <!-- Divider -->
-                    <div class="divider">
-                        <span>or continue with email</span>
-                    </div>
-
-                    <!-- Login Form -->
-                    <form id="loginForm" class="login-form">
-                        <!-- Email Field -->
-                        <div class="form-group">
-                            <div class="input-container">
-                                <input 
-                                    type="email" 
-                                    id="email" 
-                                    class="form-input" 
-                                    required
-                                    autocomplete="email"
-                                >
-                                <label for="email" class="floating-label">Email Address</label>
-                                <div class="input-icon">
-                                    <i class="fas fa-envelope"></i>
+                        
+                        <div class="categories-container">
+                            <a href="item-listing.html?category=tools" class="category-card active">
+                                <div class="category-icon">
+                                    <i class="fas fa-tools"></i>
                                 </div>
-                            </div>
-                            <div class="input-hint">
-                                Enter your registered email address
-                            </div>
-                        </div>
-
-                        <!-- Password Field -->
-                        <div class="form-group">
-                            <div class="input-container">
-                                <input 
-                                    type="password" 
-                                    id="password" 
-                                    class="form-input" 
-                                    required
-                                    autocomplete="current-password"
-                                >
-                                <label for="password" class="floating-label">Password</label>
-                                <div class="input-icon">
-                                    <i class="fas fa-lock"></i>
+                                <h3 class="category-title">Tools</h3>
+                                <p class="category-count">1,240 items</p>
+                                <div class="category-progress">
+                                    <div class="progress-bar" style="width: 85%"></div>
                                 </div>
-                                <button type="button" class="password-toggle" id="passwordToggle">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                            <div class="input-hint">
-                                Must be at least 8 characters long
-                            </div>
-                        </div>
-
-                        <!-- Remember Me & Forgot Password -->
-                        <div class="form-options">
-                            <label class="checkbox-container">
-                                <input type="checkbox" id="rememberMe">
-                                <span class="checkmark"></span>
-                                <span class="checkbox-label">Remember me for 30 days</span>
-                            </label>
-                            <a href="forgot-password.html" class="forgot-password">
-                                Forgot password?
+                            </a>
+                            
+                            <a href="item-listing.html?category=electronics" class="category-card">
+                                <div class="category-icon">
+                                    <i class="fas fa-laptop"></i>
+                                </div>
+                                <h3 class="category-title">Electronics</h3>
+                                <p class="category-count">890 items</p>
+                                <div class="category-progress">
+                                    <div class="progress-bar" style="width: 65%"></div>
+                                </div>
+                            </a>
+                            
+                            <a href="item-listing.html?category=appliances" class="category-card">
+                                <div class="category-icon">
+                                    <i class="fas fa-blender"></i>
+                                </div>
+                                <h3 class="category-title">Home Appliances</h3>
+                                <p class="category-count">1,560 items</p>
+                                <div class="category-progress">
+                                    <div class="progress-bar" style="width: 92%"></div>
+                                </div>
+                            </a>
+                            
+                            <a href="item-listing.html?category=sports" class="category-card">
+                                <div class="category-icon">
+                                    <i class="fas fa-basketball-ball"></i>
+                                </div>
+                                <h3 class="category-title">Sports & Outdoors</h3>
+                                <p class="category-count">740 items</p>
+                                <div class="category-progress">
+                                    <div class="progress-bar" style="width: 55%"></div>
+                                </div>
+                            </a>
+                            
+                            <a href="item-listing.html?category=books" class="category-card">
+                                <div class="category-icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <h3 class="category-title">Books & Media</h3>
+                                <p class="category-count">420 items</p>
+                                <div class="category-progress">
+                                    <div class="progress-bar" style="width: 40%"></div>
+                                </div>
+                            </a>
+                            
+                            <a href="item-listing.html?category=fashion" class="category-card">
+                                <div class="category-icon">
+                                    <i class="fas fa-tshirt"></i>
+                                </div>
+                                <h3 class="category-title">Fashion</h3>
+                                <p class="category-count">680 items</p>
+                                <div class="category-progress">
+                                    <div class="progress-bar" style="width: 60%"></div>
+                                </div>
                             </a>
                         </div>
-
-                        <!-- Submit Button -->
-                        <button type="submit" class="btn btn-primary btn-login">
-                            <span class="btn-text">Sign In</span>
-                            <div class="btn-loader">
-                                <div class="spinner"></div>
-                            </div>
+                        
+                        <button class="slider-btn slider-btn-next">
+                            <i class="fas fa-chevron-right"></i>
                         </button>
-
-                        <!-- Sign Up Link -->
-                        <div class="signup-link">
-                            <p>Don't have an account? <a href="signup.html" class="signup-text">Sign up</a></p>
-                        </div>
-                    </form>
-
-                    <!-- Terms -->
-                    <div class="terms">
-                        <p>By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
+                    </div>
+                    
+                    <div class="view-all-categories">
+                        <a href="item-listing.html" class="btn btn-outline">
+                            <i class="fas fa-th-large"></i>
+                            <span>View All Categories</span>
+                        </a>
                     </div>
                 </div>
+            </section>
 
-                <!-- App Download -->
-                <div class="app-download">
-                    <p>Get the app</p>
-                    <div class="app-buttons">
-                        <a href="#" class="app-btn">
+            <!-- How It Works -->
+            <section class="how-it-works">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">How It <span class="text-gradient">Works</span></h2>
+                        <p class="section-subtitle">Join the sharing revolution in just four simple steps</p>
+                    </div>
+                    
+                    <div class="steps-container">
+                        <div class="step-line"></div>
+                        
+                        <div class="step-card" data-step="1">
+                            <div class="step-number">01</div>
+                            <div class="step-content">
+                                <div class="step-icon">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <h3 class="step-title">Create Account</h3>
+                                <p class="step-description">Sign up for free, verify your location, and set up your profile in under 2 minutes.</p>
+                                <a href="signup.html" class="step-link">Get Started <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card" data-step="2">
+                            <div class="step-number">02</div>
+                            <div class="step-content">
+                                <div class="step-icon">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <h3 class="step-title">Browse or List</h3>
+                                <p class="step-description">Search for items you need or list items you're willing to share with your community.</p>
+                                <a href="item-listing.html" class="step-link">Browse Items <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card" data-step="3">
+                            <div class="step-number">03</div>
+                            <div class="step-content">
+                                <div class="step-icon">
+                                    <i class="fas fa-handshake"></i>
+                                </div>
+                                <h3 class="step-title">Connect & Arrange</h3>
+                                <p class="step-description">Message the lender, agree on timing, and arrange pickup or delivery.</p>
+                                <a href="dashboard.html" class="step-link">View Dashboard <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card" data-step="4">
+                            <div class="step-number">04</div>
+                            <div class="step-content">
+                                <div class="step-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <h3 class="step-title">Share & Review</h3>
+                                <p class="step-description">Borrow the item, return on time, and leave a review to build community trust.</p>
+                                <a href="borrow-tracker.html" class="step-link">Track Borrows <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Why Share? -->
+            <section class="why-share">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Why <span class="text-gradient">Share?</span></h2>
+                        <p class="section-subtitle">See the tangible impact you make by sharing with your neighbors</p>
+                    </div>
+                    
+                    <div class="impact-stats">
+                        <div class="impact-card">
+                            <div class="impact-icon">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div class="impact-content">
+                                <h3 class="impact-title">Environmental Impact</h3>
+                                <div class="impact-number" data-count="42">0</div>
+                                <div class="impact-unit">Tonnes CO₂ Saved</div>
+                                <p class="impact-description">Equivalent to planting 1,950 trees or taking 9 cars off the road for a year.</p>
+                            </div>
+                            <a href="community-stats.html#environment" class="impact-link">View Details <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        
+                        <div class="impact-card">
+                            <div class="impact-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="impact-content">
+                                <h3 class="impact-title">Financial Savings</h3>
+                                <div class="impact-number">$<span data-count="286">0</span>K</div>
+                                <div class="impact-unit">Saved by Members</div>
+                                <p class="impact-description">Our community has saved over $286,000 by borrowing instead of buying new.</p>
+                            </div>
+                            <a href="community-stats.html#savings" class="impact-link">View Details <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        
+                        <div class="impact-card">
+                            <div class="impact-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="impact-content">
+                                <h3 class="impact-title">Community Growth</h3>
+                                <div class="impact-number" data-count="3280">0</div>
+                                <div class="impact-unit">Active Members</div>
+                                <p class="impact-description">Join 3,280+ neighbors who are building stronger, more connected communities.</p>
+                            </div>
+                            <a href="community-stats.html" class="impact-link">View Details <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="view-impact-report">
+                        <a href="community-stats.html" class="btn btn-outline">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>View Full Impact Report</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials Carousel -->
+            <section class="testimonials">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Community <span class="text-gradient">Stories</span></h2>
+                        <p class="section-subtitle">Hear from neighbors who are already sharing smarter</p>
+                    </div>
+                    
+                    <div class="testimonials-carousel">
+                        <button class="carousel-btn carousel-btn-prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <div class="testimonials-container">
+                            <div class="testimonial-card active">
+                                <div class="testimonial-content">
+                                    <div class="quote-icon">
+                                        <i class="fas fa-quote-left"></i>
+                                    </div>
+                                    <p class="testimonial-text">"I borrowed a power washer for my deck and ended up meeting my neighbor Mark, who's a landscaper. He gave me great tips for my garden! NeighbourShare saved me $250 and helped me make a new friend."</p>
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">
+                                        <img src="assets/sample-images/avatar1.jpg" alt="Sarah Johnson" onerror="this.src='https://via.placeholder.com/100/667ee9/ffffff?text=SJ'">
+                                    </div>
+                                    <div class="author-info">
+                                        <h4 class="author-name">Sarah Johnson</h4>
+                                        <p class="author-location">• Seattle, WA • 24 Shares</p>
+                                        <a href="dashboard.html" class="author-profile">View Profile</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="testimonial-card">
+                                <div class="testimonial-content">
+                                    <div class="quote-icon">
+                                        <i class="fas fa-quote-left"></i>
+                                    </div>
+                                    <p class="testimonial-text">"As a DIY enthusiast, I have so many tools that just sit in my garage. With NeighbourShare, I've lent out my table saw 8 times and made $120 in optional tips. It feels great knowing my tools are being used instead of collecting dust."</p>
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">
+                                        <img src="assets/sample-images/avatar2.jpg" alt="Marcus Chen" onerror="this.src='https://via.placeholder.com/100/764abc/ffffff?text=MC'">
+                                    </div>
+                                    <div class="author-info">
+                                        <h4 class="author-name">Marcus Chen</h4>
+                                        <p class="author-location">• Austin, TX • 18 Lends</p>
+                                        <a href="dashboard.html" class="author-profile">View Profile</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="testimonial-card">
+                                <div class="testimonial-content">
+                                    <div class="quote-icon">
+                                        <i class="fas fa-quote-left"></i>
+                                    </div>
+                                    <p class="testimonial-text">"Moving to a new city was tough, but NeighbourShare helped me connect with my community. I've borrowed camping gear, a carpet cleaner, and even a fondue set for a party. It's more than sharing stuff—it's about building connections."</p>
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">
+                                        <img src="assets/sample-images/avatar3.jpg" alt="Priya Patel" onerror="this.src='https://via.placeholder.com/100/ed64a6/ffffff?text=PP'">
+                                    </div>
+                                    <div class="author-info">
+                                        <h4 class="author-name">Priya Patel</h4>
+                                        <p class="author-location">• Brooklyn, NY • 12 Borrows</p>
+                                        <a href="dashboard.html" class="author-profile">View Profile</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="carousel-btn carousel-btn-next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="share-story-cta">
+                        <p>Have a NeighbourShare story to share?</p>
+                        <a href="community-stats.html" class="btn btn-outline">
+                            <i class="fas fa-share-alt"></i>
+                            <span>Share Your Story</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <div class="container">
+                    <div class="cta-card">
+                        <div class="cta-content">
+                            <h2 class="cta-title">Ready to Join the <span class="text-gradient">Sharing Revolution?</span></h2>
+                            <p class="cta-description">Sign up today and get your first 3 borrows completely free. No hidden fees, no commitments—just smarter sharing.</p>
+                            
+                            <div class="cta-buttons">
+                                <a href="signup.html" class="btn btn-primary btn-large btn-ripple">
+                                    <span>Join Free Now</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                                <a href="item-details.html" class="btn btn-outline btn-large">
+                                    <i class="fas fa-search"></i>
+                                    <span>Browse Items First</span>
+                                </a>
+                            </div>
+                            
+                            <div class="cta-features">
+                                <div class="feature">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>No monthly fees</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Verified neighbors only</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Item protection guarantee</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cta-visual">
+                            <div class="visual-element visual-1">
+                                <a href="dashboard.html">
+                                    <i class="fas fa-heart"></i>
+                                </a>
+                            </div>
+                            <div class="visual-element visual-2">
+                                <a href="#">
+                                    <i class="fas fa-shield-alt"></i>
+                                </a>
+                            </div>
+                            <div class="visual-element visual-3">
+                                <a href="item-listing.html">
+                                    <i class="fas fa-bolt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Global Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer__main">
+                    <div class="footer__brand">
+                        <div class="footer__logo">
+                            <a href="index.html" class="logo-link">
+                                <div class="logo-icon">
+                                    <i class="fas fa-handshake"></i>
+                                </div>
+                                <span class="logo-text">Neighbour<span class="logo-highlight">Share</span></span>
+                            </a>
+                        </div>
+                        <p class="footer__tagline">Building sustainable communities through smart sharing.</p>
+                        <div class="footer__social">
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer__links">
+                        <div class="footer__column">
+                            <h3 class="footer__title">Platform</h3>
+                            <a href="#how-it-works" class="footer__link">How It Works</a>
+                            <a href="item-listing.html" class="footer__link">Browse Items</a>
+                            <a href="item-listing.html?action=lend" class="footer__link">Lend Items</a>
+                            <a href="community-stats.html" class="footer__link">Community</a>
+                            <a href="#" class="footer__link">Trust & Safety</a>
+                        </div>
+                        
+                        <div class="footer__column">
+                            <h3 class="footer__title">Account</h3>
+                            <a href="login.html" class="footer__link">Sign In</a>
+                            <a href="signup.html" class="footer__link">Create Account</a>
+                            <a href="dashboard.html" class="footer__link">Dashboard</a>
+                            <a href="borrow-tracker.html" class="footer__link">Borrow Tracker</a>
+                            <a href="#" class="footer__link">Account Settings</a>
+                        </div>
+                        
+                        <div class="footer__column">
+                            <h3 class="footer__title">Support</h3>
+                            <a href="#" class="footer__link">Help Center</a>
+                            <a href="#" class="footer__link">FAQs</a>
+                            <a href="#" class="footer__link">Contact Us</a>
+                            <a href="#" class="footer__link">Community Guidelines</a>
+                            <a href="#" class="footer__link">Privacy Policy</a>
+                        </div>
+                        
+                        <div class="footer__column">
+                            <h3 class="footer__title">Explore</h3>
+                            <a href="item-details.html" class="footer__link">Featured Item</a>
+                            <a href="community-stats.html" class="footer__link">Community Stats</a>
+                            <a href="#" class="footer__link">Blog</a>
+                            <a href="#" class="footer__link">Impact Report</a>
+                            <a href="#" class="footer__link">Careers</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer__bottom">
+                    <div class="footer__copyright">
+                        <p>&copy; 2025 NeighbourShare. All rights reserved. Made with <i class="fas fa-heart" style="color: #ff4757;"></i> for sustainable communities.</p>
+                    </div>
+                    
+                    <div class="footer__apps">
+                        <a href="#" class="app-link">
                             <i class="fab fa-apple"></i>
-                            <div class="app-btn-text">
+                            <div class="app-text">
                                 <span>Download on the</span>
                                 <strong>App Store</strong>
                             </div>
                         </a>
-                        <a href="#" class="app-btn">
+                        <a href="#" class="app-link">
                             <i class="fab fa-google-play"></i>
-                            <div class="app-btn-text">
+                            <div class="app-text">
                                 <span>Get it on</span>
                                 <strong>Google Play</strong>
                             </div>
@@ -246,10 +616,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </footer>
     </div>
 
     <!-- Scripts -->
-    <script src="js/auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>
