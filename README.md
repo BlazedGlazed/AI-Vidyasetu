@@ -217,3 +217,46 @@ OR
 ✅ Create the entire frontend in react with animations
 
 Just tell me which page to generate first.
+
+
+frontend/
+│── index.html
+│── login.html
+│── signup.html
+│── dashboard.html
+│── item-listing.html
+│── item-details.html
+│── borrow-tracker.html
+│── community-stats.html
+│
+│── css/
+│    ├── global.css
+│    ├── animations.css
+│    ├── index.css
+│    ├── login.css
+│    ├── signup.css
+│    ├── dashboard.css
+│    ├── item-listing.css
+│    ├── item-details.css
+│    ├── borrow-tracker.css
+│    ├── community-stats.css
+│
+│── js/
+│    ├── global.js
+│    ├── auth.js
+│    ├── index.js
+│    ├── dashboard.js
+│    ├── item-listing.js
+│    ├── item-details.js
+│    ├── borrow-tracker.js
+│    ├── community-stats.js
+│
+│── assets/
+│    ├── icons/
+│    ├── illustrations/
+│    ├── sample-images/
+|
+|── components/
+     ├── navbar.html
+     ├── footer.html
+     ├── item-card.html

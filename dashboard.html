@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeighbourShare | Your Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤝</text></svg>">
+</head>
+<body>
+    <!-- Loading animation -->
+    <div class="loader">
+        <div class="loader__circle"></div>
+        <div class="loader__circle"></div>
+        <div class="loader__circle"></div>
+        <div class="loader__text">Loading Your Dashboard...</div>
+    </div>
+
+    <!-- Background Animation -->
+    <div class="background-animation">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Logo -->
+            <div class="sidebar-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <span class="logo-text">Neighbour<span class="logo-highlight">Share</span></span>
+            </div>
+
+            <!-- User Profile -->
+            <div class="user-profile">
+                <div class="profile-avatar">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Alex Johnson">
+                    <div class="online-status"></div>
+                </div>
+                <div class="profile-info">
+                    <h3 class="profile-name">Alex Johnson</h3>
+                    <p class="profile-location">📍 Brooklyn, NY</p>
+                </div>
+                <button class="profile-toggle" id="profileToggle">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+
+            <!-- Profile Dropdown -->
+            <div class="profile-dropdown" id="profileDropdown">
+                <a href="profile.html" class="dropdown-item">
+                    <i class="fas fa-user"></i>
+                    <span>Edit Profile</span>
+                </a>
+                <a href="settings.html" class="dropdown-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="help.html" class="dropdown-item">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Help & Support</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="index.html" class="dropdown-item logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item active">
+                    <div class="nav-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <span class="nav-text">Dashboard</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="browse.html" class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <span class="nav-text">Browse Items</span>
+                    <div class="nav-badge">12</div>
+                </a>
+                <a href="lend.html" class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <span class="nav-text">Lend Items</span>
+                    <div class="nav-badge">5</div>
+                </a>
+                <a href="borrow.html" class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-hand-holding"></i>
+                    </div>
+                    <span class="nav-text">My Borrows</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="community.html" class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <span class="nav-text">Community</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="messages.html" class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <span class="nav-text">Messages</span>
+                    <div class="nav-badge">3</div>
+                </a>
+                <a href="rewards.html" class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <span class="nav-text">Rewards</span>
+                    <div class="nav-indicator"></div>
+                </a>
+            </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <div class="community-stats">
+                    <h4>Community Impact</h4>
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <div class="stat-value">42</div>
+                            <div class="stat-label">CO₂ Saved</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">$1,250</div>
+                            <div class="stat-label">Saved</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-invite">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Invite Friends</span>
+                </button>
+            </div>
+
+            <!-- Sidebar Toggle (Mobile) -->
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="welcome-message">
+                        <h1 id="dynamicGreeting">Good Morning, Alex!</h1>
+                        <p>Here's your sharing activity overview</p>
+                    </div>
+                </div>
+                <div class="top-bar-right">
+                    <!-- Dark Mode Toggle -->
+                    <div class="theme-toggle">
+                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    
+                    <!-- Notifications -->
+                    <div class="notifications">
+                        <button class="notifications-btn" id="notificationsBtn">
+                            <i class="fas fa-bell"></i>
+                            <span class="notifications-badge">3</span>
+                        </button>
+                        <div class="notifications-dropdown" id="notificationsDropdown">
+                            <div class="notifications-header">
+                                <h3>Notifications</h3>
+                                <button class="mark-read">Mark all as read</button>
+                            </div>
+                            <div class="notifications-list">
+                                <div class="notification-item unread">
+                                    <div class="notification-icon">
+                                        <i class="fas fa-handshake"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <p><strong>Sarah</strong> wants to borrow your drill</p>
+                                        <span class="notification-time">2 min ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item unread">
+                                    <div class="notification-icon">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <p>You received a 5-star review!</p>
+                                        <span class="notification-time">1 hour ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notification-icon">
+                                        <i class="fas fa-calendar"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <p>Return reminder: Lawn mower due tomorrow</p>
+                                        <span class="notification-time">5 hours ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="notifications.html" class="notifications-footer">
+                                View all notifications
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Search -->
+                    <div class="quick-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search dashboard...">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Quick Stats -->
+                <div class="quick-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(126, 217, 87, 0.1);">
+                            <i class="fas fa-money-bill-wave" style="color: #7ED957;"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-title">Money Saved</h3>
+                            <div class="stat-value">$<span id="moneySaved">1,250</span></div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>12% this month</span>
+                            </div>
+                        </div>
+                        <div class="stat-chart">
+                            <canvas id="moneyChart" width="100" height="50"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(159, 255, 209, 0.1);">
+                            <i class="fas fa-shopping-cart" style="color: #9FFFD1;"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-title">Items Borrowed</h3>
+                            <div class="stat-value"><span id="itemsBorrowed">24</span></div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>3 this month</span>
+                            </div>
+                        </div>
+                        <div class="stat-chart">
+                            <canvas id="borrowedChart" width="100" height="50"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(126, 217, 87, 0.1);">
+                            <i class="fas fa-gift" style="color: #7ED957;"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-title">Items Lent</h3>
+                            <div class="stat-value"><span id="itemsLent">18</span></div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>5 this month</span>
+                            </div>
+                        </div>
+                        <div class="stat-chart">
+                            <canvas id="lentChart" width="100" height="50"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(159, 255, 209, 0.1);">
+                            <i class="fas fa-leaf" style="color: #9FFFD1;"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-title">CO₂ Saved</h3>
+                            <div class="stat-value"><span id="co2Saved">42</span> kg</div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>8% this month</span>
+                            </div>
+                        </div>
+                        <div class="stat-chart">
+                            <canvas id="co2Chart" width="100" height="50"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h2 class="section-title">Quick Actions</h2>
+                    <div class="actions-grid">
+                        <button class="action-card" onclick="addItem()">
+                            <div class="action-icon">
+                                <i class="fas fa-plus-circle"></i>
+                            </div>
+                            <h3>Add Item</h3>
+                            <p>List an item to share with neighbors</p>
+                            <div class="action-hint">
+                                <span>Fast & easy</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </button>
+                        
+                        <button class="action-card" onclick="viewItems()">
+                            <div class="action-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <h3>View Items</h3>
+                            <p>Manage your listed items</p>
+                            <div class="action-hint">
+                                <span>5 items</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </button>
+                        
+                        <button class="action-card" onclick="trackBorrowing()">
+                            <div class="action-icon">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <h3>Track Borrowing</h3>
+                            <p>Monitor active borrows & returns</p>
+                            <div class="action-hint">
+                                <span>3 active</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </button>
+                        
+                        <button class="action-card" onclick="viewCommunityStats()">
+                            <div class="action-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <h3>Community Stats</h3>
+                            <p>See neighborhood sharing impact</p>
+                            <div class="action-hint">
+                                <span>View insights</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recently Borrowed -->
+                <div class="recent-borrowed">
+                    <div class="section-header">
+                        <h2 class="section-title">Recently Borrowed</h2>
+                        <a href="borrow-history.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="borrowed-carousel">
+                        <button class="carousel-btn carousel-prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <div class="carousel-container">
+                            <div class="borrowed-card">
+                                <div class="item-image">
+                                    <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="Power Drill">
+                                    <div class="item-status available">Available</div>
+                                </div>
+                                <div class="item-info">
+                                    <h3>Cordless Power Drill</h3>
+                                    <p class="item-owner">
+                                        <i class="fas fa-user"></i>
+                                        From: Sarah M.
+                                    </p>
+                                    <div class="item-meta">
+                                        <span class="item-date">
+                                            <i class="fas fa-calendar"></i>
+                                            Borrowed: Jan 15
+                                        </span>
+                                        <span class="item-duration">
+                                            <i class="fas fa-clock"></i>
+                                            3 days
+                                        </span>
+                                    </div>
+                                    <div class="item-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                        <span>4.5/5</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline btn-sm">Return Now</button>
+                            </div>
+                            
+                            <div class="borrowed-card">
+                                <div class="item-image">
+                                    <img src="https://images.unsplash.com/photo-1562157873-818bc0726f68?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="Camera">
+                                    <div class="item-status borrowed">Borrowed</div>
+                                </div>
+                                <div class="item-info">
+                                    <h3>DSLR Camera</h3>
+                                    <p class="item-owner">
+                                        <i class="fas fa-user"></i>
+                                        From: Mike T.
+                                    </p>
+                                    <div class="item-meta">
+                                        <span class="item-date">
+                                            <i class="fas fa-calendar"></i>
+                                            Until: Jan 20
+                                        </span>
+                                        <span class="item-duration">
+                                            <i class="fas fa-clock"></i>
+                                            2 days left
+                                        </span>
+                                    </div>
+                                    <div class="item-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span>5.0/5</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-sm">Extend Time</button>
+                            </div>
+                            
+                            <div class="borrowed-card">
+                                <div class="item-image">
+                                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="Lawn Mower">
+                                    <div class="item-status pending">Pending</div>
+                                </div>
+                                <div class="item-info">
+                                    <h3>Electric Lawn Mower</h3>
+                                    <p class="item-owner">
+                                        <i class="fas fa-user"></i>
+                                        From: David L.
+                                    </p>
+                                    <div class="item-meta">
+                                        <span class="item-date">
+                                            <i class="fas fa-calendar"></i>
+                                            Requested: Jan 18
+                                        </span>
+                                        <span class="item-duration">
+                                            <i class="fas fa-clock"></i>
+                                            Waiting approval
+                                        </span>
+                                    </div>
+                                    <div class="item-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                        <span>4.0/5</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline btn-sm">Cancel Request</button>
+                            </div>
+                            
+                            <div class="borrowed-card">
+                                <div class="item-image">
+                                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="Tent">
+                                    <div class="item-status returned">Returned</div>
+                                </div>
+                                <div class="item-info">
+                                    <h3>Camping Tent</h3>
+                                    <p class="item-owner">
+                                        <i class="fas fa-user"></i>
+                                        From: Priya K.
+                                    </p>
+                                    <div class="item-meta">
+                                        <span class="item-date">
+                                            <i class="fas fa-calendar"></i>
+                                            Returned: Jan 10
+                                        </span>
+                                        <span class="item-duration">
+                                            <i class="fas fa-clock"></i>
+                                            5 days used
+                                        </span>
+                                    </div>
+                                    <div class="item-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span>5.0/5</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline btn-sm">Leave Review</button>
+                            </div>
+                        </div>
+                        
+                        <button class="carousel-btn carousel-next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="carousel-indicators">
+                        <span class="indicator active"></span>
+                        <span class="indicator"></span>
+                        <span class="indicator"></span>
+                    </div>
+                </div>
+
+                <!-- Analytics Charts -->
+                <div class="analytics-charts">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Monthly Sharing Activity</h3>
+                            <select class="chart-filter">
+                                <option value="month">This Month</option>
+                                <option value="quarter">This Quarter</option>
+                                <option value="year">This Year</option>
+                            </select>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="activityChart" height="250"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Category Distribution</h3>
+                            <select class="chart-filter">
+                                <option value="borrowed">Borrowed</option>
+                                <option value="lent">Lent</option>
+                            </select>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="categoryChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Returns -->
+                <div class="upcoming-returns">
+                    <div class="section-header">
+                        <h2 class="section-title">Upcoming Returns</h2>
+                        <a href="schedule.html" class="view-all">View Calendar <i class="fas fa-calendar"></i></a>
+                    </div>
+                    
+                    <div class="returns-list">
+                        <div class="return-item">
+                            <div class="return-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <div class="return-details">
+                                <h4>Power Drill</h4>
+                                <p>Return to Sarah M.</p>
+                                <span class="return-time">
+                                    <i class="fas fa-clock"></i>
+                                    Due tomorrow at 2 PM
+                                </span>
+                            </div>
+                            <button class="btn btn-sm btn-primary">Mark Returned</button>
+                        </div>
+                        
+                        <div class="return-item">
+                            <div class="return-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <div class="return-details">
+                                <h4>DSLR Camera</h4>
+                                <p>Return to Mike T.</p>
+                                <span class="return-time">
+                                    <i class="fas fa-clock"></i>
+                                    Due in 2 days
+                                </span>
+                            </div>
+                            <button class="btn btn-sm btn-outline">Request Extension</button>
+                        </div>
+                        
+                        <div class="return-item">
+                            <div class="return-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="return-details">
+                                <h4>Book Collection</h4>
+                                <p>Return to Emma R.</p>
+                                <span class="return-time">
+                                    <i class="fas fa-clock"></i>
+                                    Due in 5 days
+                                </span>
+                            </div>
+                            <button class="btn btn-sm btn-outline">Set Reminder</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Community Highlights -->
+                <div class="community-highlights">
+                    <div class="section-header">
+                        <h2 class="section-title">Community Highlights</h2>
+                    </div>
+                    
+                    <div class="highlights-grid">
+                        <div class="highlight-card">
+                            <div class="highlight-icon">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div class="highlight-content">
+                                <h3>Top Eco Contributor</h3>
+                                <p>You've saved 42kg CO₂ this month</p>
+                                <div class="highlight-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 85%"></div>
+                                    </div>
+                                    <span>85% of goal</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-card">
+                            <div class="highlight-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="highlight-content">
+                                <h3>Sharing Streak</h3>
+                                <p>45 days of active sharing</p>
+                                <div class="highlight-stats">
+                                    <div class="stat">
+                                        <strong>18</strong>
+                                        <span>Items Lent</span>
+                                    </div>
+                                    <div class="stat">
+                                        <strong>24</strong>
+                                        <span>Items Borrowed</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-card">
+                            <div class="highlight-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="highlight-content">
+                                <h3>New Connections</h3>
+                                <p>You've met 12 new neighbors</p>
+                                <div class="highlight-avatars">
+                                    <div class="avatar-group">
+                                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&q=80" alt="Sarah">
+                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&q=80" alt="Mike">
+                                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&q=80" alt="Priya">
+                                        <span class="avatar-count">+9</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="dashboard-footer">
+                <p>&copy; 2025 NeighbourShare. All rights reserved. 
+                    <a href="#">Privacy Policy</a> • 
+                    <a href="#">Terms of Service</a> • 
+                    <a href="#">Help Center</a>
+                </p>
+                <div class="footer-stats">
+                    <span><i class="fas fa-users"></i> 3,280 Active Members</span>
+                    <span><i class="fas fa-handshake"></i> 12,560 Items Shared</span>
+                    <span><i class="fas fa-leaf"></i> 42 Tonnes CO₂ Saved</span>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
