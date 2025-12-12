@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="navbar__actions">
-                    <a href="signup.html" class="btn btn-login">
+                    <a href="login.html" class="btn btn-login">
                         <i class="fas fa-sign-in-alt"></i>
                         <span>Sign In</span>
                     </a>
@@ -108,7 +108,7 @@
                             <div class="search-bar">
                                 <i class="fas fa-search search-icon"></i>
                                 <input type="text" class="search-input" placeholder="Search items within 1 km... (e.g., power drill, lawn mower, blender)" id="global-search">
-                                <a href="item-listing.html?search=" class="btn btn-primary search-btn" id="search-btn">
+                                <a href="item-listing.html" class="btn btn-primary search-btn" id="search-btn">
                                     <i class="fas fa-bolt"></i>
                                     <span>Find Now</span>
                                 </a>
@@ -116,9 +116,9 @@
                             <div class="search-hint">
                                 <i class="fas fa-lightbulb"></i>
                                 <span>Popular now: 
-                                    <a href="item-listing.html?category=tools"><strong>Electric drill</strong></a>, 
-                                    <a href="item-listing.html?category=appliances"><strong>Pressure washer</strong></a>, 
-                                    <a href="item-listing.html?category=sports"><strong>Camping tent</strong></a>
+                                    <a href="item-listing.html?category=tools" class="popular-link"><strong>Electric drill</strong></a>, 
+                                    <a href="item-listing.html?category=appliances" class="popular-link"><strong>Pressure washer</strong></a>, 
+                                    <a href="item-listing.html?category=sports" class="popular-link"><strong>Camping tent</strong></a>
                                 </span>
                             </div>
                         </div>
@@ -322,7 +322,7 @@
                                 </div>
                                 <h3 class="step-title">Share & Review</h3>
                                 <p class="step-description">Borrow the item, return on time, and leave a review to build community trust.</p>
-                                <a href="community-stats.html" class="step-link">Track Borrows <i class="fas fa-arrow-right"></i></a>
+                                <a href="borrow-tracker.html" class="step-link">Track Borrows <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -410,12 +410,12 @@
                                 </div>
                                 <div class="testimonial-author">
                                     <div class="author-avatar">
-                                        <img src="assets/sample-images/avatar1.jpg" alt="Sarah Johnson">
+                                        <img src="assets/sample-images/avatar1.jpg" alt="Sarah Johnson" onerror="this.src='https://via.placeholder.com/100/667ee9/ffffff?text=SJ'">
                                     </div>
                                     <div class="author-info">
                                         <h4 class="author-name">Sarah Johnson</h4>
                                         <p class="author-location">• Seattle, WA • 24 Shares</p>
-                                        <a href="dashboard.html?user=sarah" class="author-profile">View Profile</a>
+                                        <a href="dashboard.html" class="author-profile">View Profile</a>
                                     </div>
                                 </div>
                             </div>
@@ -429,12 +429,12 @@
                                 </div>
                                 <div class="testimonial-author">
                                     <div class="author-avatar">
-                                        <img src="assets/sample-images/avatar2.jpg" alt="Marcus Chen">
+                                        <img src="assets/sample-images/avatar2.jpg" alt="Marcus Chen" onerror="this.src='https://via.placeholder.com/100/764abc/ffffff?text=MC'">
                                     </div>
                                     <div class="author-info">
                                         <h4 class="author-name">Marcus Chen</h4>
                                         <p class="author-location">• Austin, TX • 18 Lends</p>
-                                        <a href="dashboard.html?user=marcus" class="author-profile">View Profile</a>
+                                        <a href="dashboard.html" class="author-profile">View Profile</a>
                                     </div>
                                 </div>
                             </div>
@@ -448,12 +448,12 @@
                                 </div>
                                 <div class="testimonial-author">
                                     <div class="author-avatar">
-                                        <img src="assets/sample-images/avatar3.jpg" alt="Priya Patel">
+                                        <img src="assets/sample-images/avatar3.jpg" alt="Priya Patel" onerror="this.src='https://via.placeholder.com/100/ed64a6/ffffff?text=PP'">
                                     </div>
                                     <div class="author-info">
                                         <h4 class="author-name">Priya Patel</h4>
                                         <p class="author-location">• Brooklyn, NY • 12 Borrows</p>
-                                        <a href="dashboard.html?user=priya" class="author-profile">View Profile</a>
+                                        <a href="dashboard.html" class="author-profile">View Profile</a>
                                     </div>
                                 </div>
                             </div>
@@ -466,7 +466,7 @@
                     
                     <div class="share-story-cta">
                         <p>Have a NeighbourShare story to share?</p>
-                        <a href="community-stats.html#stories" class="btn btn-outline">
+                        <a href="community-stats.html" class="btn btn-outline">
                             <i class="fas fa-share-alt"></i>
                             <span>Share Your Story</span>
                         </a>
@@ -487,7 +487,7 @@
                                     <span>Join Free Now</span>
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
-                                <a href="item_details.html" class="btn btn-outline btn-large">
+                                <a href="item-details.html" class="btn btn-outline btn-large">
                                     <i class="fas fa-search"></i>
                                     <span>Browse Items First</span>
                                 </a>
@@ -557,7 +557,7 @@
                     <div class="footer__links">
                         <div class="footer__column">
                             <h3 class="footer__title">Platform</h3>
-                            <a href="index.html#how-it-works" class="footer__link">How It Works</a>
+                            <a href="#how-it-works" class="footer__link">How It Works</a>
                             <a href="item-listing.html" class="footer__link">Browse Items</a>
                             <a href="item-listing.html?action=lend" class="footer__link">Lend Items</a>
                             <a href="community-stats.html" class="footer__link">Community</a>
@@ -570,7 +570,7 @@
                             <a href="signup.html" class="footer__link">Create Account</a>
                             <a href="dashboard.html" class="footer__link">Dashboard</a>
                             <a href="borrow-tracker.html" class="footer__link">Borrow Tracker</a>
-                            <a href="dashboard.html#settings" class="footer__link">Account Settings</a>
+                            <a href="#" class="footer__link">Account Settings</a>
                         </div>
                         
                         <div class="footer__column">
@@ -584,7 +584,7 @@
                         
                         <div class="footer__column">
                             <h3 class="footer__title">Explore</h3>
-                            <a href="item-details.html?item=drill" class="footer__link">Featured Item</a>
+                            <a href="item-details.html" class="footer__link">Featured Item</a>
                             <a href="community-stats.html" class="footer__link">Community Stats</a>
                             <a href="#" class="footer__link">Blog</a>
                             <a href="#" class="footer__link">Impact Report</a>
