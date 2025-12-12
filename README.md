@@ -1,4 +1,4 @@
-# The Community Share Hub - Waste Management
+# NeighbourShare 
 This repo contains our team- 'Py_JACKEL''s official Zonal round competetion.
 
 
