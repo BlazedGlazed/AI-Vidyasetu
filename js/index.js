@@ -628,3 +628,66 @@ function initRippleEffects() {
     `;
     document.head.appendChild(rippleStyle);
 }
+
+
+function initDarkMode() {
+    const themeToggle = document.querySelector('.theme-toggle');
+    const root = document.documentElement;
+    
+    // Check for saved theme or prefer-color-scheme
+    const savedTheme = localStorage.getItem('theme') || 
+                      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    
+    // Set initial theme
+    if (savedTheme === 'dark') {
+        root.setAttribute('data-theme', 'dark');
+    }
+    
+    // Toggle theme on click
+    themeToggle.addEventListener('click', function() {
+        const currentTheme = root.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        // Apply new theme
+        root.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Add transition effect
+        document.body.style.transition = 'background 0.5s ease, color 0.5s ease';
+        
+        // Update charts if they exist
+        updateChartsForTheme(newTheme);
+    });
+    
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (!localStorage.getItem('theme')) {
+            const newTheme = e.matches ? 'dark' : 'light';
+            root.setAttribute('data-theme', newTheme);
+            updateChartsForTheme(newTheme);
+        }
+    });
+}
+
+function updateChartsForTheme(theme) {
+    // This function would update chart colors based on theme
+    // In a real implementation, you'd re-render charts with theme-appropriate colors
+    console.log(`Updating charts for ${theme} theme`);
+}
+
+// Add initDarkMode to the main initialization
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all components
+    initLoader();
+    initNavbar();
+    initDarkMode(); // Add this line
+    initSearchBar();
+    initCategorySlider();
+    initHowItWorks();
+    initImpactStats();
+    initTestimonialsCarousel();
+    initCTA();
+    initScrollAnimations();
+    initCharts();
+    initRippleEffects();
+});
