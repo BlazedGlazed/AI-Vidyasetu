@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Impact Dashboard | ShareCircle</title>
+    <link rel="stylesheet" href="community-stats.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Parallax Background Elements -->
+    <div class="parallax-bg">
+        <div class="parallax-layer layer-1" data-speed="0.1"></div>
+        <div class="parallax-layer layer-2" data-speed="0.3"></div>
+        <div class="parallax-layer layer-3" data-speed="0.5"></div>
+        <div class="parallax-layer layer-4" data-speed="0.7"></div>
+    </div>
+
+    <div class="container">
+        <!-- Premium Header -->
+        <header class="premium-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-glow">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h1>ShareCircle</h1>
+                    <span class="premium-badge">
+                        <i class="fas fa-crown"></i> Premium
+                    </span>
+                </div>
+                
+                <nav class="premium-nav">
+                    <a href="#" class="nav-link active">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-trophy"></i>
+                        <span>Achievements</span>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Community</span>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </nav>
+                
+                <div class="user-section">
+                    <div class="user-avatar">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
+                             alt="User Avatar">
+                        <div class="user-level">
+                            <span>42</span>
+                        </div>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">Alex Morgan</span>
+                        <span class="user-rank">Eco Champion</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard-main">
+            <!-- Welcome & Quick Stats -->
+            <section class="welcome-section">
+                <div class="welcome-card">
+                    <div class="welcome-content">
+                        <h2>
+                            <span class="greeting">Welcome back,</span>
+                            <span class="user-highlight">Alex!</span>
+                        </h2>
+                        <p class="welcome-text">You're making a real impact. Here's what the community has achieved together:</p>
+                        
+                        <div class="impact-stats-grid">
+                            <div class="impact-stat">
+                                <div class="stat-icon eco">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4>Global Impact</h4>
+                                    <p class="stat-value">12,450 Members</p>
+                                </div>
+                            </div>
+                            <div class="impact-stat">
+                                <div class="stat-icon money">
+                                    <i class="fas fa-piggy-bank"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4>Total Saved</h4>
+                                    <p class="stat-value">$2.8M+</p>
+                                </div>
+                            </div>
+                            <div class="impact-stat">
+                                <div class="stat-icon co2">
+                                    <i class="fas fa-cloud"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4>CO₂ Prevented</h4>
+                                    <p class="stat-value">485 Tons</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="welcome-visual">
+                        <div class="globe-animation">
+                            <i class="fas fa-globe-americas"></i>
+                            <div class="pulse-ring"></div>
+                            <div class="pulse-ring delay-1"></div>
+                            <div class="pulse-ring delay-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Animated Charts Section -->
+            <section class="charts-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-pie"></i> Community Impact Analytics</h2>
+                    <div class="time-filter">
+                        <button class="time-btn active">This Month</button>
+                        <button class="time-btn">Quarter</button>
+                        <button class="time-btn">Year</button>
+                        <button class="time-btn">All Time</button>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <!-- Money Saved Chart -->
+                    <div class="chart-card premium">
+                        <div class="chart-header">
+                            <div class="chart-title">
+                                <i class="fas fa-money-bill-wave"></i>
+                                <h3>Money Saved</h3>
+                            </div>
+                            <div class="chart-value">
+                                <span class="value">$28,450</span>
+                                <span class="trend up"><i class="fas fa-arrow-up"></i> 12%</span>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="moneyChart"></canvas>
+                        </div>
+                        <div class="chart-footer">
+                            <div class="chart-stat">
+                                <span class="label">Your Contribution</span>
+                                <span class="data">$1,240</span>
+                            </div>
+                            <div class="chart-stat">
+                                <span class="label">Avg. per Member</span>
+                                <span class="data">$228</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CO₂ Reduction Chart -->
+                    <div class="chart-card premium">
+                        <div class="chart-header">
+                            <div class="chart-title">
+                                <i class="fas fa-cloud"></i>
+                                <h3>CO₂ Reduction</h3>
+                            </div>
+                            <div class="chart-value">
+                                <span class="value">4.8 Tons</span>
+                                <span class="trend up"><i class="fas fa-arrow-up"></i> 18%</span>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="co2Chart"></canvas>
+                        </div>
+                        <div class="chart-footer">
+                            <div class="chart-stat">
+                                <span class="label">Your Impact</span>
+                                <span class="data">210 kg</span>
+                            </div>
+                            <div class="chart-stat">
+                                <span class="label">Equivalent to</span>
+                                <span class="data">48 Trees</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Items Shared Chart -->
+                    <div class="chart-card premium">
+                        <div class="chart-header">
+                            <div class="chart-title">
+                                <i class="fas fa-share-alt"></i>
+                                <h3>Items Shared</h3>
+                            </div>
+                            <div class="chart-value">
+                                <span class="value">1,248</span>
+                                <span class="trend up"><i class="fas fa-arrow-up"></i> 24%</span>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="itemsChart"></canvas>
+                        </div>
+                        <div class="chart-footer">
+                            <div class="chart-stat">
+                                <span class="label">Active Items</span>
+                                <span class="data">642</span>
+                            </div>
+                            <div class="chart-stat">
+                                <span class="label">Categories</span>
+                                <span class="data">28</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Community Contributions Chart -->
+                    <div class="chart-card premium">
+                        <div class="chart-header">
+                            <div class="chart-title">
+                                <i class="fas fa-hands-helping"></i>
+                                <h3>Contributions</h3>
+                            </div>
+                            <div class="chart-value">
+                                <span class="value">8,942</span>
+                                <span class="trend up"><i class="fas fa-arrow-up"></i> 15%</span>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="contributionsChart"></canvas>
+                        </div>
+                        <div class="chart-footer">
+                            <div class="chart-stat">
+                                <span class="label">Your Contributions</span>
+                                <span class="data">42</span>
+                            </div>
+                            <div class="chart-stat">
+                                <span class="label">Avg. Rating</span>
+                                <span class="data">4.8★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Achievement Badges -->
+            <section class="achievements-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-trophy"></i> Your Achievements</h2>
+                    <div class="progress-indicator">
+                        <span class="progress-text">12/25 Badges Unlocked</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 48%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="achievements-grid">
+                    <!-- Unlocked Badges -->
+                    <div class="badge-card unlocked">
+                        <div class="badge-icon">
+                            <i class="fas fa-seedling"></i>
+                            <div class="shine-effect"></div>
+                        </div>
+                        <div class="badge-content">
+                            <h4>Green Pioneer</h4>
+                            <p>First item shared</p>
+                            <span class="badge-date">Unlocked Mar 2024</span>
+                        </div>
+                    </div>
+
+                    <div class="badge-card unlocked">
+                        <div class="badge-icon">
+                            <i class="fas fa-bolt"></i>
+                            <div class="shine-effect"></div>
+                        </div>
+                        <div class="badge-content">
+                            <h4>Power Lender</h4>
+                            <p>10+ items shared</p>
+                            <span class="badge-date">Unlocked Apr 2024</span>
+                        </div>
+                    </div>
+
+                    <div class="badge-card unlocked">
+                        <div class="badge-icon">
+                            <i class="fas fa-star"></i>
+                            <div class="shine-effect"></div>
+                        </div>
+                        <div class="badge-content">
+                            <h4>Community Star</h4>
+                            <p>50+ positive reviews</p>
+                            <span class="badge-date">Unlocked May 2024</span>
+                        </div>
+                    </div>
+
+                    <div class="badge-card unlocked">
+                        <div class="badge-icon">
+                            <i class="fas fa-recycle"></i>
+                            <div class="shine-effect"></div>
+                        </div>
+                        <div class="badge-content">
+                            <h4>Circular Hero</h4>
+                            <p>Saved 1 ton CO₂</p>
+                            <span class="badge-date">Unlocked Jun 2024</span>
+                        </div>
+                    </div>
+
+                    <!-- Locked Badges (With Unlock Animation) -->
+                    <div class="badge-card locked" data-badge="eco-warrior">
+                        <div class="badge-icon">
+                            <i class="fas fa-leaf"></i>
+                            <div class="lock-overlay">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                        <div class="badge-content">
+                            <h4>Eco Warrior</h4>
+                            <p>Share 100 items</p>
+                            <span class="progress">68/100</span>
+                        </div>
+                    </div>
+
+                    <div class="badge-card locked" data-badge="sharing-king">
+                        <div class="badge-icon">
+                            <i class="fas fa-crown"></i>
+                            <div class="lock-overlay">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                        <div class="badge-content">
+                            <h4>Sharing King</h4>
+                            <p>Top 1% lender</p>
+                            <span class="progress">Top 3%</span>
+                        </div>
+                    </div>
+
+                    <div class="badge-card locked" data-badge="carbon-neutral">
+                        <div class="badge-icon">
+                            <i class="fas fa-cloud"></i>
+                            <div class="lock-overlay">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                        <div class="badge-content">
+                            <h4>Carbon Neutral</h4>
+                            <p>Offset 5 tons CO₂</p>
+                            <span class="progress">2.1/5 tons</span>
+                        </div>
+                    </div>
+
+                    <div class="badge-card locked" data-badge="community-leader">
+                        <div class="badge-icon">
+                            <i class="fas fa-users"></i>
+                            <div class="lock-overlay">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                        <div class="badge-content">
+                            <h4>Community Leader</h4>
+                            <p>Help 50+ members</p>
+                            <span class="progress">32/50</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="view-all-btn" id="viewAllBadges">
+                    View All 25 Badges <i class="fas fa-arrow-right"></i>
+                </button>
+            </section>
+
+            <!-- Leaderboard & Personal Stats -->
+            <section class="leaderboard-section">
+                <div class="leaderboard-grid">
+                    <!-- Personal Impact Card -->
+                    <div class="personal-impact-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-user-chart"></i> Your Impact Dashboard</h3>
+                            <span class="rank-badge">#42 in Community</span>
+                        </div>
+                        
+                        <div class="personal-stats">
+                            <div class="personal-stat">
+                                <div class="stat-visual">
+                                    <div class="circular-progress" data-value="85">
+                                        <svg width="80" height="80" viewBox="0 0 100 100">
+                                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                                            <circle class="progress-fill" cx="50" cy="50" r="40"></circle>
+                                        </svg>
+                                        <span class="progress-value">85%</span>
+                                    </div>
+                                </div>
+                                <div class="stat-details">
+                                    <h4>Sharing Score</h4>
+                                    <p>Based on activity & reliability</p>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-breakdown">
+                                <div class="breakdown-item">
+                                    <span class="label">Items Listed</span>
+                                    <span class="value">12</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="label">Times Borrowed</span>
+                                    <span class="value">48</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="label">Avg. Rating</span>
+                                    <span class="value">4.9★</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="label">Response Time</span>
+                                    <span class="value">1.2h</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="impact-comparison">
+                            <h4><i class="fas fa-chart-bar"></i> Monthly Comparison</h4>
+                            <div class="comparison-bars">
+                                <div class="bar-item">
+                                    <span class="bar-label">Last Month</span>
+                                    <div class="bar-container">
+                                        <div class="bar-fill" style="width: 65%"></div>
+                                    </div>
+                                    <span class="bar-value">65%</span>
+                                </div>
+                                <div class="bar-item">
+                                    <span class="bar-label">This Month</span>
+                                    <div class="bar-container">
+                                        <div class="bar-fill" style="width: 85%"></div>
+                                    </div>
+                                    <span class="bar-value">85%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top Contributors -->
+                    <div class="leaderboard-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-crown"></i> Top Contributors</h3>
+                            <span class="time-filter">This Month</span>
+                        </div>
+                        
+                        <div class="leaderboard-list">
+                            <div class="leaderboard-item you">
+                                <div class="rank">42</div>
+                                <div class="user-info">
+                                    <div class="user-avatar small">
+                                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
+                                             alt="You">
+                                    </div>
+                                    <div class="user-details">
+                                        <h4>You (Alex Morgan)</h4>
+                                        <p>Eco Champion</p>
+                                    </div>
+                                </div>
+                                <div class="score">
+                                    <span class="points">1,240 pts</span>
+                                    <div class="trend up"><i class="fas fa-arrow-up"></i></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Top 5 -->
+                            <div class="leaderboard-item">
+                                <div class="rank gold">1</div>
+                                <div class="user-info">
+                                    <div class="user-avatar small">
+                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
+                                             alt="Sarah Chen">
+                                    </div>
+                                    <div class="user-details">
+                                        <h4>Sarah Chen</h4>
+                                        <p>Sharing Legend</p>
+                                    </div>
+                                </div>
+                                <div class="score">
+                                    <span class="points">8,542 pts</span>
+                                    <div class="trend up"><i class="fas fa-arrow-up"></i></div>
+                                </div>
+                            </div>
+                            
+                            <div class="leaderboard-item">
+                                <div class="rank silver">2</div>
+                                <div class="user-info">
+                                    <div class="user-avatar small">
+                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
+                                             alt="Marcus Lee">
+                                    </div>
+                                    <div class="user-details">
+                                        <h4>Marcus Lee</h4>
+                                        <p>Community Leader</p>
+                                    </div>
+                                </div>
+                                <div class="score">
+                                    <span class="points">7,891 pts</span>
+                                    <div class="trend down"><i class="fas fa-arrow-down"></i></div>
+                                </div>
+                            </div>
+                            
+                            <div class="leaderboard-item">
+                                <div class="rank bronze">3</div>
+                                <div class="user-info">
+                                    <div class="user-avatar small">
+                                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
+                                             alt="Elena Rossi">
+                                    </div>
+                                    <div class="user-details">
+                                        <h4>Elena Rossi</h4>
+                                        <p>Green Innovator</p>
+                                    </div>
+                                </div>
+                                <div class="score">
+                                    <span class="points">6,423 pts</span>
+                                    <div class="trend up"><i class="fas fa-arrow-up"></i></div>
+                                </div>
+                            </div>
+                            
+                            <div class="leaderboard-item">
+                                <div class="rank">4</div>
+                                <div class="user-info">
+                                    <div class="user-avatar small">
+                                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
+                                             alt="James Wilson">
+                                    </div>
+                                    <div class="user-details">
+                                        <h4>James Wilson</h4>
+                                        <p>Tool Master</p>
+                                    </div>
+                                </div>
+                                <div class="score">
+                                    <span class="points">5,987 pts</span>
+                                    <div class="trend up"><i class="fas fa-arrow-up"></i></div>
+                                </div>
+                            </div>
+                            
+                            <div class="leaderboard-item">
+                                <div class="rank">5</div>
+                                <div class="user-info">
+                                    <div class="user-avatar small">
+                                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
+                                             alt="Maya Patel">
+                                    </div>
+                                    <div class="user-details">
+                                        <h4>Maya Patel</h4>
+                                        <p>Eco Enthusiast</p>
+                                    </div>
+                                </div>
+                                <div class="score">
+                                    <span class="points">5,421 pts</span>
+                                    <div class="trend stable">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="view-full-btn" id="viewFullLeaderboard">
+                            View Full Leaderboard <i class="fas fa-external-link-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sustainability Artwork -->
+            <section class="artwork-section">
+                <div class="artwork-card">
+                    <div class="artwork-content">
+                        <h2><i class="fas fa-palette"></i> The Art of Sharing</h2>
+                        <p class="artwork-description">
+                            Every shared item creates ripples of positive impact. 
+                            This visualization represents the collective effort of our community.
+                        </p>
+                        
+                        <div class="artwork-visual">
+                            <div class="eco-visualization">
+                                <div class="eco-circle" data-value="75">
+                                    <div class="circle-inner">
+                                        <i class="fas fa-recycle"></i>
+                                    </div>
+                                </div>
+                                <div class="eco-ripples">
+                                    <div class="ripple"></div>
+                                    <div class="ripple delay-1"></div>
+                                    <div class="ripple delay-2"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="visual-stats">
+                                <div class="visual-stat">
+                                    <div class="visual-icon">
+                                        <i class="fas fa-tree"></i>
+                                    </div>
+                                    <div>
+                                        <h4>Equivalent to</h4>
+                                        <p class="stat">12,450 Trees Planted</p>
+                                    </div>
+                                </div>
+                                <div class="visual-stat">
+                                    <div class="visual-icon">
+                                        <i class="fas fa-car"></i>
+                                    </div>
+                                    <div>
+                                        <h4>Carbon Offset</h4>
+                                        <p class="stat">1,240 Cars Off Road</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="artwork-quote">
+                        <blockquote>
+                            <i class="fas fa-quote-left"></i>
+                            <p>The greatest threat to our planet is the belief that someone else will save it.</p>
+                            <cite>— Robert Swan</cite>
+                        </blockquote>
+                        <div class="quote-decoration">
+                            <div class="quote-line"></div>
+                            <i class="fas fa-leaf"></i>
+                            <div class="quote-line"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Premium Footer -->
+        <footer class="premium-footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-leaf"></i>
+                        <h3>ShareCircle</h3>
+                    </div>
+                    <p class="footer-tagline">Building sustainable communities through intelligent sharing.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Impact Metrics</h4>
+                    <div class="footer-metrics">
+                        <div class="footer-metric">
+                            <span class="metric-value">12.4k</span>
+                            <span class="metric-label">Members</span>
+                        </div>
+                        <div class="footer-metric">
+                            <span class="metric-value">$2.8M</span>
+                            <span class="metric-label">Saved</span>
+                        </div>
+                        <div class="footer-metric">
+                            <span class="metric-value">485T</span>
+                            <span class="metric-label">CO₂ Reduced</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <a href="#" class="footer-link"><i class="fas fa-book"></i> Impact Report</a>
+                    <a href="#" class="footer-link"><i class="fas fa-chart-pie"></i> Analytics</a>
+                    <a href="#" class="footer-link"><i class="fas fa-award"></i> Badges Guide</a>
+                    <a href="#" class="footer-link"><i class="fas fa-question-circle"></i> FAQ</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Get Involved</h4>
+                    <a href="#" class="footer-link"><i class="fas fa-plus-circle"></i> List Items</a>
+                    <a href="#" class="footer-link"><i class="fas fa-users"></i> Join Community</a>
+                    <a href="#" class="footer-link"><i class="fas fa-handshake"></i> Become Ambassador</a>
+                    <a href="#" class="footer-link"><i class="fas fa-donate"></i> Support Mission</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="copyright">© 2024 ShareCircle. Making sharing beautiful and impactful.</p>
+                <div class="footer-badges">
+                    <span class="eco-badge"><i class="fas fa-leaf"></i> Carbon Neutral</span>
+                    <span class="trust-badge"><i class="fas fa-shield-alt"></i> 100% Secure</span>
+                    <span class="premium-badge"><i class="fas fa-crown"></i> Premium Platform</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Badge Unlock Modal -->
+    <div class="modal-overlay" id="badgeModal">
+        <div class="modal-container premium">
+            <div class="modal-header">
+                <h2><i class="fas fa-trophy"></i> Achievement Unlocked!</h2>
+                <button class="close-modal" id="closeBadgeModal">&times;</button>
+            </div>
+            
+            <div class="modal-content">
+                <div class="badge-unlock-animation">
+                    <div class="unlock-circle">
+                        <div class="badge-icon large">
+                            <i class="fas fa-crown"></i>
+                            <div class="shine-effect intense"></div>
+                        </div>
+                        <div class="confetti">
+                            <div class="confetti-piece"></div>
+                            <div class="confetti-piece"></div>
+                            <div class="confetti-piece"></div>
+                            <div class="confetti-piece"></div>
+                            <div class="confetti-piece"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="unlock-details">
+                        <h3 id="unlockedBadgeName">Sharing King</h3>
+                        <p id="unlockedBadgeDesc">Reached top 1% of lenders in the community</p>
+                        
+                        <div class="unlock-rewards">
+                            <div class="reward">
+                                <i class="fas fa-star"></i>
+                                <span>+500 Points</span>
+                            </div>
+                            <div class="reward">
+                                <i class="fas fa-crown"></i>
+                                <span>Premium Badge</span>
+                            </div>
+                            <div class="reward">
+                                <i class="fas fa-gift"></i>
+                                <span>Special Rewards</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn-secondary" id="shareAchievementBtn">
+                        <i class="fas fa-share"></i> Share Achievement
+                    </button>
+                    <button class="btn-primary" id="continueBtn">
+                        Continue Exploring
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="community-stats.js"></script>
+</body>
+</html>
