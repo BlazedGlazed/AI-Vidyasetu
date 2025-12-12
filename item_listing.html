@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeighbourShare | List an Item</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/item-listing.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤝</text></svg>">
+</head>
+<body>
+    <!-- Loading animation -->
+    <div class="loader">
+        <div class="loader__circle"></div>
+        <div class="loader__circle"></div>
+        <div class="loader__circle"></div>
+        <div class="loader__text">Preparing Listing Wizard...</div>
+    </div>
+
+    <!-- Background Animation -->
+    <div class="background-animation">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-icon icon-1">
+            <i class="fas fa-camera"></i>
+        </div>
+        <div class="floating-icon icon-2">
+            <i class="fas fa-robot"></i>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="listing-container">
+        <!-- Back Navigation -->
+        <nav class="listing-nav">
+            <a href="dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Dashboard</span>
+            </a>
+            
+            <div class="nav-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <span class="logo-text">Neighbour<span class="logo-highlight">Share</span></span>
+            </div>
+            
+            <div class="nav-actions">
+                <!-- Dark Mode Toggle -->
+                <div class="theme-toggle">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </div>
+                
+                <div class="progress-indicator">
+                    <span class="progress-text">Step 1 of 3</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 33%"></div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="listing-content">
+            <!-- Left Panel - Upload & Preview -->
+            <div class="upload-panel">
+                <div class="panel-header">
+                    <h2>Upload Photos</h2>
+                    <p>Add clear photos to attract borrowers</p>
+                </div>
+
+                <!-- AI Upload Assistant -->
+                <div class="ai-assistant">
+                    <div class="ai-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="ai-message">
+                        <h4>AI Assistant Ready</h4>
+                        <p>I'll help optimize your listing based on photos</p>
+                    </div>
+                    <div class="ai-status">
+                        <div class="pulse"></div>
+                        <span>Active</span>
+                    </div>
+                </div>
+
+                <!-- Drag & Drop Upload Area -->
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h3>Drag & Drop Photos</h3>
+                        <p>or <span class="browse-link">browse files</span></p>
+                        <p class="upload-hint">JPG, PNG up to 10MB • Up to 8 photos</p>
+                    </div>
+                    <input type="file" id="fileInput" multiple accept="image/*" hidden>
+                    
+                    <!-- Upload Progress -->
+                    <div class="upload-progress" id="uploadProgress">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <div class="progress-info">
+                            <span class="progress-text">Uploading...</span>
+                            <span class="progress-percent">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Preview Gallery -->
+                <div class="image-gallery" id="imageGallery">
+                    <!-- Images will be added here dynamically -->
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-images"></i>
+                        <p>Uploaded photos will appear here</p>
+                    </div>
+                </div>
+
+                <!-- AI Photo Tips -->
+                <div class="ai-tips">
+                    <div class="tips-header">
+                        <i class="fas fa-lightbulb"></i>
+                        <h4>AI Photo Tips</h4>
+                    </div>
+                    <ul class="tips-list">
+                        <li data-checked="true">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Use natural lighting</span>
+                        </li>
+                        <li data-checked="false">
+                            <i class="fas fa-circle"></i>
+                            <span>Show item from multiple angles</span>
+                        </li>
+                        <li data-checked="false">
+                            <i class="fas fa-circle"></i>
+                            <span>Include size reference (ruler, coin)</span>
+                        </li>
+                        <li data-checked="false">
+                            <i class="fas fa-circle"></i>
+                            <span>Capture any imperfections</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Panel - Listing Form -->
+            <div class="form-panel">
+                <div class="panel-header">
+                    <h2>Item Details</h2>
+                    <p>Fill in details about your item</p>
+                </div>
+
+                <!-- AI Suggestions -->
+                <div class="ai-suggestions">
+                    <div class="suggestion-header">
+                        <i class="fas fa-magic"></i>
+                        <h3>AI Suggestions</h3>
+                        <button class="refresh-suggestions" id="refreshSuggestions">
+                            <i class="fas fa-redo"></i>
+                            Refresh
+                        </button>
+                    </div>
+                    
+                    <div class="suggestions-grid">
+                        <div class="suggestion-card" data-field="title">
+                            <div class="suggestion-icon">
+                                <i class="fas fa-heading"></i>
+                            </div>
+                            <div class="suggestion-content">
+                                <h4>Suggested Title</h4>
+                                <p id="aiTitle">Loading AI suggestion...</p>
+                                <button class="btn-suggestion" data-field="title">
+                                    <i class="fas fa-check"></i>
+                                    Use This
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="suggestion-card" data-field="category">
+                            <div class="suggestion-icon">
+                                <i class="fas fa-tag"></i>
+                            </div>
+                            <div class="suggestion-content">
+                                <h4>Suggested Category</h4>
+                                <p id="aiCategory">Analyzing images...</p>
+                                <button class="btn-suggestion" data-field="category">
+                                    <i class="fas fa-check"></i>
+                                    Use This
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="suggestion-card" data-field="description">
+                            <div class="suggestion-icon">
+                                <i class="fas fa-align-left"></i>
+                            </div>
+                            <div class="suggestion-content">
+                                <h4>Auto Description</h4>
+                                <p id="aiDescription">AI will generate description from photos</p>
+                                <button class="btn-suggestion" data-field="description">
+                                    <i class="fas fa-check"></i>
+                                    Use This
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Listing Form -->
+                <form class="listing-form" id="listingForm">
+                    <!-- Title -->
+                    <div class="form-group">
+                        <label for="itemTitle" class="form-label">
+                            Item Title *
+                            <span class="label-hint">Be descriptive and clear</span>
+                        </label>
+                        <div class="input-container">
+                            <input 
+                                type="text" 
+                                id="itemTitle" 
+                                class="form-input"
+                                placeholder="e.g., Cordless Drill with 2 Batteries"
+                                required
+                            >
+                            <div class="input-icon">
+                                <i class="fas fa-heading"></i>
+                            </div>
+                            <div class="input-validation">
+                                <i class="fas fa-check-circle valid-icon"></i>
+                                <i class="fas fa-exclamation-circle error-icon"></i>
+                            </div>
+                        </div>
+                        <div class="character-count">
+                            <span id="titleCount">0</span>/60 characters
+                        </div>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="form-group">
+                        <label for="itemCategory" class="form-label">
+                            Category *
+                            <span class="label-hint">Select the most relevant category</span>
+                        </label>
+                        <div class="input-container">
+                            <select id="itemCategory" class="form-input" required>
+                                <option value="">Select a category</option>
+                                <option value="tools">Tools</option>
+                                <option value="electronics">Electronics</option>
+                                <option value="home-appliances">Home Appliances</option>
+                                <option value="sports-outdoors">Sports & Outdoors</option>
+                                <option value="books-media">Books & Media</option>
+                                <option value="fashion">Fashion</option>
+                                <option value="furniture">Furniture</option>
+                                <option value="kitchen">Kitchen</option>
+                                <option value="garden">Garden</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <div class="input-icon">
+                                <i class="fas fa-tag"></i>
+                            </div>
+                            <div class="input-validation">
+                                <i class="fas fa-check-circle valid-icon"></i>
+                                <i class="fas fa-exclamation-circle error-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label for="itemDescription" class="form-label">
+                            Description *
+                            <span class="label-hint">Include condition, features, and usage instructions</span>
+                        </label>
+                        <div class="input-container">
+                            <textarea 
+                                id="itemDescription" 
+                                class="form-input textarea"
+                                rows="5"
+                                placeholder="Describe your item in detail. Include brand, model, condition, and any special features..."
+                                required
+                            ></textarea>
+                            <div class="input-icon">
+                                <i class="fas fa-align-left"></i>
+                            </div>
+                            <div class="input-validation">
+                                <i class="fas fa-check-circle valid-icon"></i>
+                                <i class="fas fa-exclamation-circle error-icon"></i>
+                            </div>
+                        </div>
+                        <div class="character-count">
+                            <span id="descriptionCount">0</span>/2000 characters
+                        </div>
+                    </div>
+
+                    <!-- Condition -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            Condition *
+                            <span class="label-hint">Be honest about the item's condition</span>
+                        </label>
+                        <div class="condition-options">
+                            <label class="radio-option">
+                                <input type="radio" name="condition" value="new" required>
+                                <div class="radio-card">
+                                    <div class="radio-icon">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <div class="radio-content">
+                                        <h4>New</h4>
+                                        <p>Unused, in original packaging</p>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="radio-option">
+                                <input type="radio" name="condition" value="excellent">
+                                <div class="radio-card">
+                                    <div class="radio-icon">
+                                        <i class="fas fa-gem"></i>
+                                    </div>
+                                    <div class="radio-content">
+                                        <h4>Excellent</h4>
+                                        <p>Like new, minimal signs of use</p>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="radio-option">
+                                <input type="radio" name="condition" value="good">
+                                <div class="radio-card">
+                                    <div class="radio-icon">
+                                        <i class="fas fa-thumbs-up"></i>
+                                    </div>
+                                    <div class="radio-content">
+                                        <h4>Good</h4>
+                                        <p>Normal wear, fully functional</p>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="radio-option">
+                                <input type="radio" name="condition" value="fair">
+                                <div class="radio-card">
+                                    <div class="radio-icon">
+                                        <i class="fas fa-wrench"></i>
+                                    </div>
+                                    <div class="radio-content">
+                                        <h4>Fair</h4>
+                                        <p>Shows wear, works with minor issues</p>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Price & Terms -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemPrice" class="form-label">
+                                Daily Rate
+                                <span class="label-hint">Set 0 for free sharing</span>
+                            </label>
+                            <div class="input-container">
+                                <div class="price-prefix">$</div>
+                                <input 
+                                    type="number" 
+                                    id="itemPrice" 
+                                    class="form-input"
+                                    placeholder="0.00"
+                                    min="0"
+                                    step="0.01"
+                                >
+                                <div class="input-icon">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <div class="input-hint">per day</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="itemDeposit" class="form-label">
+                                Security Deposit
+                                <span class="label-hint">Optional damage protection</span>
+                            </label>
+                            <div class="input-container">
+                                <div class="price-prefix">$</div>
+                                <input 
+                                    type="number" 
+                                    id="itemDeposit" 
+                                    class="form-input"
+                                    placeholder="0.00"
+                                    min="0"
+                                    step="0.01"
+                                >
+                                <div class="input-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="input-hint">refundable</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Availability -->
+                    <div class="form-group">
+                        <label for="itemAvailability" class="form-label">
+                            Availability
+                            <span class="label-hint">When can borrowers pick up?</span>
+                        </label>
+                        <div class="input-container">
+                            <select id="itemAvailability" class="form-input">
+                                <option value="">Select availability</option>
+                                <option value="weekdays">Weekdays (Mon-Fri)</option>
+                                <option value="weekends">Weekends Only</option>
+                                <option value="evenings">Evenings Only</option>
+                                <option value="flexible">Flexible Schedule</option>
+                                <option value="by-appointment">By Appointment</option>
+                            </select>
+                            <div class="input-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="form-group">
+                        <label for="itemLocation" class="form-label">
+                            Pickup Location
+                            <span class="label-hint">Neighborhood or specific address</span>
+                        </label>
+                        <div class="input-container">
+                            <input 
+                                type="text" 
+                                id="itemLocation" 
+                                class="form-input"
+                                placeholder="e.g., Downtown Brooklyn or 123 Main St"
+                            >
+                            <div class="input-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <button type="button" class="location-btn" id="useCurrentLocation">
+                                <i class="fas fa-location-arrow"></i>
+                                Use Current
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="form-group">
+                        <label for="itemTags" class="form-label">
+                            Tags
+                            <span class="label-hint">Add keywords to help people find your item</span>
+                        </label>
+                        <div class="tags-container">
+                            <div class="tags-input">
+                                <input 
+                                    type="text" 
+                                    id="itemTags" 
+                                    class="form-input"
+                                    placeholder="Type and press Enter to add tags"
+                                >
+                                <div class="input-icon">
+                                    <i class="fas fa-hashtag"></i>
+                                </div>
+                            </div>
+                            <div class="tags-suggestions">
+                                <span class="tag-suggestion">power tools</span>
+                                <span class="tag-suggestion">DIY</span>
+                                <span class="tag-suggestion">home improvement</span>
+                                <span class="tag-suggestion">cordless</span>
+                            </div>
+                            <div class="tags-display" id="tagsDisplay">
+                                <!-- Tags will be added here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms & Submit -->
+                    <div class="form-group">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="listingTerms" required>
+                            <span class="checkmark"></span>
+                            <span class="checkbox-label">
+                                I agree to the <a href="#">Sharing Terms</a> and confirm this item is safe and legal to share
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline btn-preview">
+                            <i class="fas fa-eye"></i>
+                            Preview Listing
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-submit btn-ripple">
+                            <span class="btn-text">Publish Item</span>
+                            <div class="btn-loader">
+                                <div class="spinner"></div>
+                            </div>
+                            <i class="fas fa-rocket"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Success Modal -->
+                <div class="success-modal" id="successModal">
+                    <div class="modal-content">
+                        <div class="success-animation">
+                            <div class="success-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="confetti">
+                                <div class="confetti-piece"></div>
+                                <div class="confetti-piece"></div>
+                                <div class="confetti-piece"></div>
+                                <div class="confetti-piece"></div>
+                                <div class="confetti-piece"></div>
+                                <div class="confetti-piece"></div>
+                                <div class="confetti-piece"></div>
+                                <div class="confetti-piece"></div>
+                            </div>
+                        </div>
+                        
+                        <h2>Item Listed Successfully!</h2>
+                        <p>Your item is now available for borrowing in your community.</p>
+                        
+                        <div class="success-stats">
+                            <div class="success-stat">
+                                <i class="fas fa-eye"></i>
+                                <span>Estimated 120+ views this week</span>
+                            </div>
+                            <div class="success-stat">
+                                <i class="fas fa-handshake"></i>
+                                <span>Typically borrowed within 3 days</span>
+                            </div>
+                            <div class="success-stat">
+                                <i class="fas fa-leaf"></i>
+                                <span>You're helping reduce waste</span>
+                            </div>
+                        </div>
+
+                        <div class="modal-actions">
+                            <button class="btn btn-outline" onclick="viewListing()">
+                                <i class="fas fa-external-link-alt"></i>
+                                View Listing
+                            </button>
+                            <button class="btn btn-primary" onclick="shareListing()">
+                                <i class="fas fa-share-alt"></i>
+                                Share with Community
+                            </button>
+                            <button class="btn btn-secondary" onclick="listAnother()">
+                                <i class="fas fa-plus"></i>
+                                List Another Item
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer Tips -->
+        <footer class="listing-footer">
+            <div class="footer-tip">
+                <i class="fas fa-lightbulb"></i>
+                <p><strong>Pro Tip:</strong> Items with 3+ photos get 2x more views. Add clear photos from different angles!</p>
+            </div>
+            <div class="footer-stats">
+                <span><i class="fas fa-users"></i> 3,280 neighbors waiting to borrow</span>
+                <span><i class="fas fa-chart-line"></i> 85% of items get borrowed in first week</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/item-listing.js"></script>
+</body>
+</html>
