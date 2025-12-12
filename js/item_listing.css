@@ -1,1389 +1,770 @@
-// Item Listing JavaScript for NeighbourShare
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all components
-    initLoader();
-    initDarkMode();
-    initUploadArea();
-    initFormValidation();
-    initAISuggestions();
-    initCharacterCounters();
-    initConditionSelection();
-    initLocationDetection();
-    initTagsSystem();
-    initFormSubmission();
-    initPreviewButton();
-    initSuccessModal();
-    initThemeToggle();
-    initBackButton();
-});
-
-// =========================================
-// 1. Loading Animation
-// =========================================
-function initLoader() {
-    const loader = document.querySelector('.loader');
-    
-    // Hide loader after page loads
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            loader.classList.add('fade-out');
-            
-            setTimeout(() => {
-                loader.style.display = 'none';
-            }, 800);
-        }, 1000);
-    });
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-// =========================================
-// 2. Dark Mode Toggle
-// =========================================
-function initDarkMode() {
-    const themeToggle = document.querySelector('.theme-toggle');
-    const root = document.documentElement;
-    
-    if (!themeToggle) return;
-    
-    // Check for saved theme
-    const savedTheme = localStorage.getItem('theme') || 
-                      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    
-    // Set initial theme
-    if (savedTheme === 'dark') {
-        root.setAttribute('data-theme', 'dark');
-    }
-    
-    // Toggle theme
-    themeToggle.addEventListener('click', function() {
-        const currentTheme = root.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        root.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        
-        // Update AI tips based on theme
-        updateAITipsVisibility();
-    });
-    
-    // Listen for system theme changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-        if (!localStorage.getItem('theme')) {
-            root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
-        }
-    });
+:root {
+    --primary: #10b981;
+    --primary-dark: #059669;
+    --secondary: #3b82f6;
+    --accent: #8b5cf6;
+    --light: #f8fafc;
+    --dark: #1e293b;
+    --gray: #64748b;
+    --light-gray: #e2e8f0;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --radius: 12px;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-function updateAITipsVisibility() {
-    // This function could adjust AI tips based on theme
-    console.log('Theme changed, updating UI elements...');
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f0fdf4 0%, #f8fafc 100%);
+    color: var(--dark);
+    min-height: 100vh;
+    padding: 20px;
 }
 
-// =========================================
-// 3. Upload Area with Drag & Drop
-// =========================================
-function initUploadArea() {
-    const uploadArea = document.getElementById('uploadArea');
-    const fileInput = document.getElementById('fileInput');
-    const imageGallery = document.getElementById('imageGallery');
-    const uploadProgress = document.getElementById('uploadProgress');
-    const progressFill = uploadProgress?.querySelector('.progress-fill');
-    const progressPercent = uploadProgress?.querySelector('.progress-percent');
-    const progressText = uploadProgress?.querySelector('.progress-text');
-    const browseLink = document.querySelector('.browse-link');
-    
-    let uploadedImages = [];
-    let maxImages = 8;
-    
-    // Click on upload area
-    if (uploadArea) {
-        uploadArea.addEventListener('click', function(e) {
-            if (!e.target.closest('.remove-btn') && !e.target.closest('.gallery-item')) {
-                fileInput.click();
-            }
-        });
-    }
-    
-    // Browse link
-    if (browseLink) {
-        browseLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            fileInput.click();
-        });
-    }
-    
-    // File input change
-    if (fileInput) {
-        fileInput.addEventListener('change', handleFileSelect);
-    }
-    
-    // Drag and drop functionality
-    if (uploadArea) {
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            uploadArea.addEventListener(eventName, preventDefaults, false);
-        });
-        
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        
-        ['dragenter', 'dragover'].forEach(eventName => {
-            uploadArea.addEventListener(eventName, highlight, false);
-        });
-        
-        ['dragleave', 'drop'].forEach(eventName => {
-            uploadArea.addEventListener(eventName, unhighlight, false);
-        });
-        
-        function highlight() {
-            uploadArea.classList.add('drag-over');
-            uploadArea.querySelector('.upload-icon').style.animation = 'none';
-            uploadArea.querySelector('.upload-icon').style.transform = 'scale(1.1)';
-        }
-        
-        function unhighlight() {
-            uploadArea.classList.remove('drag-over');
-            uploadArea.querySelector('.upload-icon').style.animation = 'bounce 2s infinite';
-            uploadArea.querySelector('.upload-icon').style.transform = 'scale(1)';
-        }
-        
-        // Handle drop
-        uploadArea.addEventListener('drop', handleDrop, false);
-        
-        function handleDrop(e) {
-            const dt = e.dataTransfer;
-            const files = dt.files;
-            handleFiles(files);
-        }
-    }
-    
-    function handleFileSelect(e) {
-        const files = e.target.files || e.dataTransfer?.files;
-        if (files && files.length > 0) {
-            handleFiles(files);
-        }
-    }
-    
-    function handleFiles(files) {
-        const totalSlots = maxImages - uploadedImages.length;
-        const filesToUpload = Array.from(files).slice(0, totalSlots);
-        
-        if (filesToUpload.length === 0) {
-            showToast('Maximum 8 photos allowed', 'warning');
-            return;
-        }
-        
-        // Show upload progress
-        if (uploadProgress && progressFill && progressPercent && progressText) {
-            uploadProgress.classList.add('show');
-            progressFill.style.width = '0%';
-            progressPercent.textContent = '0%';
-            progressText.textContent = 'Uploading...';
-        }
-        
-        // Simulate upload process
-        let uploadedCount = 0;
-        const totalFiles = filesToUpload.length;
-        
-        filesToUpload.forEach((file, index) => {
-            // Validate file
-            if (!file.type.match('image.*')) {
-                showToast(`Skipped ${file.name}: Not an image file`, 'error');
-                return;
-            }
-            
-            if (file.size > 10 * 1024 * 1024) {
-                showToast(`Skipped ${file.name}: File too large (max 10MB)`, 'error');
-                return;
-            }
-            
-            // Simulate upload delay
-            setTimeout(() => {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    // Add to uploaded images
-                    uploadedImages.push({
-                        id: Date.now() + index,
-                        file: file,
-                        dataUrl: e.target.result
-                    });
-                    
-                    // Update progress
-                    uploadedCount++;
-                    const percent = Math.round((uploadedCount / totalFiles) * 100);
-                    
-                    if (progressFill) progressFill.style.width = percent + '%';
-                    if (progressPercent) progressPercent.textContent = percent + '%';
-                    
-                    if (uploadedCount === totalFiles) {
-                        // Upload complete
-                        setTimeout(() => {
-                            if (progressText) progressText.textContent = 'Upload Complete!';
-                            
-                            setTimeout(() => {
-                                uploadProgress.classList.remove('show');
-                                updateImageGallery();
-                                updateAISuggestionsBasedOnImages();
-                                updateAITips();
-                                showToast(`${uploadedCount} photo(s) uploaded successfully`, 'success');
-                            }, 1000);
-                        }, 500);
-                    }
-                };
-                
-                reader.readAsDataURL(file);
-            }, index * 300); // Stagger uploads
-        });
-    }
-    
-    function updateImageGallery() {
-        if (!imageGallery) return;
-        
-        // Clear placeholder
-        const placeholder = imageGallery.querySelector('.gallery-placeholder');
-        if (placeholder) placeholder.remove();
-        
-        // Clear existing images
-        imageGallery.innerHTML = '';
-        
-        // Add uploaded images
-        uploadedImages.forEach((image, index) => {
-            const galleryItem = document.createElement('div');
-            galleryItem.className = 'gallery-item';
-            galleryItem.innerHTML = `
-                <img src="${image.dataUrl}" alt="Uploaded image ${index + 1}">
-                <button class="remove-btn" data-id="${image.id}">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-            
-            imageGallery.appendChild(galleryItem);
-        });
-        
-        // Add remove button listeners
-        document.querySelectorAll('.remove-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const id = parseInt(this.getAttribute('data-id'));
-                removeImage(id);
-            });
-        });
-        
-        // Update upload area text if we have images
-        if (uploadedImages.length > 0) {
-            const uploadContent = uploadArea.querySelector('.upload-content');
-            if (uploadContent) {
-                uploadContent.innerHTML = `
-                    <div class="upload-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h3>${uploadedImages.length} Photo(s) Uploaded</h3>
-                    <p>Click or drag to add more photos</p>
-                    <p class="upload-hint">${maxImages - uploadedImages.length} more photos allowed</p>
-                `;
-            }
-        }
-    }
-    
-    function removeImage(id) {
-        uploadedImages = uploadedImages.filter(img => img.id !== id);
-        updateImageGallery();
-        
-        // Reset upload area text if no images
-        if (uploadedImages.length === 0) {
-            const uploadContent = uploadArea.querySelector('.upload-content');
-            if (uploadContent) {
-                uploadContent.innerHTML = `
-                    <div class="upload-icon">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                    </div>
-                    <h3>Drag & Drop Photos</h3>
-                    <p>or <span class="browse-link">browse files</span></p>
-                    <p class="upload-hint">JPG, PNG up to 10MB • Up to 8 photos</p>
-                `;
-                
-                // Re-add browse link listener
-                const newBrowseLink = uploadContent.querySelector('.browse-link');
-                if (newBrowseLink) {
-                    newBrowseLink.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        fileInput.click();
-                    });
-                }
-            }
-        }
-        
-        showToast('Photo removed', 'info');
-    }
-    
-    // Update AI tips based on uploaded images
-    function updateAITips() {
-        const tips = document.querySelectorAll('.tips-list li');
-        
-        if (uploadedImages.length >= 1) {
-            tips[0].setAttribute('data-checked', 'true');
-            tips[0].querySelector('i').className = 'fas fa-check-circle';
-        }
-        
-        if (uploadedImages.length >= 3) {
-            tips[1].setAttribute('data-checked', 'true');
-            tips[1].querySelector('i').className = 'fas fa-check-circle';
-        }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+/* Header */
+.listing-header {
+    padding: 30px 40px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-content h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tagline {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-top: 5px;
+}
+
+.back-btn {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(-5px);
+}
+
+/* Main Content */
+.listing-main {
+    padding: 40px;
+}
+
+.listing-card {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.card-header {
+    padding: 30px;
+    border-bottom: 2px solid var(--light-gray);
+}
+
+.card-header h2 {
+    font-size: 28px;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.subtitle {
+    color: var(--gray);
+    margin-top: 10px;
+}
+
+.card-body {
+    padding: 40px;
+}
+
+/* Upload Section */
+.upload-section {
+    margin-bottom: 40px;
+}
+
+.upload-section h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--dark);
+}
+
+.section-description {
+    color: var(--gray);
+    margin-bottom: 25px;
+}
+
+.upload-area {
+    border: 3px dashed var(--light-gray);
+    border-radius: var(--radius);
+    padding: 60px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--light);
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-area.dragover {
+    border-color: var(--primary);
+    background: rgba(16, 185, 129, 0.05);
+    transform: scale(1.01);
+}
+
+.upload-area:hover {
+    border-color: var(--primary);
+}
+
+.upload-content {
+    transition: opacity 0.3s ease;
+}
+
+.upload-icon {
+    font-size: 48px;
+    color: var(--gray);
+    margin-bottom: 20px;
+}
+
+.upload-text {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--dark);
+    margin-bottom: 5px;
+}
+
+.upload-subtext {
+    color: var(--gray);
+    margin-bottom: 20px;
+}
+
+.browse-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.browse-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.upload-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.upload-progress.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.progress-bar {
+    width: 80%;
+    height: 6px;
+    background: var(--light-gray);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.progress-bar::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    animation: progress 2s ease-in-out forwards;
+}
+
+@keyframes progress {
+    to {
+        width: 100%;
     }
 }
 
-// =========================================
-// 4. Form Validation
-// =========================================
-function initFormValidation() {
-    const form = document.getElementById('listingForm');
-    const inputs = form?.querySelectorAll('.form-input');
-    
-    if (!form || !inputs) return;
-    
-    // Real-time validation for each input
-    inputs.forEach(input => {
-        input.addEventListener('input', function() {
-            validateField(this);
-        });
-        
-        input.addEventListener('blur', function() {
-            validateField(this);
-        });
-    });
-    
-    // Select validation
-    const selects = form.querySelectorAll('select');
-    selects.forEach(select => {
-        select.addEventListener('change', function() {
-            validateField(this);
-        });
-    });
-    
-    // Condition radio validation
-    const conditionRadios = form.querySelectorAll('input[name="condition"]');
-    conditionRadios.forEach(radio => {
-        radio.addEventListener('change', function() {
-            validateCondition();
-        });
-    });
+.image-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
 }
 
-function validateField(field) {
-    const value = field.value.trim();
-    const container = field.closest('.input-container');
-    const validation = container?.querySelector('.input-validation');
-    const validIcon = validation?.querySelector('.valid-icon');
-    const errorIcon = validation?.querySelector('.error-icon');
-    
-    // Clear previous states
-    field.classList.remove('valid', 'error');
-    if (validIcon) validIcon.style.display = 'none';
-    if (errorIcon) errorIcon.style.display = 'none';
-    
-    // Skip validation for optional fields if empty
-    if (!field.hasAttribute('required') && !value) {
-        return true;
-    }
-    
-    let isValid = true;
-    let errorMessage = '';
-    
-    // Field-specific validation
-    switch (field.id) {
-        case 'itemTitle':
-            if (!value) {
-                errorMessage = 'Title is required';
-                isValid = false;
-            } else if (value.length < 5) {
-                errorMessage = 'Title must be at least 5 characters';
-                isValid = false;
-            } else if (value.length > 60) {
-                errorMessage = 'Title must be 60 characters or less';
-                isValid = false;
-            }
-            break;
-            
-        case 'itemCategory':
-            if (!value) {
-                errorMessage = 'Please select a category';
-                isValid = false;
-            }
-            break;
-            
-        case 'itemDescription':
-            if (!value) {
-                errorMessage = 'Description is required';
-                isValid = false;
-            } else if (value.length < 20) {
-                errorMessage = 'Description must be at least 20 characters';
-                isValid = false;
-            }
-            break;
-            
-        case 'itemPrice':
-            if (value && parseFloat(value) < 0) {
-                errorMessage = 'Price cannot be negative';
-                isValid = false;
-            }
-            break;
-            
-        case 'itemDeposit':
-            if (value && parseFloat(value) < 0) {
-                errorMessage = 'Deposit cannot be negative';
-                isValid = false;
-            }
-            break;
-            
-        case 'itemLocation':
-            if (value && value.length < 3) {
-                errorMessage = 'Location must be at least 3 characters';
-                isValid = false;
-            }
-            break;
-    }
-    
-    // Update UI
-    if (isValid && value) {
-        field.classList.add('valid');
-        if (validIcon) validIcon.style.display = 'block';
-    } else if (!isValid) {
-        field.classList.add('error');
-        if (errorIcon) errorIcon.style.display = 'block';
-        
-        // Show shake animation
-        field.style.animation = 'none';
-        setTimeout(() => {
-            field.style.animation = 'shake 0.5s';
-        }, 10);
-    }
-    
-    return isValid;
+.preview-item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
 }
 
-function validateCondition() {
-    const conditionSelected = document.querySelector('input[name="condition"]:checked');
-    const conditionOptions = document.querySelector('.condition-options');
-    
-    if (conditionOptions) {
-        conditionOptions.classList.remove('error');
-        
-        if (!conditionSelected) {
-            conditionOptions.classList.add('error');
-            return false;
-        }
-    }
-    
-    return true;
+.preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-function validateForm() {
-    const form = document.getElementById('listingForm');
-    const requiredInputs = form.querySelectorAll('.form-input[required]');
-    let isValid = true;
-    
-    // Validate all required fields
-    requiredInputs.forEach(input => {
-        if (!validateField(input)) {
-            isValid = false;
-        }
-    });
-    
-    // Validate condition
-    if (!validateCondition()) {
-        isValid = false;
-    }
-    
-    // Validate terms
-    const termsCheckbox = document.getElementById('listingTerms');
-    const termsContainer = termsCheckbox?.closest('.checkbox-container');
-    
-    if (termsContainer) {
-        termsContainer.classList.remove('error');
-        
-        if (!termsCheckbox?.checked) {
-            termsContainer.classList.add('error');
-            isValid = false;
-        }
-    }
-    
-    // Validate at least one image
-    const uploadArea = document.getElementById('uploadArea');
-    if (uploadArea && !uploadArea.querySelector('.gallery-item')) {
-        showToast('Please upload at least one photo', 'warning');
-        
-        // Scroll to upload area
-        uploadArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        
-        // Highlight upload area
-        uploadArea.style.borderColor = 'var(--error)';
-        uploadArea.style.animation = 'shake 0.5s';
-        setTimeout(() => {
-            uploadArea.style.animation = '';
-        }, 500);
-        
-        isValid = false;
-    }
-    
-    return isValid;
+.remove-image {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-// =========================================
-// 5. AI Suggestions
-// =========================================
-function initAISuggestions() {
-    const refreshBtn = document.getElementById('refreshSuggestions');
-    const suggestionButtons = document.querySelectorAll('.btn-suggestion');
-    
-    // Generate initial suggestions
-    updateAISuggestionsBasedOnImages();
-    
-    // Refresh suggestions
-    if (refreshBtn) {
-        refreshBtn.addEventListener('click', function() {
-            this.classList.add('loading');
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
-            
-            setTimeout(() => {
-                generateNewSuggestions();
-                this.classList.remove('loading');
-                this.innerHTML = '<i class="fas fa-redo"></i> Refresh';
-                showToast('AI suggestions refreshed', 'success');
-            }, 1500);
-        });
-    }
-    
-    // Use suggestion buttons
-    suggestionButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const field = this.getAttribute('data-field');
-            useAISuggestion(field);
-        });
-    });
+.preview-item:hover .remove-image {
+    opacity: 1;
 }
 
-function updateAISuggestionsBasedOnImages() {
-    // This would normally analyze images with AI
-    // For demo, we'll use simulated data
-    
-    setTimeout(() => {
-        const aiTitle = document.getElementById('aiTitle');
-        const aiCategory = document.getElementById('aiCategory');
-        const aiDescription = document.getElementById('aiDescription');
-        
-        // Sample suggestions based on common uploads
-        const suggestions = {
-            tools: {
-                title: 'Cordless Power Drill with Accessories',
-                category: 'Tools',
-                description: 'High-quality cordless drill with 2 batteries, charger, and drill bit set. Perfect for home DIY projects, furniture assembly, and light construction work. Batteries hold charge well and drill has variable speed control.'
-            },
-            electronics: {
-                title: 'DSLR Camera with Lens Kit',
-                category: 'Electronics',
-                description: 'Professional DSLR camera with 18-55mm lens, perfect for photography enthusiasts. Includes camera bag, memory card, and cleaning kit. Great for events, portraits, or learning photography.'
-            },
-            default: {
-                title: 'Quality Item in Good Condition',
-                category: 'Other',
-                description: 'This item is in good working condition and ready to use. It has been well-maintained and comes from a smoke-free home. Perfect for temporary needs or trying before buying.'
-            }
-        };
-        
-    // For demo, randomly pick a suggestion type
-        const types = ['tools', 'electronics', 'default'];
-        const randomType = types[Math.floor(Math.random() * types.length)];
-        const suggestion = suggestions[randomType];
-        
-        if (aiTitle) aiTitle.textContent = suggestion.title;
-        if (aiCategory) aiCategory.textContent = suggestion.category;
-        if (aiDescription) aiDescription.textContent = suggestion.description;
-        
-        // Store suggestions for later use
-        window.aiSuggestions = suggestion;
-    }, 2000);
+/* AI Suggestions */
+.ai-suggestions {
+    background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 100%);
+    border-radius: var(--radius);
+    padding: 30px;
+    margin-bottom: 40px;
+    border-left: 4px solid var(--accent);
 }
 
-function generateNewSuggestions() {
-    const suggestions = {
-        1: {
-            title: 'Professional Grade Item',
-            category: 'Tools',
-            description: 'Professional-grade equipment suitable for serious projects. Well-maintained and ready for immediate use.'
-        },
-        2: {
-            title: 'Compact and Portable',
-            category: 'Electronics',
-            description: 'Compact design makes this easy to transport and store. Perfect for occasional use or special events.'
-        },
-        3: {
-            title: 'Eco-Friendly Alternative',
-            category: 'Home Appliances',
-            description: 'Save money and reduce waste by borrowing instead of buying new. This item helps promote sustainable living.'
-        }
-    };
-    
-    const randomIndex = Math.floor(Math.random() * 3) + 1;
-    const suggestion = suggestions[randomIndex];
-    
-    const aiTitle = document.getElementById('aiTitle');
-    const aiCategory = document.getElementById('aiCategory');
-    const aiDescription = document.getElementById('aiDescription');
-    
-    if (aiTitle) aiTitle.textContent = suggestion.title;
-    if (aiCategory) aiCategory.textContent = suggestion.category;
-    if (aiDescription) aiDescription.textContent = suggestion.description;
-    
-    window.aiSuggestions = suggestion;
+.suggestion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
 }
 
-function useAISuggestion(field) {
-    if (!window.aiSuggestions) return;
-    
-    switch (field) {
-        case 'title':
-            document.getElementById('itemTitle').value = window.aiSuggestions.title;
-            validateField(document.getElementById('itemTitle'));
-            updateCharacterCounter('itemTitle');
-            break;
-            
-        case 'category':
-            const categorySelect = document.getElementById('itemCategory');
-            const option = Array.from(categorySelect.options).find(
-                opt => opt.text.toLowerCase() === window.aiSuggestions.category.toLowerCase()
-            );
-            if (option) {
-                categorySelect.value = option.value;
-                validateField(categorySelect);
-            }
-            break;
-            
-        case 'description':
-            document.getElementById('itemDescription').value = window.aiSuggestions.description;
-            validateField(document.getElementById('itemDescription'));
-            updateCharacterCounter('itemDescription');
-            break;
-    }
-    
-    // Visual feedback
-    const button = document.querySelector(`.btn-suggestion[data-field="${field}"]`);
-    if (button) {
-        const originalText = button.innerHTML;
-        button.innerHTML = '<i class="fas fa-check"></i> Applied!';
-        button.style.background = 'var(--success)';
-        button.style.color = 'white';
-        
-        setTimeout(() => {
-            button.innerHTML = originalText;
-            button.style.background = '';
-            button.style.color = '';
-        }, 2000);
-    }
-    
-    showToast(`AI suggestion applied to ${field}`, 'success');
+.suggestion-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--dark);
 }
 
-// =========================================
-// 6. Character Counters
-// =========================================
-function initCharacterCounters() {
-    const titleInput = document.getElementById('itemTitle');
-    const descriptionInput = document.getElementById('itemDescription');
-    
-    if (titleInput) {
-        titleInput.addEventListener('input', function() {
-            updateCharacterCounter('itemTitle');
-        });
-        updateCharacterCounter('itemTitle');
-    }
-    
-    if (descriptionInput) {
-        descriptionInput.addEventListener('input', function() {
-            updateCharacterCounter('itemDescription');
-        });
-        updateCharacterCounter('itemDescription');
+.ai-loading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--gray);
+}
+
+.ai-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--light-gray);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
     }
 }
 
-function updateCharacterCounter(fieldId) {
-    const input = document.getElementById(fieldId);
-    const counter = document.getElementById(fieldId + 'Count');
-    const counterContainer = counter?.closest('.character-count');
-    
-    if (!input || !counter || !counterContainer) return;
-    
-    const length = input.value.length;
-    counter.textContent = length;
-    
-    // Remove previous classes
-    counterContainer.classList.remove('warning', 'error');
-    
-    // Add appropriate class based on length
-    if (fieldId === 'itemTitle') {
-        if (length > 50) {
-            counterContainer.classList.add('warning');
-        }
-        if (length > 60) {
-            counterContainer.classList.add('error');
-        }
-    } else if (fieldId === 'itemDescription') {
-        if (length > 1900) {
-            counterContainer.classList.add('warning');
-        }
-        if (length > 2000) {
-            counterContainer.classList.add('error');
-        }
+.suggestion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.suggestion-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+}
+
+.suggestion-card:hover {
+    transform: translateY(-5px);
+}
+
+.suggestion-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--accent), var(--secondary));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.suggestion-card h4 {
+    font-size: 14px;
+    color: var(--gray);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.suggestion-content p {
+    color: var(--dark);
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.apply-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+}
+
+.apply-btn:hover {
+    background: var(--primary-dark);
+    transform: scale(1.05);
+}
+
+/* Form Styles */
+.listing-form {
+    margin-top: 40px;
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: var(--dark);
+    margin-bottom: 10px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid var(--light-gray);
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.input-with-action {
+    position: relative;
+}
+
+.char-count {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray);
+    font-size: 14px;
+}
+
+.input-with-prefix {
+    position: relative;
+}
+
+.prefix {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray);
+}
+
+.input-with-prefix input {
+    padding-left: 35px;
+}
+
+.hint {
+    color: var(--gray);
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.textarea-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.ai-tip {
+    color: var(--accent);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Terms Section */
+.terms-section {
+    background: var(--light);
+    padding: 25px;
+    border-radius: 10px;
+    margin: 30px 0;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.checkbox-group:last-child {
+    margin-bottom: 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+}
+
+.checkbox-group label {
+    color: var(--dark);
+    font-size: 15px;
+}
+
+.checkbox-group a {
+    color: var(--secondary);
+    text-decoration: none;
+}
+
+.checkbox-group a:hover {
+    text-decoration: underline;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    padding-top: 30px;
+    border-top: 2px solid var(--light-gray);
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--gray);
+    border: 2px solid var(--light-gray);
+}
+
+.btn-secondary:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-3px);
+}
+
+/* Success Modal */
+.success-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.success-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: white;
+    padding: 50px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    animation: modalAppear 0.5s ease;
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
     }
 }
 
-// =========================================
-// 7. Condition Selection
-// =========================================
-function initConditionSelection() {
-    const conditionOptions = document.querySelectorAll('.radio-option');
-    
-    conditionOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            // Remove active class from all options
-            conditionOptions.forEach(opt => {
-                opt.classList.remove('active');
-            });
-            
-            // Add active class to clicked option
-            this.classList.add('active');
-            
-            // Visual feedback
-            const radioCard = this.querySelector('.radio-card');
-            radioCard.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                radioCard.style.transform = '';
-            }, 200);
-        });
-    });
+.success-animation {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 30px;
 }
 
-// =========================================
-// 8. Location Detection
-// =========================================
-function initLocationDetection() {
-    const locationBtn = document.getElementById('useCurrentLocation');
-    const locationInput = document.getElementById('itemLocation');
-    
-    if (!locationBtn || !locationInput) return;
-    
-    locationBtn.addEventListener('click', function() {
-        if (!navigator.geolocation) {
-            showToast('Geolocation is not supported by your browser', 'error');
-            return;
-        }
-        
-        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Detecting...';
-        this.disabled = true;
-        
-        // For demo, use simulated location
-        setTimeout(() => {
-            const locations = [
-                'Downtown Brooklyn, NY',
-                'Williamsburg, Brooklyn',
-                'Park Slope, Brooklyn',
-                'Upper East Side, Manhattan',
-                'Astoria, Queens'
-            ];
-            
-            const randomLocation = locations[Math.floor(Math.random() * locations.length)];
-            locationInput.value = randomLocation;
-            validateField(locationInput);
-            
-            this.innerHTML = '<i class="fas fa-check-circle"></i> Detected';
-            showToast(`Location set to ${randomLocation}`, 'success');
-            
-            // Reset button after 2 seconds
-            setTimeout(() => {
-                this.innerHTML = '<i class="fas fa-location-arrow"></i> Use Current';
-                this.disabled = false;
-            }, 2000);
-        }, 1500);
-        
-        // Real implementation would use:
-        // navigator.geolocation.getCurrentPosition(success, error);
-    });
+.success-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 3px solid var(--primary);
+    border-radius: 50%;
+    animation: circlePulse 2s ease-out;
 }
 
-// =========================================
-// 9. Tags System
-// =========================================
-function initTagsSystem() {
-    const tagsInput = document.getElementById('itemTags');
-    const tagsDisplay = document.getElementById('tagsDisplay');
-    const tagSuggestions = document.querySelectorAll('.tag-suggestion');
-    
-    let tags = [];
-    
-    // Add tag on Enter or comma
-    if (tagsInput) {
-        tagsInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ',') {
-                e.preventDefault();
-                addTag(this.value.trim());
-                this.value = '';
-            }
-        });
-        
-        tagsInput.addEventListener('blur', function() {
-            if (this.value.trim()) {
-                addTag(this.value.trim());
-                this.value = '';
-            }
-        });
+.success-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    color: var(--primary);
+    animation: iconPop 0.5s ease 0.5s both;
+}
+
+@keyframes circlePulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.8;
     }
-    
-    // Tag suggestions
-    tagSuggestions.forEach(suggestion => {
-        suggestion.addEventListener('click', function() {
-            addTag(this.textContent);
-        });
-    });
-    
-    function addTag(tagText) {
-        if (!tagText) return;
-        
-        // Clean tag text
-        tagText = tagText.replace(',', '').trim();
-        
-        // Check if tag already exists
-        if (tags.includes(tagText.toLowerCase())) {
-            showToast(`Tag "${tagText}" already added`, 'info');
-            return;
-        }
-        
-        // Check maximum tags
-        if (tags.length >= 10) {
-            showToast('Maximum 10 tags allowed', 'warning');
-            return;
-        }
-        
-        // Add tag
-        tags.push(tagText.toLowerCase());
-        renderTags();
-        
-        // Clear input
-        if (tagsInput) tagsInput.value = '';
-        
-        // Visual feedback
-        const tagElement = tagsDisplay.lastElementChild;
-        if (tagElement) {
-            tagElement.style.transform = 'scale(0.8)';
-            setTimeout(() => {
-                tagElement.style.transform = 'scale(1)';
-            }, 100);
-        }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.4;
     }
-    
-    function removeTag(tagText) {
-        tags = tags.filter(tag => tag !== tagText.toLowerCase());
-        renderTags();
-    }
-    
-    function renderTags() {
-        if (!tagsDisplay) return;
-        
-        tagsDisplay.innerHTML = '';
-        
-        tags.forEach(tag => {
-            const tagElement = document.createElement('div');
-            tagElement.className = 'tag';
-            tagElement.innerHTML = `
-                ${tag}
-                <span class="remove-tag" data-tag="${tag}">
-                    <i class="fas fa-times"></i>
-                </span>
-            `;
-            
-            tagsDisplay.appendChild(tagElement);
-        });
-        
-        // Add remove listeners
-        document.querySelectorAll('.remove-tag').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const tagToRemove = this.getAttribute('data-tag');
-                removeTag(tagToRemove);
-            });
-        });
-    }
-    
-    // Store tags in form data
-    window.getTags = function() {
-        return tags;
-    };
-}
-
-// =========================================
-// 10. Form Submission
-// =========================================
-function initFormSubmission() {
-    const form = document.getElementById('listingForm');
-    const submitBtn = form?.querySelector('.btn-submit');
-    
-    if (!form || !submitBtn) return;
-    
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        if (!validateForm()) {
-            showToast('Please fix errors before submitting', 'error');
-            return;
-        }
-        
-        // Show loading state
-        submitBtn.classList.add('loading');
-        submitBtn.disabled = true;
-        
-        // Simulate API call
-        setTimeout(() => {
-            submitListing();
-        }, 2000);
-    });
-}
-
-function submitListing() {
-    // Collect form data
-    const formData = {
-        title: document.getElementById('itemTitle').value,
-        category: document.getElementById('itemCategory').value,
-        description: document.getElementById('itemDescription').value,
-        condition: document.querySelector('input[name="condition"]:checked')?.value,
-        price: document.getElementById('itemPrice').value || '0',
-        deposit: document.getElementById('itemDeposit').value || '0',
-        availability: document.getElementById('itemAvailability').value,
-        location: document.getElementById('itemLocation').value,
-        tags: window.getTags ? window.getTags() : [],
-        images: window.uploadedImages ? window.uploadedImages.map(img => img.dataUrl) : [],
-        termsAccepted: document.getElementById('listingTerms').checked
-    };
-    
-    // In a real app, you would send this to your backend
-    console.log('Submitting listing:', formData);
-    
-    // Simulate success
-    setTimeout(() => {
-        showSuccessModal();
-    }, 500);
-}
-
-// =========================================
-// 11. Preview Button
-// =========================================
-function initPreviewButton() {
-    const previewBtn = document.querySelector('.btn-preview');
-    
-    if (previewBtn) {
-        previewBtn.addEventListener('click', function() {
-            if (!validateForm()) {
-                showToast('Please fix errors before previewing', 'error');
-                return;
-            }
-            
-            // Show preview modal or page
-            showToast('Preview feature coming soon!', 'info');
-            
-            // For now, log the form data
-            const formData = {
-                title: document.getElementById('itemTitle').value,
-                category: document.getElementById('itemCategory').value,
-                description: document.getElementById('itemDescription').value.substring(0, 100) + '...',
-                condition: document.querySelector('input[name="condition"]:checked')?.value,
-                price: document.getElementById('itemPrice').value || 'Free',
-                location: document.getElementById('itemLocation').value
-            };
-            
-            console.log('Preview data:', formData);
-        });
+    100% {
+        transform: scale(1);
+        opacity: 0;
     }
 }
 
-// =========================================
-// 12. Success Modal
-// =========================================
-function initSuccessModal() {
-    // Modal functions are defined globally
-    window.viewListing = function() {
-        showToast('Redirecting to your listing...', 'success');
-        setTimeout(() => {
-            window.location.href = 'dashboard.html';
-        }, 1500);
-    };
-    
-    window.shareListing = function() {
-        // Simulate sharing
-        showToast('Sharing options opened', 'success');
-        
-        // In a real app, this would open share dialog
-        setTimeout(() => {
-            const shareText = `I just listed "${document.getElementById('itemTitle').value}" on NeighbourShare!`;
-            if (navigator.share) {
-                navigator.share({
-                    title: 'My NeighbourShare Listing',
-                    text: shareText,
-                    url: window.location.href
-                });
-            } else {
-                // Fallback
-                prompt('Copy this link to share:', shareText);
-            }
-        }, 500);
-    };
-    
-    window.listAnother = function() {
-        // Reset form
-        document.getElementById('listingForm').reset();
-        document.querySelectorAll('.gallery-item').forEach(item => item.remove());
-        
-        // Reset upload area
-        const uploadArea = document.getElementById('uploadArea');
-        const uploadContent = uploadArea.querySelector('.upload-content');
-        if (uploadContent) {
-            uploadContent.innerHTML = `
-                <div class="upload-icon">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                </div>
-                <h3>Drag & Drop Photos</h3>
-                <p>or <span class="browse-link">browse files</span></p>
-                <p class="upload-hint">JPG, PNG up to 10MB • Up to 8 photos</p>
-            `;
-        }
-        
-        // Reset AI tips
-        document.querySelectorAll('.tips-list li').forEach(li => {
-            li.setAttribute('data-checked', 'false');
-            li.querySelector('i').className = 'fas fa-circle';
-        });
-        
-        // Hide modal
-        hideSuccessModal();
-        
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        
-        showToast('Ready to list another item!', 'success');
-    };
-}
-
-function showSuccessModal() {
-    const modal = document.getElementById('successModal');
-    const submitBtn = document.querySelector('.btn-submit');
-    
-    if (modal) {
-        modal.classList.add('show');
-        
-        // Reset submit button
-        if (submitBtn) {
-            submitBtn.classList.remove('loading');
-            submitBtn.disabled = false;
-        }
-        
-        // Disable body scroll
-        document.body.style.overflow = 'hidden';
+@keyframes iconPop {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
     }
 }
 
-function hideSuccessModal() {
-    const modal = document.getElementById('successModal');
-    if (modal) {
-        modal.classList.remove('show');
-        document.body.style.overflow = 'auto';
-    }
+.modal-content h3 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: var(--dark);
 }
 
-// =========================================
-// 13. Theme Toggle
-// =========================================
-function initThemeToggle() {
-    // Already handled in initDarkMode
+.modal-content p {
+    color: var(--gray);
+    margin-bottom: 30px;
 }
 
-// =========================================
-// 14. Back Button
-// =========================================
-function initBackButton() {
-    const backBtn = document.querySelector('.back-btn');
-    
-    if (backBtn) {
-        backBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Check if form has data
-            const hasData = document.getElementById('itemTitle').value.trim() !== '' ||
-                           document.querySelector('.gallery-item') !== null;
-            
-            if (hasData) {
-                if (confirm('You have unsaved changes. Are you sure you want to leave?')) {
-                    window.location.href = this.href;
-                }
-            } else {
-                window.location.href = this.href;
-            }
-        });
-    }
+.eco-impact {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 25px 0;
+    padding: 20px;
+    background: var(--light);
+    border-radius: 10px;
 }
 
-// =========================================
-// 15. Toast Notifications
-// =========================================
-function showToast(message, type = 'info') {
-    // Remove existing toasts
-    document.querySelectorAll('.toast').forEach(toast => toast.remove());
-    
-    // Create toast
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    
-    // Set icon based on type
-    let icon = 'info-circle';
-    switch (type) {
-        case 'success': icon = 'check-circle'; break;
-        case 'error': icon = 'exclamation-circle'; break;
-        case 'warning': icon = 'exclamation-triangle'; break;
-        case 'info': icon = 'info-circle'; break;
-    }
-    
-    toast.innerHTML = `
-        <div class="toast-content">
-            <i class="fas fa-${icon}"></i>
-            <span>${message}</span>
-        </div>
-        <button class="toast-close">
-            <i class="fas fa-times"></i>
-        </button>
-    `;
-    
-    // Add styles if not already present
-    if (!document.querySelector('#toast-styles')) {
-        const style = document.createElement('style');
-        style.id = 'toast-styles';
-        style.textContent = `
-            .toast {
-                position: fixed;
-                bottom: 30px;
-                right: 30px;
-                background: var(--glass);
-                backdrop-filter: blur(20px);
-                border: 1px solid rgba(126, 217, 87, 0.2);
-                border-radius: var(--radius-sm);
-                padding: 15px 20px;
-                box-shadow: var(--shadow-lg);
-                z-index: 9999;
-                animation: slideInUp 0.3s ease-out;
-                max-width: 350px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                gap: 15px;
-            }
-            
-            .toast-success {
-                border-left: 4px solid var(--success);
-            }
-            
-            .toast-error {
-                border-left: 4px solid var(--error);
-            }
-            
-            .toast-warning {
-                border-left: 4px solid var(--warning);
-            }
-            
-            .toast-info {
-                border-left: 4px solid var(--info);
-            }
-            
-            .toast-content {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                color: var(--dark);
-                flex: 1;
-            }
-            
-            .toast-content i {
-                font-size: 18px;
-            }
-            
-            .toast-success .toast-content i {
-                color: var(--success);
-            }
-            
-            .toast-error .toast-content i {
-                color: var(--error);
-            }
-            
-            .toast-warning .toast-content i {
-                color: var(--warning);
-            }
-            
-            .toast-info .toast-content i {
-                color: var(--info);
-            }
-            
-            .toast-close {
-                background: none;
-                border: none;
-                color: var(--gray);
-                font-size: 14px;
-                cursor: pointer;
-                padding: 5px;
-                border-radius: 4px;
-                transition: var(--transition);
-            }
-            
-            .toast-close:hover {
-                background: rgba(126, 217, 87, 0.1);
-                color: var(--primary);
-            }
-            
-            @keyframes slideInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-            
-            @keyframes slideOutDown {
-                from {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-                to {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    
-    document.body.appendChild(toast);
-    
-    // Add close button listener
-    toast.querySelector('.toast-close').addEventListener('click', function() {
-        toast.style.animation = 'slideOutDown 0.3s ease-out forwards';
-        setTimeout(() => toast.remove(), 300);
-    });
-    
-    // Auto remove after 5 seconds
-    setTimeout(() => {
-        if (toast.parentNode) {
-            toast.style.animation = 'slideOutDown 0.3s ease-out forwards';
-            setTimeout(() => toast.remove(), 300);
-        }
-    }, 5000);
+.impact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--dark);
 }
 
-// =========================================
-// 16. Ripple Effect for Buttons
-// =========================================
-document.addEventListener('click', function(e) {
-    const button = e.target.closest('.btn-ripple');
-    
-    if (button) {
-        const ripple = document.createElement('span');
-        const rect = button.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        
-        ripple.classList.add('ripple');
-        ripple.style.width = ripple.style.height = `${size}px`;
-        ripple.style.left = `${x}px`;
-        ripple.style.top = `${y}px`;
-        
-        button.appendChild(ripple);
-        
-        setTimeout(() => {
-            ripple.remove();
-        }, 600);
-    }
-});
-
-// Add ripple styles if not already present
-if (!document.querySelector('#ripple-styles')) {
-    const style = document.createElement('style');
-    style.id = 'ripple-styles';
-    style.textContent = `
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.7);
-            transform: scale(0);
-            animation: ripple-animation 0.6s linear;
-        }
-        
-        @keyframes ripple-animation {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-        
-        .btn-ripple {
-            position: relative;
-            overflow: hidden;
-        }
-    `;
-    document.head.appendChild(style);
+.impact-item i {
+    color: var(--primary);
+    font-size: 20px;
 }
 
-// =========================================
-// 17. Progress Indicator Update
-// =========================================
-function updateProgressIndicator() {
-    const progressFill = document.querySelector('.progress-fill');
-    const progressText = document.querySelector('.progress-text');
-    
-    if (!progressFill || !progressText) return;
-    
-    // Calculate progress based on form completion
-    const form = document.getElementById('listingForm');
-    const requiredFields = form.querySelectorAll('[required]');
-    const completedFields = Array.from(requiredFields).filter(field => {
-        if (field.type === 'checkbox') return field.checked;
-        if (field.type === 'radio') return document.querySelector(`input[name="${field.name}"]:checked`);
-        return field.value.trim() !== '';
-    }).length;
-    
-    const imagesUploaded = document.querySelectorAll('.gallery-item').length > 0 ? 1 : 0;
-    const totalSteps = requiredFields.length + 1; // +1 for images
-    
-    const progress = ((completedFields + imagesUploaded) / totalSteps) * 100;
-    
-    // Update progress bar
-    progressFill.style.width = `${Math.min(progress, 100)}%`;
-    
-    // Update text
-    if (progress < 33) {
-        progressText.textContent = 'Step 1 of 3';
-    } else if (progress < 66) {
-        progressText.textContent = 'Step 2 of 3';
-    } else {
-        progressText.textContent = 'Step 3 of 3';
-    }
+.modal-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
 }
 
-// Update progress on form changes
-document.addEventListener('input', function() {
-    updateProgressIndicator();
-});
+/* Footer */
+.listing-footer {
+    padding: 25px 40px;
+    background: var(--dark);
+    color: white;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-document.addEventListener('change', function() {
-    updateProgressIndicator();
-});
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 15px;
+}
 
-// Initial update
-setTimeout(updateProgressIndicator, 500);
+.footer-links a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        border-radius: 15px;
+    }
+    
+    .listing-header,
+    .listing-main {
+        padding: 20px;
+    }
+    
+    .card-body {
+        padding: 20px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .suggestion-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

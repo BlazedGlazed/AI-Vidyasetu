@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Camera Lens | ShareCircle</title>
+    <link rel="stylesheet" href="item-details.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="details-header">
+            <div class="header-content">
+                <a href="#" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1><i class="fas fa-leaf"></i> ShareCircle</h1>
+                <div class="header-actions">
+                    <button class="icon-btn" id="shareBtn">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                    <button class="icon-btn" id="wishlistBtn">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="details-main">
+            <!-- Main Content Grid -->
+            <div class="details-grid">
+                <!-- Left Column: Item Gallery & Details -->
+                <div class="left-column">
+                    <!-- Item Gallery -->
+                    <div class="item-gallery">
+                        <div class="main-image">
+                            <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                 alt="Professional Camera Lens" id="mainImage">
+                            <div class="image-badge">
+                                <i class="fas fa-images"></i> 5 photos
+                            </div>
+                            <button class="zoom-btn" id="zoomBtn">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="thumbnail-carousel">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide thumbnail active" data-image="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80">
+                                    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Lens Front">
+                                </div>
+                                <div class="swiper-slide thumbnail" data-image="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80">
+                                    <img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Lens Side">
+                                </div>
+                                <div class="swiper-slide thumbnail" data-image="https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80">
+                                    <img src="https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Lens Case">
+                                </div>
+                                <div class="swiper-slide thumbnail" data-image="https://images.unsplash.com/photo-1502982720700-bfff97f2ecac?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80">
+                                    <img src="https://images.unsplash.com/photo-1502982720700-bfff97f2ecac?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Sample Image">
+                                </div>
+                                <div class="swiper-slide thumbnail" data-image="https://images.unsplash.com/photo-1492446845049-9c50cc313f00?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80">
+                                    <img src="https://images.unsplash.com/photo-1492446845049-9c50cc313f00?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="In Use">
+                                </div>
+                            </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                    </div>
+
+                    <!-- Item Details -->
+                    <div class="item-details-section">
+                        <div class="section-header">
+                            <h2><i class="fas fa-info-circle"></i> Item Details</h2>
+                            <div class="availability-indicator" id="availabilityIndicator">
+                                <div class="pulse-dot"></div>
+                                <span>Available Now</span>
+                            </div>
+                        </div>
+                        
+                        <div class="details-grid-info">
+                            <div class="detail-item">
+                                <div class="detail-icon">
+                                    <i class="fas fa-tag"></i>
+                                </div>
+                                <div class="detail-content">
+                                    <h4>Category</h4>
+                                    <p>Electronics > Photography</p>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <div class="detail-icon">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <div class="detail-content">
+                                    <h4>Estimated Value</h4>
+                                    <p class="value">$450</p>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <div class="detail-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div class="detail-content">
+                                    <h4>Listed Date</h4>
+                                    <p>March 15, 2024</p>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <div class="detail-icon">
+                                    <i class="fas fa-history"></i>
+                                </div>
+                                <div class="detail-content">
+                                    <h4>Borrowed</h4>
+                                    <p>12 times</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="description-box">
+                            <h3>Description</h3>
+                            <p>Professional 50mm f/1.8 camera lens in excellent condition. Perfect for portrait photography with beautiful bokeh effect. Includes original lens cap, carrying case, and lens hood.</p>
+                            
+                            <div class="specs-list">
+                                <h4>Specifications:</h4>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> Focal Length: 50mm</li>
+                                    <li><i class="fas fa-check-circle"></i> Maximum Aperture: f/1.8</li>
+                                    <li><i class="fas fa-check-circle"></i> Minimum Focusing Distance: 0.35m</li>
+                                    <li><i class="fas fa-check-circle"></i> Filter Size: 58mm</li>
+                                    <li><i class="fas fa-check-circle"></i> Compatible with most DSLR cameras</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="usage-tips">
+                                <h4><i class="fas fa-lightbulb"></i> Usage Tips:</h4>
+                                <p>Clean lens with microfiber cloth only. Avoid touching glass elements. Return with lens cap on.</p>
+                            </div>
+                        </div>
+
+                        <!-- Sustainability Impact -->
+                        <div class="impact-card">
+                            <div class="impact-header">
+                                <i class="fas fa-leaf"></i>
+                                <h3>Environmental Impact</h3>
+                            </div>
+                            <div class="impact-stats">
+                                <div class="impact-stat">
+                                    <i class="fas fa-co2"></i>
+                                    <div>
+                                        <h4>CO₂ Saved</h4>
+                                        <p class="stat-value">45 kg</p>
+                                    </div>
+                                </div>
+                                <div class="impact-stat">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <div>
+                                        <h4>Community Savings</h4>
+                                        <p class="stat-value">$2,800</p>
+                                    </div>
+                                </div>
+                                <div class="impact-stat">
+                                    <i class="fas fa-recycle"></i>
+                                    <div>
+                                        <h4>Times Shared</h4>
+                                        <p class="stat-value">12</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Action Panel -->
+                <div class="right-column">
+                    <!-- Action Card -->
+                    <div class="action-card">
+                        <div class="card-header">
+                            <h2>Professional Camera Lens 50mm f/1.8</h2>
+                            <div class="rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-text">4.5 (24 reviews)</span>
+                            </div>
+                        </div>
+
+                        <div class="price-info">
+                            <div class="price-detail">
+                                <span class="label">Daily Rate</span>
+                                <span class="price">$8<span class="period">/day</span></span>
+                            </div>
+                            <div class="price-detail">
+                                <span class="label">Security Deposit</span>
+                                <span class="deposit">$50</span>
+                            </div>
+                        </div>
+
+                        <!-- Borrow Request Form -->
+                        <div class="borrow-form">
+                            <h3><i class="fas fa-calendar-check"></i> Request to Borrow</h3>
+                            
+                            <div class="date-picker">
+                                <div class="date-input">
+                                    <label for="startDate"><i class="fas fa-calendar-plus"></i> Start Date</label>
+                                    <input type="date" id="startDate" min="">
+                                </div>
+                                <div class="date-input">
+                                    <label for="endDate"><i class="fas fa-calendar-minus"></i> End Date</label>
+                                    <input type="date" id="endDate" min="">
+                                </div>
+                            </div>
+
+                            <div class="duration-display">
+                                <div class="duration-item">
+                                    <span class="duration-label">Total Days:</span>
+                                    <span class="duration-value" id="totalDays">0</span>
+                                </div>
+                                <div class="duration-item">
+                                    <span class="duration-label">Total Cost:</span>
+                                    <span class="duration-value" id="totalCost">$0</span>
+                                </div>
+                            </div>
+
+                            <div class="request-message">
+                                <label for="message"><i class="fas fa-comment-alt"></i> Message to Lender</label>
+                                <textarea id="message" placeholder="Tell the lender about your project and how you'll use the item..." rows="3"></textarea>
+                            </div>
+
+                            <button class="btn-primary borrow-btn" id="requestBorrowBtn">
+                                <i class="fas fa-handshake"></i> Send Borrow Request
+                            </button>
+
+                            <p class="terms-note">
+                                <i class="fas fa-shield-alt"></i> Your security deposit will be held and returned after the item is returned in good condition.
+                            </p>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="quick-stats">
+                            <div class="stat">
+                                <i class="fas fa-bolt"></i>
+                                <div>
+                                    <h4>Response Time</h4>
+                                    <p>Usually within 2 hours</p>
+                                </div>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h4>Success Rate</h4>
+                                    <p>96% requests approved</p>
+                                </div>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <h4>Min. Rental</h4>
+                                    <p>3 days</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lender Profile Card -->
+                    <div class="lender-card">
+                        <div class="lender-header">
+                            <div class="lender-avatar">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
+                                     alt="Alex Morgan">
+                                <div class="verification-badge">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            <div class="lender-info">
+                                <h3>Alex Morgan</h3>
+                                <p class="lender-title">Professional Photographer</p>
+                                <div class="lender-rating">
+                                    <div class="stars small">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span>5.0 (128 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lender-stats">
+                            <div class="lender-stat">
+                                <span class="stat-number">42</span>
+                                <span class="stat-label">Items Shared</span>
+                            </div>
+                            <div class="lender-stat">
+                                <span class="stat-number">156</span>
+                                <span class="stat-label">Total Loans</span>
+                            </div>
+                            <div class="lender-stat">
+                                <span class="stat-number">98%</span>
+                                <span class="stat-label">Positive</span>
+                            </div>
+                        </div>
+
+                        <div class="lender-badges">
+                            <div class="badge">
+                                <i class="fas fa-award"></i>
+                                <span>Top Lender</span>
+                            </div>
+                            <div class="badge">
+                                <i class="fas fa-bolt"></i>
+                                <span>Fast Responder</span>
+                            </div>
+                            <div class="badge">
+                                <i class="fas fa-leaf"></i>
+                                <span>Eco Hero</span>
+                            </div>
+                        </div>
+
+                        <div class="lender-actions">
+                            <button class="btn-secondary" id="messageLenderBtn">
+                                <i class="fas fa-envelope"></i> Message
+                            </button>
+                            <button class="btn-primary" id="viewProfileBtn">
+                                <i class="fas fa-user"></i> View Profile
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Location Map -->
+                    <div class="location-card">
+                        <div class="location-header">
+                            <h3><i class="fas fa-map-marker-alt"></i> Pickup Location</h3>
+                            <span class="distance">2.3 miles away</span>
+                        </div>
+                        
+                        <div class="map-placeholder" id="mapPlaceholder">
+                            <div class="map-overlay">
+                                <i class="fas fa-map"></i>
+                                <p>Interactive Map</p>
+                                <small>Click to view directions</small>
+                            </div>
+                        </div>
+                        
+                        <div class="location-details">
+                            <p><i class="fas fa-home"></i> Downtown Area, Safe neighborhood</p>
+                            <p><i class="fas fa-clock"></i> Flexible pickup hours</p>
+                            <p><i class="fas fa-parking"></i> Street parking available</p>
+                        </div>
+                        
+                        <button class="btn-secondary" id="getDirectionsBtn">
+                            <i class="fas fa-directions"></i> Get Directions
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Similar Items Carousel -->
+            <section class="similar-items-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-th-large"></i> Similar Items You Might Like</h2>
+                    <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="carousel-container">
+                    <div class="swiper similar-items-carousel">
+                        <div class="swiper-wrapper">
+                            <!-- Item 1 -->
+                            <div class="swiper-slide item-card">
+                                <div class="item-image">
+                                    <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                                         alt="Camera Lens 85mm">
+                                    <div class="item-badge">
+                                        <i class="fas fa-bolt"></i> Popular
+                                    </div>
+                                </div>
+                                <div class="item-info">
+                                    <h4>85mm f/1.4 Portrait Lens</h4>
+                                    <p class="item-category">Photography</p>
+                                    <div class="item-meta">
+                                        <span class="price">$12/day</span>
+                                        <span class="rating"><i class="fas fa-star"></i> 4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Item 2 -->
+                            <div class="swiper-slide item-card">
+                                <div class="item-image">
+                                    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                                         alt="DSLR Camera">
+                                    <div class="item-badge new">
+                                        <i class="fas fa-star"></i> New
+                                    </div>
+                                </div>
+                                <div class="item-info">
+                                    <h4>Canon EOS R5 Camera Body</h4>
+                                    <p class="item-category">Photography</p>
+                                    <div class="item-meta">
+                                        <span class="price">$25/day</span>
+                                        <span class="rating"><i class="fas fa-star"></i> 4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Item 3 -->
+                            <div class="swiper-slide item-card">
+                                <div class="item-image">
+                                    <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                                         alt="Camera Tripod">
+                                </div>
+                                <div class="item-info">
+                                    <h4>Professional Camera Tripod</h4>
+                                    <p class="item-category">Photography</p>
+                                    <div class="item-meta">
+                                        <span class="price">$6/day</span>
+                                        <span class="rating"><i class="fas fa-star"></i> 4.7</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Item 4 -->
+                            <div class="swiper-slide item-card">
+                                <div class="item-image">
+                                    <img src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                                         alt="Camera Flash">
+                                </div>
+                                <div class="item-info">
+                                    <h4>External Flash Unit</h4>
+                                    <p class="item-category">Photography</p>
+                                    <div class="item-meta">
+                                        <span class="price">$5/day</span>
+                                        <span class="rating"><i class="fas fa-star"></i> 4.6</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Item 5 -->
+                            <div class="swiper-slide item-card">
+                                <div class="item-image">
+                                    <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                                         alt="Camera Bag">
+                                </div>
+                                <div class="item-info">
+                                    <h4>Professional Camera Bag</h4>
+                                    <p class="item-category">Photography</p>
+                                    <div class="item-meta">
+                                        <span class="price">$4/day</span>
+                                        <span class="rating"><i class="fas fa-star"></i> 4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Item 6 -->
+                            <div class="swiper-slide item-card">
+                                <div class="item-image">
+                                    <img src="https://images.unsplash.com/photo-1552168324-d612d77725e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                                         alt="Camera Lens Kit">
+                                </div>
+                                <div class="item-info">
+                                    <h4>Camera Lens Cleaning Kit</h4>
+                                    <p class="item-category">Accessories</p>
+                                    <div class="item-meta">
+                                        <span class="price">$3/day</span>
+                                        <span class="rating"><i class="fas fa-star"></i> 4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Navigation Buttons -->
+                        <div class="swiper-button-next carousel-next"></div>
+                        <div class="swiper-button-prev carousel-prev"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Borrow Request Modal -->
+        <div class="modal-overlay" id="borrowModal">
+            <div class="modal-container">
+                <div class="modal-header">
+                    <h2><i class="fas fa-handshake"></i> Confirm Borrow Request</h2>
+                    <button class="close-modal" id="closeModal">&times;</button>
+                </div>
+                
+                <div class="modal-content">
+                    <div class="request-summary">
+                        <div class="summary-item">
+                            <h4>Item</h4>
+                            <p>Professional Camera Lens 50mm f/1.8</p>
+                        </div>
+                        <div class="summary-item">
+                            <h4>Lender</h4>
+                            <p>Alex Morgan</p>
+                        </div>
+                        <div class="summary-item">
+                            <h4>Dates</h4>
+                            <p id="modalDates">Apr 15 - Apr 18, 2024 (3 days)</p>
+                        </div>
+                        <div class="summary-item">
+                            <h4>Total Cost</h4>
+                            <p class="total-cost" id="modalCost">$24</p>
+                        </div>
+                        <div class="summary-item">
+                            <h4>Security Deposit</h4>
+                            <p class="deposit">$50</p>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-details">
+                        <h3><i class="fas fa-credit-card"></i> Payment Summary</h3>
+                        <div class="payment-breakdown">
+                            <div class="payment-item">
+                                <span>Rental (3 days × $8)</span>
+                                <span>$24</span>
+                            </div>
+                            <div class="payment-item">
+                                <span>Service Fee</span>
+                                <span>$2.40</span>
+                            </div>
+                            <div class="payment-item">
+                                <span>Security Deposit</span>
+                                <span>$50.00</span>
+                            </div>
+                            <div class="payment-item total">
+                                <span>Total to Pay Now</span>
+                                <span>$26.40</span>
+                            </div>
+                        </div>
+                        <p class="deposit-note">
+                            <i class="fas fa-info-circle"></i> The $50 deposit will be refunded within 24 hours after return.
+                        </p>
+                    </div>
+                    
+                    <div class="insurance-option">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="insuranceOption" checked>
+                            <label for="insuranceOption">
+                                <strong>Add Protection Plan</strong> (+$2.00)
+                                <span class="plan-desc">Covers accidental damage up to $200</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button class="btn-secondary" id="cancelRequestBtn">
+                            Cancel
+                        </button>
+                        <button class="btn-primary" id="confirmRequestBtn">
+                            <i class="fas fa-lock"></i> Confirm & Pay $28.40
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Modal -->
+        <div class="modal-overlay success" id="successModal">
+            <div class="modal-container success">
+                <div class="success-animation">
+                    <div class="success-circle"></div>
+                    <i class="fas fa-check success-icon"></i>
+                </div>
+                <h2>Request Sent Successfully!</h2>
+                <p>Alex has been notified of your request. You'll receive a response within 24 hours.</p>
+                
+                <div class="next-steps">
+                    <h3><i class="fas fa-list-check"></i> Next Steps:</h3>
+                    <ul>
+                        <li><i class="fas fa-clock"></i> Wait for lender approval</li>
+                        <li><i class="fas fa-calendar"></i> Schedule pickup time</li>
+                        <li><i class="fas fa-comments"></i> Message lender for details</li>
+                        <li><i class="fas fa-star"></i> Leave a review after return</li>
+                    </ul>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn-secondary" id="viewRequestsBtn">
+                        View My Requests
+                    </button>
+                    <button class="btn-primary" id="continueBrowsingBtn">
+                        Continue Browsing
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="details-footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4><i class="fas fa-shield-alt"></i> Safe Sharing</h4>
+                    <p>All transactions are protected by our security system</p>
+                </div>
+                <div class="footer-section">
+                    <h4><i class="fas fa-headset"></i> 24/7 Support</h4>
+                    <p>Get help anytime from our community team</p>
+                </div>
+                <div class="footer-section">
+                    <h4><i class="fas fa-leaf"></i> Eco Impact</h4>
+                    <p>This sharing saves 45kg CO₂ monthly</p>
+                </div>
+            </div>
+            <p class="copyright">© 2024 ShareCircle. Building sustainable communities through sharing.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="item-details.js"></script>
+</body>
+</html>

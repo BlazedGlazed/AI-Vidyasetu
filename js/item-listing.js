@@ -1,0 +1,1389 @@
+// Item Listing JavaScript for NeighbourShare
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all components
+    initLoader();
+    initDarkMode();
+    initUploadArea();
+    initFormValidation();
+    initAISuggestions();
+    initCharacterCounters();
+    initConditionSelection();
+    initLocationDetection();
+    initTagsSystem();
+    initFormSubmission();
+    initPreviewButton();
+    initSuccessModal();
+    initThemeToggle();
+    initBackButton();
+});
+
+// =========================================
+// 1. Loading Animation
+// =========================================
+function initLoader() {
+    const loader = document.querySelector('.loader');
+    
+    // Hide loader after page loads
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            loader.classList.add('fade-out');
+            
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 800);
+        }, 1000);
+    });
+}
+
+// =========================================
+// 2. Dark Mode Toggle
+// =========================================
+function initDarkMode() {
+    const themeToggle = document.querySelector('.theme-toggle');
+    const root = document.documentElement;
+    
+    if (!themeToggle) return;
+    
+    // Check for saved theme
+    const savedTheme = localStorage.getItem('theme') || 
+                      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    
+    // Set initial theme
+    if (savedTheme === 'dark') {
+        root.setAttribute('data-theme', 'dark');
+    }
+    
+    // Toggle theme
+    themeToggle.addEventListener('click', function() {
+        const currentTheme = root.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        root.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Update AI tips based on theme
+        updateAITipsVisibility();
+    });
+    
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (!localStorage.getItem('theme')) {
+            root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+        }
+    });
+}
+
+function updateAITipsVisibility() {
+    // This function could adjust AI tips based on theme
+    console.log('Theme changed, updating UI elements...');
+}
+
+// =========================================
+// 3. Upload Area with Drag & Drop
+// =========================================
+function initUploadArea() {
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const imageGallery = document.getElementById('imageGallery');
+    const uploadProgress = document.getElementById('uploadProgress');
+    const progressFill = uploadProgress?.querySelector('.progress-fill');
+    const progressPercent = uploadProgress?.querySelector('.progress-percent');
+    const progressText = uploadProgress?.querySelector('.progress-text');
+    const browseLink = document.querySelector('.browse-link');
+    
+    let uploadedImages = [];
+    let maxImages = 8;
+    
+    // Click on upload area
+    if (uploadArea) {
+        uploadArea.addEventListener('click', function(e) {
+            if (!e.target.closest('.remove-btn') && !e.target.closest('.gallery-item')) {
+                fileInput.click();
+            }
+        });
+    }
+    
+    // Browse link
+    if (browseLink) {
+        browseLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            fileInput.click();
+        });
+    }
+    
+    // File input change
+    if (fileInput) {
+        fileInput.addEventListener('change', handleFileSelect);
+    }
+    
+    // Drag and drop functionality
+    if (uploadArea) {
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            uploadArea.classList.add('drag-over');
+            uploadArea.querySelector('.upload-icon').style.animation = 'none';
+            uploadArea.querySelector('.upload-icon').style.transform = 'scale(1.1)';
+        }
+        
+        function unhighlight() {
+            uploadArea.classList.remove('drag-over');
+            uploadArea.querySelector('.upload-icon').style.animation = 'bounce 2s infinite';
+            uploadArea.querySelector('.upload-icon').style.transform = 'scale(1)';
+        }
+        
+        // Handle drop
+        uploadArea.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+    }
+    
+    function handleFileSelect(e) {
+        const files = e.target.files || e.dataTransfer?.files;
+        if (files && files.length > 0) {
+            handleFiles(files);
+        }
+    }
+    
+    function handleFiles(files) {
+        const totalSlots = maxImages - uploadedImages.length;
+        const filesToUpload = Array.from(files).slice(0, totalSlots);
+        
+        if (filesToUpload.length === 0) {
+            showToast('Maximum 8 photos allowed', 'warning');
+            return;
+        }
+        
+        // Show upload progress
+        if (uploadProgress && progressFill && progressPercent && progressText) {
+            uploadProgress.classList.add('show');
+            progressFill.style.width = '0%';
+            progressPercent.textContent = '0%';
+            progressText.textContent = 'Uploading...';
+        }
+        
+        // Simulate upload process
+        let uploadedCount = 0;
+        const totalFiles = filesToUpload.length;
+        
+        filesToUpload.forEach((file, index) => {
+            // Validate file
+            if (!file.type.match('image.*')) {
+                showToast(`Skipped ${file.name}: Not an image file`, 'error');
+                return;
+            }
+            
+            if (file.size > 10 * 1024 * 1024) {
+                showToast(`Skipped ${file.name}: File too large (max 10MB)`, 'error');
+                return;
+            }
+            
+            // Simulate upload delay
+            setTimeout(() => {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    // Add to uploaded images
+                    uploadedImages.push({
+                        id: Date.now() + index,
+                        file: file,
+                        dataUrl: e.target.result
+                    });
+                    
+                    // Update progress
+                    uploadedCount++;
+                    const percent = Math.round((uploadedCount / totalFiles) * 100);
+                    
+                    if (progressFill) progressFill.style.width = percent + '%';
+                    if (progressPercent) progressPercent.textContent = percent + '%';
+                    
+                    if (uploadedCount === totalFiles) {
+                        // Upload complete
+                        setTimeout(() => {
+                            if (progressText) progressText.textContent = 'Upload Complete!';
+                            
+                            setTimeout(() => {
+                                uploadProgress.classList.remove('show');
+                                updateImageGallery();
+                                updateAISuggestionsBasedOnImages();
+                                updateAITips();
+                                showToast(`${uploadedCount} photo(s) uploaded successfully`, 'success');
+                            }, 1000);
+                        }, 500);
+                    }
+                };
+                
+                reader.readAsDataURL(file);
+            }, index * 300); // Stagger uploads
+        });
+    }
+    
+    function updateImageGallery() {
+        if (!imageGallery) return;
+        
+        // Clear placeholder
+        const placeholder = imageGallery.querySelector('.gallery-placeholder');
+        if (placeholder) placeholder.remove();
+        
+        // Clear existing images
+        imageGallery.innerHTML = '';
+        
+        // Add uploaded images
+        uploadedImages.forEach((image, index) => {
+            const galleryItem = document.createElement('div');
+            galleryItem.className = 'gallery-item';
+            galleryItem.innerHTML = `
+                <img src="${image.dataUrl}" alt="Uploaded image ${index + 1}">
+                <button class="remove-btn" data-id="${image.id}">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            imageGallery.appendChild(galleryItem);
+        });
+        
+        // Add remove button listeners
+        document.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const id = parseInt(this.getAttribute('data-id'));
+                removeImage(id);
+            });
+        });
+        
+        // Update upload area text if we have images
+        if (uploadedImages.length > 0) {
+            const uploadContent = uploadArea.querySelector('.upload-content');
+            if (uploadContent) {
+                uploadContent.innerHTML = `
+                    <div class="upload-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>${uploadedImages.length} Photo(s) Uploaded</h3>
+                    <p>Click or drag to add more photos</p>
+                    <p class="upload-hint">${maxImages - uploadedImages.length} more photos allowed</p>
+                `;
+            }
+        }
+    }
+    
+    function removeImage(id) {
+        uploadedImages = uploadedImages.filter(img => img.id !== id);
+        updateImageGallery();
+        
+        // Reset upload area text if no images
+        if (uploadedImages.length === 0) {
+            const uploadContent = uploadArea.querySelector('.upload-content');
+            if (uploadContent) {
+                uploadContent.innerHTML = `
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h3>Drag & Drop Photos</h3>
+                    <p>or <span class="browse-link">browse files</span></p>
+                    <p class="upload-hint">JPG, PNG up to 10MB • Up to 8 photos</p>
+                `;
+                
+                // Re-add browse link listener
+                const newBrowseLink = uploadContent.querySelector('.browse-link');
+                if (newBrowseLink) {
+                    newBrowseLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        fileInput.click();
+                    });
+                }
+            }
+        }
+        
+        showToast('Photo removed', 'info');
+    }
+    
+    // Update AI tips based on uploaded images
+    function updateAITips() {
+        const tips = document.querySelectorAll('.tips-list li');
+        
+        if (uploadedImages.length >= 1) {
+            tips[0].setAttribute('data-checked', 'true');
+            tips[0].querySelector('i').className = 'fas fa-check-circle';
+        }
+        
+        if (uploadedImages.length >= 3) {
+            tips[1].setAttribute('data-checked', 'true');
+            tips[1].querySelector('i').className = 'fas fa-check-circle';
+        }
+    }
+}
+
+// =========================================
+// 4. Form Validation
+// =========================================
+function initFormValidation() {
+    const form = document.getElementById('listingForm');
+    const inputs = form?.querySelectorAll('.form-input');
+    
+    if (!form || !inputs) return;
+    
+    // Real-time validation for each input
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {
+            validateField(this);
+        });
+        
+        input.addEventListener('blur', function() {
+            validateField(this);
+        });
+    });
+    
+    // Select validation
+    const selects = form.querySelectorAll('select');
+    selects.forEach(select => {
+        select.addEventListener('change', function() {
+            validateField(this);
+        });
+    });
+    
+    // Condition radio validation
+    const conditionRadios = form.querySelectorAll('input[name="condition"]');
+    conditionRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            validateCondition();
+        });
+    });
+}
+
+function validateField(field) {
+    const value = field.value.trim();
+    const container = field.closest('.input-container');
+    const validation = container?.querySelector('.input-validation');
+    const validIcon = validation?.querySelector('.valid-icon');
+    const errorIcon = validation?.querySelector('.error-icon');
+    
+    // Clear previous states
+    field.classList.remove('valid', 'error');
+    if (validIcon) validIcon.style.display = 'none';
+    if (errorIcon) errorIcon.style.display = 'none';
+    
+    // Skip validation for optional fields if empty
+    if (!field.hasAttribute('required') && !value) {
+        return true;
+    }
+    
+    let isValid = true;
+    let errorMessage = '';
+    
+    // Field-specific validation
+    switch (field.id) {
+        case 'itemTitle':
+            if (!value) {
+                errorMessage = 'Title is required';
+                isValid = false;
+            } else if (value.length < 5) {
+                errorMessage = 'Title must be at least 5 characters';
+                isValid = false;
+            } else if (value.length > 60) {
+                errorMessage = 'Title must be 60 characters or less';
+                isValid = false;
+            }
+            break;
+            
+        case 'itemCategory':
+            if (!value) {
+                errorMessage = 'Please select a category';
+                isValid = false;
+            }
+            break;
+            
+        case 'itemDescription':
+            if (!value) {
+                errorMessage = 'Description is required';
+                isValid = false;
+            } else if (value.length < 20) {
+                errorMessage = 'Description must be at least 20 characters';
+                isValid = false;
+            }
+            break;
+            
+        case 'itemPrice':
+            if (value && parseFloat(value) < 0) {
+                errorMessage = 'Price cannot be negative';
+                isValid = false;
+            }
+            break;
+            
+        case 'itemDeposit':
+            if (value && parseFloat(value) < 0) {
+                errorMessage = 'Deposit cannot be negative';
+                isValid = false;
+            }
+            break;
+            
+        case 'itemLocation':
+            if (value && value.length < 3) {
+                errorMessage = 'Location must be at least 3 characters';
+                isValid = false;
+            }
+            break;
+    }
+    
+    // Update UI
+    if (isValid && value) {
+        field.classList.add('valid');
+        if (validIcon) validIcon.style.display = 'block';
+    } else if (!isValid) {
+        field.classList.add('error');
+        if (errorIcon) errorIcon.style.display = 'block';
+        
+        // Show shake animation
+        field.style.animation = 'none';
+        setTimeout(() => {
+            field.style.animation = 'shake 0.5s';
+        }, 10);
+    }
+    
+    return isValid;
+}
+
+function validateCondition() {
+    const conditionSelected = document.querySelector('input[name="condition"]:checked');
+    const conditionOptions = document.querySelector('.condition-options');
+    
+    if (conditionOptions) {
+        conditionOptions.classList.remove('error');
+        
+        if (!conditionSelected) {
+            conditionOptions.classList.add('error');
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+function validateForm() {
+    const form = document.getElementById('listingForm');
+    const requiredInputs = form.querySelectorAll('.form-input[required]');
+    let isValid = true;
+    
+    // Validate all required fields
+    requiredInputs.forEach(input => {
+        if (!validateField(input)) {
+            isValid = false;
+        }
+    });
+    
+    // Validate condition
+    if (!validateCondition()) {
+        isValid = false;
+    }
+    
+    // Validate terms
+    const termsCheckbox = document.getElementById('listingTerms');
+    const termsContainer = termsCheckbox?.closest('.checkbox-container');
+    
+    if (termsContainer) {
+        termsContainer.classList.remove('error');
+        
+        if (!termsCheckbox?.checked) {
+            termsContainer.classList.add('error');
+            isValid = false;
+        }
+    }
+    
+    // Validate at least one image
+    const uploadArea = document.getElementById('uploadArea');
+    if (uploadArea && !uploadArea.querySelector('.gallery-item')) {
+        showToast('Please upload at least one photo', 'warning');
+        
+        // Scroll to upload area
+        uploadArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Highlight upload area
+        uploadArea.style.borderColor = 'var(--error)';
+        uploadArea.style.animation = 'shake 0.5s';
+        setTimeout(() => {
+            uploadArea.style.animation = '';
+        }, 500);
+        
+        isValid = false;
+    }
+    
+    return isValid;
+}
+
+// =========================================
+// 5. AI Suggestions
+// =========================================
+function initAISuggestions() {
+    const refreshBtn = document.getElementById('refreshSuggestions');
+    const suggestionButtons = document.querySelectorAll('.btn-suggestion');
+    
+    // Generate initial suggestions
+    updateAISuggestionsBasedOnImages();
+    
+    // Refresh suggestions
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', function() {
+            this.classList.add('loading');
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+            
+            setTimeout(() => {
+                generateNewSuggestions();
+                this.classList.remove('loading');
+                this.innerHTML = '<i class="fas fa-redo"></i> Refresh';
+                showToast('AI suggestions refreshed', 'success');
+            }, 1500);
+        });
+    }
+    
+    // Use suggestion buttons
+    suggestionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const field = this.getAttribute('data-field');
+            useAISuggestion(field);
+        });
+    });
+}
+
+function updateAISuggestionsBasedOnImages() {
+    // This would normally analyze images with AI
+    // For demo, we'll use simulated data
+    
+    setTimeout(() => {
+        const aiTitle = document.getElementById('aiTitle');
+        const aiCategory = document.getElementById('aiCategory');
+        const aiDescription = document.getElementById('aiDescription');
+        
+        // Sample suggestions based on common uploads
+        const suggestions = {
+            tools: {
+                title: 'Cordless Power Drill with Accessories',
+                category: 'Tools',
+                description: 'High-quality cordless drill with 2 batteries, charger, and drill bit set. Perfect for home DIY projects, furniture assembly, and light construction work. Batteries hold charge well and drill has variable speed control.'
+            },
+            electronics: {
+                title: 'DSLR Camera with Lens Kit',
+                category: 'Electronics',
+                description: 'Professional DSLR camera with 18-55mm lens, perfect for photography enthusiasts. Includes camera bag, memory card, and cleaning kit. Great for events, portraits, or learning photography.'
+            },
+            default: {
+                title: 'Quality Item in Good Condition',
+                category: 'Other',
+                description: 'This item is in good working condition and ready to use. It has been well-maintained and comes from a smoke-free home. Perfect for temporary needs or trying before buying.'
+            }
+        };
+        
+    // For demo, randomly pick a suggestion type
+        const types = ['tools', 'electronics', 'default'];
+        const randomType = types[Math.floor(Math.random() * types.length)];
+        const suggestion = suggestions[randomType];
+        
+        if (aiTitle) aiTitle.textContent = suggestion.title;
+        if (aiCategory) aiCategory.textContent = suggestion.category;
+        if (aiDescription) aiDescription.textContent = suggestion.description;
+        
+        // Store suggestions for later use
+        window.aiSuggestions = suggestion;
+    }, 2000);
+}
+
+function generateNewSuggestions() {
+    const suggestions = {
+        1: {
+            title: 'Professional Grade Item',
+            category: 'Tools',
+            description: 'Professional-grade equipment suitable for serious projects. Well-maintained and ready for immediate use.'
+        },
+        2: {
+            title: 'Compact and Portable',
+            category: 'Electronics',
+            description: 'Compact design makes this easy to transport and store. Perfect for occasional use or special events.'
+        },
+        3: {
+            title: 'Eco-Friendly Alternative',
+            category: 'Home Appliances',
+            description: 'Save money and reduce waste by borrowing instead of buying new. This item helps promote sustainable living.'
+        }
+    };
+    
+    const randomIndex = Math.floor(Math.random() * 3) + 1;
+    const suggestion = suggestions[randomIndex];
+    
+    const aiTitle = document.getElementById('aiTitle');
+    const aiCategory = document.getElementById('aiCategory');
+    const aiDescription = document.getElementById('aiDescription');
+    
+    if (aiTitle) aiTitle.textContent = suggestion.title;
+    if (aiCategory) aiCategory.textContent = suggestion.category;
+    if (aiDescription) aiDescription.textContent = suggestion.description;
+    
+    window.aiSuggestions = suggestion;
+}
+
+function useAISuggestion(field) {
+    if (!window.aiSuggestions) return;
+    
+    switch (field) {
+        case 'title':
+            document.getElementById('itemTitle').value = window.aiSuggestions.title;
+            validateField(document.getElementById('itemTitle'));
+            updateCharacterCounter('itemTitle');
+            break;
+            
+        case 'category':
+            const categorySelect = document.getElementById('itemCategory');
+            const option = Array.from(categorySelect.options).find(
+                opt => opt.text.toLowerCase() === window.aiSuggestions.category.toLowerCase()
+            );
+            if (option) {
+                categorySelect.value = option.value;
+                validateField(categorySelect);
+            }
+            break;
+            
+        case 'description':
+            document.getElementById('itemDescription').value = window.aiSuggestions.description;
+            validateField(document.getElementById('itemDescription'));
+            updateCharacterCounter('itemDescription');
+            break;
+    }
+    
+    // Visual feedback
+    const button = document.querySelector(`.btn-suggestion[data-field="${field}"]`);
+    if (button) {
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check"></i> Applied!';
+        button.style.background = 'var(--success)';
+        button.style.color = 'white';
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.style.background = '';
+            button.style.color = '';
+        }, 2000);
+    }
+    
+    showToast(`AI suggestion applied to ${field}`, 'success');
+}
+
+// =========================================
+// 6. Character Counters
+// =========================================
+function initCharacterCounters() {
+    const titleInput = document.getElementById('itemTitle');
+    const descriptionInput = document.getElementById('itemDescription');
+    
+    if (titleInput) {
+        titleInput.addEventListener('input', function() {
+            updateCharacterCounter('itemTitle');
+        });
+        updateCharacterCounter('itemTitle');
+    }
+    
+    if (descriptionInput) {
+        descriptionInput.addEventListener('input', function() {
+            updateCharacterCounter('itemDescription');
+        });
+        updateCharacterCounter('itemDescription');
+    }
+}
+
+function updateCharacterCounter(fieldId) {
+    const input = document.getElementById(fieldId);
+    const counter = document.getElementById(fieldId + 'Count');
+    const counterContainer = counter?.closest('.character-count');
+    
+    if (!input || !counter || !counterContainer) return;
+    
+    const length = input.value.length;
+    counter.textContent = length;
+    
+    // Remove previous classes
+    counterContainer.classList.remove('warning', 'error');
+    
+    // Add appropriate class based on length
+    if (fieldId === 'itemTitle') {
+        if (length > 50) {
+            counterContainer.classList.add('warning');
+        }
+        if (length > 60) {
+            counterContainer.classList.add('error');
+        }
+    } else if (fieldId === 'itemDescription') {
+        if (length > 1900) {
+            counterContainer.classList.add('warning');
+        }
+        if (length > 2000) {
+            counterContainer.classList.add('error');
+        }
+    }
+}
+
+// =========================================
+// 7. Condition Selection
+// =========================================
+function initConditionSelection() {
+    const conditionOptions = document.querySelectorAll('.radio-option');
+    
+    conditionOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            // Remove active class from all options
+            conditionOptions.forEach(opt => {
+                opt.classList.remove('active');
+            });
+            
+            // Add active class to clicked option
+            this.classList.add('active');
+            
+            // Visual feedback
+            const radioCard = this.querySelector('.radio-card');
+            radioCard.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                radioCard.style.transform = '';
+            }, 200);
+        });
+    });
+}
+
+// =========================================
+// 8. Location Detection
+// =========================================
+function initLocationDetection() {
+    const locationBtn = document.getElementById('useCurrentLocation');
+    const locationInput = document.getElementById('itemLocation');
+    
+    if (!locationBtn || !locationInput) return;
+    
+    locationBtn.addEventListener('click', function() {
+        if (!navigator.geolocation) {
+            showToast('Geolocation is not supported by your browser', 'error');
+            return;
+        }
+        
+        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Detecting...';
+        this.disabled = true;
+        
+        // For demo, use simulated location
+        setTimeout(() => {
+            const locations = [
+                'Downtown Brooklyn, NY',
+                'Williamsburg, Brooklyn',
+                'Park Slope, Brooklyn',
+                'Upper East Side, Manhattan',
+                'Astoria, Queens'
+            ];
+            
+            const randomLocation = locations[Math.floor(Math.random() * locations.length)];
+            locationInput.value = randomLocation;
+            validateField(locationInput);
+            
+            this.innerHTML = '<i class="fas fa-check-circle"></i> Detected';
+            showToast(`Location set to ${randomLocation}`, 'success');
+            
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-location-arrow"></i> Use Current';
+                this.disabled = false;
+            }, 2000);
+        }, 1500);
+        
+        // Real implementation would use:
+        // navigator.geolocation.getCurrentPosition(success, error);
+    });
+}
+
+// =========================================
+// 9. Tags System
+// =========================================
+function initTagsSystem() {
+    const tagsInput = document.getElementById('itemTags');
+    const tagsDisplay = document.getElementById('tagsDisplay');
+    const tagSuggestions = document.querySelectorAll('.tag-suggestion');
+    
+    let tags = [];
+    
+    // Add tag on Enter or comma
+    if (tagsInput) {
+        tagsInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ',') {
+                e.preventDefault();
+                addTag(this.value.trim());
+                this.value = '';
+            }
+        });
+        
+        tagsInput.addEventListener('blur', function() {
+            if (this.value.trim()) {
+                addTag(this.value.trim());
+                this.value = '';
+            }
+        });
+    }
+    
+    // Tag suggestions
+    tagSuggestions.forEach(suggestion => {
+        suggestion.addEventListener('click', function() {
+            addTag(this.textContent);
+        });
+    });
+    
+    function addTag(tagText) {
+        if (!tagText) return;
+        
+        // Clean tag text
+        tagText = tagText.replace(',', '').trim();
+        
+        // Check if tag already exists
+        if (tags.includes(tagText.toLowerCase())) {
+            showToast(`Tag "${tagText}" already added`, 'info');
+            return;
+        }
+        
+        // Check maximum tags
+        if (tags.length >= 10) {
+            showToast('Maximum 10 tags allowed', 'warning');
+            return;
+        }
+        
+        // Add tag
+        tags.push(tagText.toLowerCase());
+        renderTags();
+        
+        // Clear input
+        if (tagsInput) tagsInput.value = '';
+        
+        // Visual feedback
+        const tagElement = tagsDisplay.lastElementChild;
+        if (tagElement) {
+            tagElement.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                tagElement.style.transform = 'scale(1)';
+            }, 100);
+        }
+    }
+    
+    function removeTag(tagText) {
+        tags = tags.filter(tag => tag !== tagText.toLowerCase());
+        renderTags();
+    }
+    
+    function renderTags() {
+        if (!tagsDisplay) return;
+        
+        tagsDisplay.innerHTML = '';
+        
+        tags.forEach(tag => {
+            const tagElement = document.createElement('div');
+            tagElement.className = 'tag';
+            tagElement.innerHTML = `
+                ${tag}
+                <span class="remove-tag" data-tag="${tag}">
+                    <i class="fas fa-times"></i>
+                </span>
+            `;
+            
+            tagsDisplay.appendChild(tagElement);
+        });
+        
+        // Add remove listeners
+        document.querySelectorAll('.remove-tag').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tagToRemove = this.getAttribute('data-tag');
+                removeTag(tagToRemove);
+            });
+        });
+    }
+    
+    // Store tags in form data
+    window.getTags = function() {
+        return tags;
+    };
+}
+
+// =========================================
+// 10. Form Submission
+// =========================================
+function initFormSubmission() {
+    const form = document.getElementById('listingForm');
+    const submitBtn = form?.querySelector('.btn-submit');
+    
+    if (!form || !submitBtn) return;
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (!validateForm()) {
+            showToast('Please fix errors before submitting', 'error');
+            return;
+        }
+        
+        // Show loading state
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+        
+        // Simulate API call
+        setTimeout(() => {
+            submitListing();
+        }, 2000);
+    });
+}
+
+function submitListing() {
+    // Collect form data
+    const formData = {
+        title: document.getElementById('itemTitle').value,
+        category: document.getElementById('itemCategory').value,
+        description: document.getElementById('itemDescription').value,
+        condition: document.querySelector('input[name="condition"]:checked')?.value,
+        price: document.getElementById('itemPrice').value || '0',
+        deposit: document.getElementById('itemDeposit').value || '0',
+        availability: document.getElementById('itemAvailability').value,
+        location: document.getElementById('itemLocation').value,
+        tags: window.getTags ? window.getTags() : [],
+        images: window.uploadedImages ? window.uploadedImages.map(img => img.dataUrl) : [],
+        termsAccepted: document.getElementById('listingTerms').checked
+    };
+    
+    // In a real app, you would send this to your backend
+    console.log('Submitting listing:', formData);
+    
+    // Simulate success
+    setTimeout(() => {
+        showSuccessModal();
+    }, 500);
+}
+
+// =========================================
+// 11. Preview Button
+// =========================================
+function initPreviewButton() {
+    const previewBtn = document.querySelector('.btn-preview');
+    
+    if (previewBtn) {
+        previewBtn.addEventListener('click', function() {
+            if (!validateForm()) {
+                showToast('Please fix errors before previewing', 'error');
+                return;
+            }
+            
+            // Show preview modal or page
+            showToast('Preview feature coming soon!', 'info');
+            
+            // For now, log the form data
+            const formData = {
+                title: document.getElementById('itemTitle').value,
+                category: document.getElementById('itemCategory').value,
+                description: document.getElementById('itemDescription').value.substring(0, 100) + '...',
+                condition: document.querySelector('input[name="condition"]:checked')?.value,
+                price: document.getElementById('itemPrice').value || 'Free',
+                location: document.getElementById('itemLocation').value
+            };
+            
+            console.log('Preview data:', formData);
+        });
+    }
+}
+
+// =========================================
+// 12. Success Modal
+// =========================================
+function initSuccessModal() {
+    // Modal functions are defined globally
+    window.viewListing = function() {
+        showToast('Redirecting to your listing...', 'success');
+        setTimeout(() => {
+            window.location.href = 'dashboard.html';
+        }, 1500);
+    };
+    
+    window.shareListing = function() {
+        // Simulate sharing
+        showToast('Sharing options opened', 'success');
+        
+        // In a real app, this would open share dialog
+        setTimeout(() => {
+            const shareText = `I just listed "${document.getElementById('itemTitle').value}" on NeighbourShare!`;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My NeighbourShare Listing',
+                    text: shareText,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback
+                prompt('Copy this link to share:', shareText);
+            }
+        }, 500);
+    };
+    
+    window.listAnother = function() {
+        // Reset form
+        document.getElementById('listingForm').reset();
+        document.querySelectorAll('.gallery-item').forEach(item => item.remove());
+        
+        // Reset upload area
+        const uploadArea = document.getElementById('uploadArea');
+        const uploadContent = uploadArea.querySelector('.upload-content');
+        if (uploadContent) {
+            uploadContent.innerHTML = `
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <h3>Drag & Drop Photos</h3>
+                <p>or <span class="browse-link">browse files</span></p>
+                <p class="upload-hint">JPG, PNG up to 10MB • Up to 8 photos</p>
+            `;
+        }
+        
+        // Reset AI tips
+        document.querySelectorAll('.tips-list li').forEach(li => {
+            li.setAttribute('data-checked', 'false');
+            li.querySelector('i').className = 'fas fa-circle';
+        });
+        
+        // Hide modal
+        hideSuccessModal();
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        showToast('Ready to list another item!', 'success');
+    };
+}
+
+function showSuccessModal() {
+    const modal = document.getElementById('successModal');
+    const submitBtn = document.querySelector('.btn-submit');
+    
+    if (modal) {
+        modal.classList.add('show');
+        
+        // Reset submit button
+        if (submitBtn) {
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+        }
+        
+        // Disable body scroll
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function hideSuccessModal() {
+    const modal = document.getElementById('successModal');
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// =========================================
+// 13. Theme Toggle
+// =========================================
+function initThemeToggle() {
+    // Already handled in initDarkMode
+}
+
+// =========================================
+// 14. Back Button
+// =========================================
+function initBackButton() {
+    const backBtn = document.querySelector('.back-btn');
+    
+    if (backBtn) {
+        backBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Check if form has data
+            const hasData = document.getElementById('itemTitle').value.trim() !== '' ||
+                           document.querySelector('.gallery-item') !== null;
+            
+            if (hasData) {
+                if (confirm('You have unsaved changes. Are you sure you want to leave?')) {
+                    window.location.href = this.href;
+                }
+            } else {
+                window.location.href = this.href;
+            }
+        });
+    }
+}
+
+// =========================================
+// 15. Toast Notifications
+// =========================================
+function showToast(message, type = 'info') {
+    // Remove existing toasts
+    document.querySelectorAll('.toast').forEach(toast => toast.remove());
+    
+    // Create toast
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    
+    // Set icon based on type
+    let icon = 'info-circle';
+    switch (type) {
+        case 'success': icon = 'check-circle'; break;
+        case 'error': icon = 'exclamation-circle'; break;
+        case 'warning': icon = 'exclamation-triangle'; break;
+        case 'info': icon = 'info-circle'; break;
+    }
+    
+    toast.innerHTML = `
+        <div class="toast-content">
+            <i class="fas fa-${icon}"></i>
+            <span>${message}</span>
+        </div>
+        <button class="toast-close">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+    
+    // Add styles if not already present
+    if (!document.querySelector('#toast-styles')) {
+        const style = document.createElement('style');
+        style.id = 'toast-styles';
+        style.textContent = `
+            .toast {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background: var(--glass);
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(126, 217, 87, 0.2);
+                border-radius: var(--radius-sm);
+                padding: 15px 20px;
+                box-shadow: var(--shadow-lg);
+                z-index: 9999;
+                animation: slideInUp 0.3s ease-out;
+                max-width: 350px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 15px;
+            }
+            
+            .toast-success {
+                border-left: 4px solid var(--success);
+            }
+            
+            .toast-error {
+                border-left: 4px solid var(--error);
+            }
+            
+            .toast-warning {
+                border-left: 4px solid var(--warning);
+            }
+            
+            .toast-info {
+                border-left: 4px solid var(--info);
+            }
+            
+            .toast-content {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                color: var(--dark);
+                flex: 1;
+            }
+            
+            .toast-content i {
+                font-size: 18px;
+            }
+            
+            .toast-success .toast-content i {
+                color: var(--success);
+            }
+            
+            .toast-error .toast-content i {
+                color: var(--error);
+            }
+            
+            .toast-warning .toast-content i {
+                color: var(--warning);
+            }
+            
+            .toast-info .toast-content i {
+                color: var(--info);
+            }
+            
+            .toast-close {
+                background: none;
+                border: none;
+                color: var(--gray);
+                font-size: 14px;
+                cursor: pointer;
+                padding: 5px;
+                border-radius: 4px;
+                transition: var(--transition);
+            }
+            
+            .toast-close:hover {
+                background: rgba(126, 217, 87, 0.1);
+                color: var(--primary);
+            }
+            
+            @keyframes slideInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            @keyframes slideOutDown {
+                from {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(toast);
+    
+    // Add close button listener
+    toast.querySelector('.toast-close').addEventListener('click', function() {
+        toast.style.animation = 'slideOutDown 0.3s ease-out forwards';
+        setTimeout(() => toast.remove(), 300);
+    });
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        if (toast.parentNode) {
+            toast.style.animation = 'slideOutDown 0.3s ease-out forwards';
+            setTimeout(() => toast.remove(), 300);
+        }
+    }, 5000);
+}
+
+// =========================================
+// 16. Ripple Effect for Buttons
+// =========================================
+document.addEventListener('click', function(e) {
+    const button = e.target.closest('.btn-ripple');
+    
+    if (button) {
+        const ripple = document.createElement('span');
+        const rect = button.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.classList.add('ripple');
+        ripple.style.width = ripple.style.height = `${size}px`;
+        ripple.style.left = `${x}px`;
+        ripple.style.top = `${y}px`;
+        
+        button.appendChild(ripple);
+        
+        setTimeout(() => {
+            ripple.remove();
+        }, 600);
+    }
+});
+
+// Add ripple styles if not already present
+if (!document.querySelector('#ripple-styles')) {
+    const style = document.createElement('style');
+    style.id = 'ripple-styles';
+    style.textContent = `
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        .btn-ripple {
+            position: relative;
+            overflow: hidden;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// =========================================
+// 17. Progress Indicator Update
+// =========================================
+function updateProgressIndicator() {
+    const progressFill = document.querySelector('.progress-fill');
+    const progressText = document.querySelector('.progress-text');
+    
+    if (!progressFill || !progressText) return;
+    
+    // Calculate progress based on form completion
+    const form = document.getElementById('listingForm');
+    const requiredFields = form.querySelectorAll('[required]');
+    const completedFields = Array.from(requiredFields).filter(field => {
+        if (field.type === 'checkbox') return field.checked;
+        if (field.type === 'radio') return document.querySelector(`input[name="${field.name}"]:checked`);
+        return field.value.trim() !== '';
+    }).length;
+    
+    const imagesUploaded = document.querySelectorAll('.gallery-item').length > 0 ? 1 : 0;
+    const totalSteps = requiredFields.length + 1; // +1 for images
+    
+    const progress = ((completedFields + imagesUploaded) / totalSteps) * 100;
+    
+    // Update progress bar
+    progressFill.style.width = `${Math.min(progress, 100)}%`;
+    
+    // Update text
+    if (progress < 33) {
+        progressText.textContent = 'Step 1 of 3';
+    } else if (progress < 66) {
+        progressText.textContent = 'Step 2 of 3';
+    } else {
+        progressText.textContent = 'Step 3 of 3';
+    }
+}
+
+// Update progress on form changes
+document.addEventListener('input', function() {
+    updateProgressIndicator();
+});
+
+document.addEventListener('change', function() {
+    updateProgressIndicator();
+});
+
+// Initial update
+setTimeout(updateProgressIndicator, 500);
